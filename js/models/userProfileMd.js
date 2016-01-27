@@ -7,7 +7,7 @@ module.exports = Backbone.Model.extend({
     profile: {
       guid: "",
       vendor: false,
-      name: "Default Name",
+      name: "",
       categories: ["category 1", "category 2"],
       moderator: false,
       moderators: ["moderator 1", "moderator 2"],
@@ -34,8 +34,6 @@ module.exports = Backbone.Model.extend({
           proof_url: ""
         }
       },
-      followers: ["handle1", "handle2", "handle3"],
-      following: ["handle4", "handle5", "handle6"],
       contracts: ["ID1", "ID2", "ID3"],
       primary_color: "#086A9E",
       secondary_color: "#317DB8",
@@ -75,7 +73,7 @@ module.exports = Backbone.Model.extend({
 
       //if an empty social_accounts object is returned, put the defaults back into it
       response.profile.social_accounts.facebook = response.profile.social_accounts.facebook || {username: "", proof_url: ""};
-      response.profile.social_accounts.twitter = response.profile.social_accounts.facebook || {twitter: "", proof_url: ""};
+      response.profile.social_accounts.twitter = response.profile.social_accounts.twitter || {username: "", proof_url: ""};
       response.profile.social_accounts.instagram = response.profile.social_accounts.instagram || {username: "", proof_url: ""};
       response.profile.social_accounts.snapchat = response.profile.social_accounts.snapchat || {username: "", proof_url: ""};
 
@@ -84,15 +82,30 @@ module.exports = Backbone.Model.extend({
         response.profile.avatar_hash = "";
       }
 
+      //check to make sure header hash is valid
+      if(response.profile.header_hash === "b472a266d0bd89c13706a4132ccfb16f7c3b9fcb" || response.profile.header_hash.length !== 40) {
+        response.profile.header_hash = "";
+      }
+
+      response.profile.beenSet = !(!response.profile.avatar_hash && !response.profile.name && !response.profile.header_hash && !response.profile.handle);
+
       //if name comes back blank, set to random value
       if(!response.profile.name){
         response.profile.name = "ob" + Math.random().toString(36).slice(2);
       }
 
       //if no country, set to USA
-      if(!response.location) {
-        response.location = "UNITED_STATES";
+      if(!response.profile.location) {
+        response.profile.location = "UNITED_STATES";
       }
+
+      //put a copy of the avatar outside of the profile object, so change events can be triggered for it
+      if(response.profile.avatar_hash){
+        response.avatar_hash = response.profile.avatar_hash;
+      }
+
+      //add randome number because change event is not triggered by changes inside profile
+      response.fetched = Math.random();
     }
 
     return response;

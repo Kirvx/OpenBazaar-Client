@@ -22,7 +22,8 @@ module.exports = Backbone.View.extend({
     'blur input': 'validateInput',
     'blur textarea': 'validateInput',
     'click .js-adminShutdown': 'shutdown',
-    'click .js-adminCloseApp': 'closeApp'
+    'click .js-adminCloseApp': 'closeApp',
+    'click .js-adminClearLocalStorage': 'clearStorage'
   },
 
   initialize: function (options) {
@@ -48,7 +49,6 @@ module.exports = Backbone.View.extend({
   blockClicks: function(e) {
     "use strict";
     e.stopPropagation();
-
   },
 
   updatePage: function() {
@@ -103,7 +103,18 @@ module.exports = Backbone.View.extend({
     $.ajax({
       url: self.model.get('serverUrl')+ "routing_table",
       success: function(data){
-        self.$el.find('.js-adminRoutingTable').text(data);
+        var routingString = '';
+        __.each(data, function(tableEntry){
+          routingString += "<table class='basicTable row20'>";
+          routingString += "<tr><td>NAT Type</td><td>"+tableEntry.nat_type+"</td><tr>";
+          routingString += "<tr><td>IP</td><td>"+tableEntry.ip+"</td><tr>";
+          routingString += "<tr><td>GUID</td><td>"+tableEntry.guid+"</td><tr>";
+          routingString += "<tr><td>Vendor</td><td>"+tableEntry.vendor+"</td><tr>";
+          routingString += "<tr><td>Port</td><td>"+tableEntry.port+"</td><tr>";
+          routingString += "</table>";
+        });
+
+        self.$el.find('.js-adminRoutingTable').html(routingString);
       },
       error: function(){
         self.$el.find('.js-adminRoutingTable').text("Call to routing table API failed.");
@@ -112,8 +123,9 @@ module.exports = Backbone.View.extend({
   },
 
   closeModal: function(e){
-    $(e.target).closest('.js-adminModal').fadeTo(0,0).removeAttr('style');
-    window.location.reload();
+    $(e.target).closest('.js-adminModal').fadeOut(300, function(){
+      window.location.reload();
+    });
   },
 
   makeModerator: function() {
@@ -242,6 +254,12 @@ module.exports = Backbone.View.extend({
     } else {
       win.hide();
     }
+  },
+
+  clearStorage: function(){
+    "use strict";
+    this.$el.find('.js-adminClearLocalMsg').text("Local Storage Cleared");
+    localStorage.clear();
   },
 
   close: function(){

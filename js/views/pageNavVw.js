@@ -11,7 +11,7 @@ var __ = require('underscore'),
     notificationsPanelView = require('../views/notificationsPanelVw'),
     remote = require('remote'),
     cropit = require('../utils/jquery.cropit'),
-    showErrorModal = require('../utils/showErrorModal.js');
+    messageModal = require('../utils/messageModal.js');
 
 
 module.exports = Backbone.View.extend({
@@ -24,11 +24,17 @@ module.exports = Backbone.View.extend({
     'click .js-navMax': 'navMaxClick',
     'click .js-navBack': 'navBackClick',
     'click .js-navFwd': 'navFwdClick',
+    'click .js-showAboutModal': 'showAboutModal',
+    'click .js-hideAboutModal': 'hideAboutModal',
+    'click .js-showSupportModal': 'showSupportModal',
+    'click .js-hideSupportModal': 'hideSupportModal',
+    'click .js-aboutModal .js-tab': 'aboutModalTabClick',
     'click .js-navNotifications': 'navNotificationsClick',
     'click .js-navProfile': 'navProfileClick',
     'click .js-navRefresh': 'navRefreshClick',
     'click .js-navAdminPanel': 'navAdminPanel',
     'click .js-navProfileMenu a': 'closeNav',
+    'click .js-homeModal': 'blockClicks',
     'click .js-homeModal-countrySelect': 'countrySelect',
     'click .js-homeModal-currencySelect': 'currencySelect',
     'click .js-homeModal-languageSelect': 'languageSelect',
@@ -36,43 +42,63 @@ module.exports = Backbone.View.extend({
     'click .js-homeModal-newHandle': 'newHandle',
     'click .js-homeModal-existingHandle': 'existingHandle',
     'click .js-homeModal-cancelHandle': 'cancelHandle',
-    //'change .js-homeModalAvatarUpload': 'uploadAvatar',
+    'click .js-accordionNext': 'accNext',
+    'click .js-accordionPrev': 'accPrev',
+    'keypress .js-accordionNext': 'accNextKeypress',
+    'keypress .js-accordionPrev': 'accPrevKeypress',
     'click .js-homeModalDone': 'settingsDone',
-    'click .js-closeModal': 'closeModal',
+    'keypress .js-homeModalDone': 'settingsDoneKeypress',
+    'focus .js-navAddressBar': 'addressBarFocus',
     'keyup .js-navAddressBar': 'addressBarKeyup',
     'click .js-closeStatus': 'closeStatusBar',
-    'click .js-homeModal-themeSelected': 'setSelectedTheme'
+    'click .js-homeModal-themeSelected': 'setSelectedTheme',
+    'blur input': 'validateInput',
+    'blur textarea': 'validateInput'
   },
 
   initialize: function(options){
     "use strict";
     var self = this;
+    this.options = options || {};
+    /* recieves socketView and userProfile from app.js */
     this.socketView = options.socketView;
+    this.userProfile = options.userProfile;
+    this.model.set('vendor', this.userProfile.get('profile').vendor);
     this.subViews = [];
     this.languages = new languagesModel();
-    this.options = options || {};
+
 
     this.currentWindow = remote.getCurrentWindow();
 
-    //when language is changed, re-render
-    this.listenTo(this.model, 'change:language', function(){
-      var newLang = this.model.get("language");
-      window.polyglot = new Polyglot({locale: newLang});
-      window.polyglot.extend(__.where(this.languages.get('languages'), {langCode: newLang})[0]);
-      this.render();
-      //refresh the current page
-      Backbone.history.loadUrl();
-    });
-
-    this.listenTo(window.obEventBus, "socketMessageRecived", function(response){
-      this.handleSocketMessage(response);
-    });
     this.socketNotificationID = Math.random().toString(36).slice(2);
     this.socketView.getNotifications(this.socketNotificationID);
 
-    this.listenTo(window.obEventBus, "countryListRendered", function(){this.accordionReady("country")});
-    this.listenTo(window.obEventBus, "currencyListRendered", function(){this.accordionReady("currency")});
-    this.listenTo(window.obEventBus, "languageListRendered", function(){this.accordionReady("language")});
+    this.listenTo(window.obEventBus, "countryListRendered", function(){this.accordionReady("country");});
+    this.listenTo(window.obEventBus, "currencyListRendered", function(){this.accordionReady("currency");});
+    this.listenTo(window.obEventBus, "languageListRendered", function(){this.accordionReady("language");});
+    this.listenTo(window.obEventBus, "updateProfile", function(response){
+      this.userProfile.fetch();
+    });
+    this.listenTo(window.obEventBus, "updateUserModel", function(response){
+      this.model.fetch();
+    });
+
+    this.notifcationSound = document.createElement('audio');
+    this.notifcationSound.setAttribute('src', './audio/notification.mp3');
+
+    // pre-select lauguage.
+    var localLanguage = window.navigator.language;
+    var localLanguageFound = false;
+    var languageList = this.languages.get('languages');
+    for(var i in languageList) {
+      if(languageList[i].langCode == localLanguage) {
+        localLanguageFound = true;
+        break;
+      }
+    }
+    localLanguage = localLanguageFound ? localLanguage : "en-US";
+    this.model.set('language', localLanguage);
+    this.createTranslation(localLanguage);
 
     this.render();
   },
@@ -85,8 +111,20 @@ module.exports = Backbone.View.extend({
     }
   },
 
+  refreshProfile: function() {
+    "use strict";
+    var self = this;
+    this.userProfile.fetch({
+      success: function(){
+        self.render();
+      }
+    });
+  },
+
   accordionReady: function(listReady) {
     "use strict";
+    var self = this;
+
     if(listReady == "country") {
       this.countryReady = true;
     } else if(listReady == "currency") {
@@ -95,47 +133,92 @@ module.exports = Backbone.View.extend({
       this.languageReady = true;
     }
     if(this.countryReady && this.currencyReady && this.languageReady){
-      //set up filterable lists.
       var countryList = new window.List('homeModal-countryList', {valueNames: ['homeModal-country'], page: 1000});
       var currencyList = new window.List('homeModal-currencyList', {valueNames: ['homeModal-currency'], page: 1000});
       var timeList = new window.List('homeModal-timeList', {valueNames: ['homeModal-time'], page: 1000});
       var languageList = new window.List('homeModal-languageList', {valueNames: ['homeModal-language'], page: 1000});
-      this.initAccordion('.js-profileAccordion');
-      //console.log(currencyList.items);
+      self.initAccordion('.js-profileAccordion');
+      // Scroll selected options to the top
+      var checkedInput = $('.js-homeModal-listParent').find('input:checked').each(function(){
+        var checkedInputScrollParent = $(this).closest('ul');
+        var checkedInputPosition = $(this).closest('li').position().top;
+        var checkedInputOffset = checkedInputScrollParent.position().top;
+        checkedInputScrollParent.scrollTop(checkedInputPosition - checkedInputOffset);
+      });
     }
   },
 
   initAccordion: function(targ){
     "use strict";
-    var acc = $(targ);
-    var accWidth = acc.width();
-    var accHeight = acc.height();
-    var accChildren = acc.find('.accordion-child');
-    var accNum = accChildren.length;
-    var accWin = acc.find('.accordion-window');
+    this.acc = $(targ);
+    this.accWidth = this.acc.width();
+    this.accHeight = this.acc.height();
+    this.accChildren = this.acc.find('.accordion-child');
+    this.accNum = this.accChildren.length;
+    this.accWin = this.acc.find('.accordion-window');
+    this.accWin.css({'left':0, 'width': function(){return this.accWidth * this.accNum;}});
+    this.accChildren.css({'width':this.accWidth, 'height':this.accHeight});
+  },
 
-    accWin.css({'left':0, 'width': function(){return accWidth * accNum;}});
-    accChildren.css({'width':accWidth, 'height':accHeight});
-    acc.find('.js-accordionNext').on('click', function(){
-      var oldPos = accWin.css('left').replace("px","");
-      if(oldPos > (accWidth * accNum * -1 + accWidth)){
-        accWin.css('left', function(){
-          return parseInt(accWin.css('left').replace("px","")) - accWidth;
-        });
-      }
+  accNext: function(advanceBy){
+    "use strict";
+    var self = this,
+        oldPos = parseInt(this.accWin.css('left').replace("px","")),
+        moveBy = parseInt(advanceBy) ? this.accWidth * advanceBy : this.accWidth;
+
+    if(oldPos > (this.accWidth * (this.accNum -1) * -1)){
+      this.accWin.css('left', function(){
+        return oldPos - moveBy;
+      });
+      // switch active tab
+      var curActive = $(this.$el).find('.accordion-active');
+      curActive.addClass('accordion-inactive').removeClass('accordion-active');
+      var newActive = curActive.next('.accordion-child');
+      newActive.addClass('accordion-active').removeClass('accordion-inactive');
       // focus search input
-      $(this).closest('.accordion-child').next('.accordion-child').find('input:visible:first').focus();
-    });
-    acc.find('.js-accordionPrev').on('click', function(){
-      var oldPos = accWin.css('left').replace("px","");
-      if(oldPos < (0)){
-        accWin.css('left', function(){
-          return parseInt(accWin.css('left').replace("px","")) + accWidth;
-        });
-      }
+      newActive.find('.search').focus();
+    }
+  },
+
+  accPrev: function(rewindBy){
+    "use strict";
+    var self = this,
+        oldPos = parseInt(this.accWin.css('left').replace("px","")),
+        moveBy = parseInt(rewindBy) ? this.accWidth * rewindBy : this.accWidth;
+
+    if(oldPos < (0)){
+      this.accWin.css('left', function(){
+        return oldPos + moveBy;
+      });
+      // switch active tab
+      var curActive = $(this.$el).find('.accordion-active');
+      curActive.addClass('accordion-inactive').removeClass('accordion-active');
+      var newActive = curActive.prev('.accordion-child');
+      newActive.addClass('accordion-active').removeClass('accordion-inactive');
       // focus search input
-       $(this).closest('.accordion-child').prev('.accordion-child').find('input:visible:first').focus();
-    });
+      newActive.find('.search').focus();
+    }
+  },
+
+  triggerOnEnterSpace: function(e, cb) {
+    "use strict";
+    switch (e.which) {
+      case 32: // space
+      case 13: // return
+        event.stopPropagation();
+        return cb(e);
+    }
+    return true;
+  },
+
+  accNextKeypress: function(e) {
+    "use strict";
+    this.triggerOnEnterSpace(e, this.accNext.bind(this));
+  },
+
+  accPrevKeypress: function(e) {
+    "use strict";
+    this.triggerOnEnterSpace(e, this.accPrev.bind(this));
   },
 
   closeNav: function(){
@@ -143,6 +226,7 @@ module.exports = Backbone.View.extend({
     var targ = this.$el.find('.js-navProfileMenu');
     targ.addClass('hide');
     $('#overlay').addClass('hide');
+
   },
 
   render: function(){
@@ -152,17 +236,36 @@ module.exports = Backbone.View.extend({
     this.countryReady = false;
     this.currencyReady = false;
     this.languageReady = false;
+    //load userProfile data into model
+    this.model.set('guid', this.userProfile.get('profile').guid);
+    this.model.set('avatar_hash', this.userProfile.get('profile').avatar_hash);
     loadTemplate('./js/templates/pageNav.html', function(loadedTemplate) {
       self.$el.html(loadedTemplate(self.model.toJSON()));
-      self.countryList = new countryListView({el: '.js-homeModal-countryList', selected: self.model.get('country')});
-      self.currencyList = new currencyListView({el: '.js-homeModal-currencyList', selected: self.model.get('currency_code')});
-      self.languageList = new languageListView({el: '.js-homeModal-languageList', selected: self.model.get('language')});
-      self.subViews.push(self.countryList);
-      self.subViews.push(self.currencyList);
-      self.subViews.push(self.languageList);
-      if(localStorage.getItem("onboardingComplete") === "true") {
-      self.$el.find('.js-homeModal').hide();
+      if(localStorage.getItem("onboardingComplete") != "true") {
+        var modal = self.$el.find('.js-homeModal');
+        modal.removeClass("hide");
+        $('#obContainer').addClass("blur");
+        modal.attr("tabIndex", "0");
+        document.addEventListener('focus', function( ev ) {
+          if ( !modal.hasClass("hide") && !$.contains( modal[0], ev.target ) ) {
+            ev.stopPropagation();
+            modal.focus();
+          }
+        }, true);
+
+        // pre-select timezone
+        var timeZoneOffset = new Date().getTimezoneOffset();
+        timeZoneOffset = '(GMT ' + (timeZoneOffset < 0 ? '+' : '-') + parseInt(Math.abs(timeZoneOffset/60)) + ':00)';
+        self.$("[id*='" + timeZoneOffset + "']").prop('checked', true);
+
+        self.countryList = new countryListView({el: '.js-homeModal-countryList', selected: self.model.get('country')});
+        self.currencyList = new currencyListView({el: '.js-homeModal-currencyList', selected: self.model.get('currency_code')});
+        self.languageList = new languageListView({el: '.js-homeModal-languageList', selected: self.model.get('language')});
+        self.subViews.push(self.countryList);
+        self.subViews.push(self.currencyList);
+        self.subViews.push(self.languageList);
       }
+
       self.notificationsPanel = new notificationsPanelView({
         parentEl: '#notificationsPanel',
         socketView: self.socketView,
@@ -170,20 +273,121 @@ module.exports = Backbone.View.extend({
       });
       self.listenTo(self.notificationsPanel, 'notificationsCounted', self.setNotificationCount);
       self.subViews.push(self.notificationsPanel);
-      self.$el.find('#image-cropper').cropit();
+      self.$el.find('#image-cropper').cropit({
+        smallImage: "stretch",
+        exportZoom: 1.33,
+        maxZoom: 5,
+        onFileReaderError: function(data){console.log(data);},
+        onImageError: function(errorObject, errorCode, errorMessage) {
+          console.log(errorObject);
+          console.log(errorCode);
+          console.log(errorMessage);
+        }
+      });
       //add the admin panel
       self.adminPanel = new adminPanelView({model: self.model});
       self.subViews.push(self.adminPanel);
       self.addressInput = self.$el.find('.js-navAddressBar');
-      self.addressBarGoBtn = self.$el.find('.js-navAddressBarGo');
       self.statusBar = self.$el.find('.js-navStatusBar');
       //listen for address bar set events
       self.listenTo(window.obEventBus, "setAddressBar", function(setText){
         self.addressInput.val(setText);
         self.closeStatusBar();
       });
+
+      self.listenTo(self.userProfile, 'change:avatar_hash', function(){
+        self.model.set('vendor', self.userProfile.get('profile').vendor);
+        self.render();
+      });
+
+      self.listenTo(window.obEventBus, "socketMessageRecived", function(response){
+        self.handleSocketMessage(response);
+      });
+
+      if(self.showDiscoverCallout) {
+        // display discover callout
+        self.$el.find('.js-OnboardingIntroDiscoverHolder').removeClass('hide');
+      }
+
+      //when language is changed, re-render
+      self.listenTo(self.model, 'change:language', function(){
+        self.createTranslation(self.model.get("language"));
+        self.render();
+      });
     });
     return this;
+  },
+
+  createTranslation: function(newLang){
+    "use strict";
+    window.polyglot = new Polyglot({locale: newLang});
+    window.polyglot.extend(__.where(this.languages.get('languages'), {langCode: newLang})[0]);
+
+  },
+
+  showAboutModal: function(e){
+    "use strict";
+
+    // set the active tab
+    $('.js-aboutModal .navBar .btn.btn-bar').removeClass('active');
+    $('.js-about-mainTab').addClass('active');
+
+    // set the active section
+    $('.js-aboutModal .modal-section').addClass('hide');
+    $('.js-aboutModal .js-modalAboutMain').removeClass('hide');
+
+    // blur the container for extra focus
+    $('#obContainer').addClass('blur');
+
+    // display the modal
+    $('.js-aboutModal').removeClass('hide');
+  },
+
+  hideAboutModal: function(e){
+    "use strict";
+    $('.js-aboutModal').addClass('hide');
+    $('#obContainer').removeClass('blur');
+  },
+
+  showSupportModal: function(e){
+    "use strict";
+    $('.js-aboutModal').removeClass('hide');
+    $('.js-aboutModal .navBar .btn.btn-bar').removeClass('active');
+    $('.js-about-donationsTab').addClass('active');
+    $('.js-aboutModal .modal-section').addClass('hide');
+    $('.js-aboutModal .js-modalAboutSupport').removeClass('hide');
+    $('#obContainer').addClass('blur');
+  },
+
+  hideSupportModal: function(e){
+    "use strict";
+    $('.js-aboutModal').addClass('hide');
+    $('#obContainer').removeClass('blur');
+  },
+
+  aboutModalTabClick: function(e){
+    var tab = $(e.currentTarget).data('tab');
+    $('.js-aboutModal .btn-tab').removeClass('active');
+    $(e.currentTarget).addClass('active');
+
+    switch(tab) {
+      case "about":
+        $('.modal-about-section').addClass('hide');
+        $('.js-modalAboutMain').removeClass('hide');
+        break;
+      case "support":
+        $('.modal-about-section').addClass('hide');
+        $('.js-modalAboutSupport').removeClass('hide');
+        break;
+      case "contributors":
+        $('.modal-about-section').addClass('hide');
+        $('.js-modalAboutContributors').removeClass('hide');
+        break;
+      case "licensing":
+        $('.modal-about-section').addClass('hide');
+        $('.js-modalAboutLicensing').removeClass('hide');
+        break;
+    }
   },
 
   navNotificationsClick: function(e){
@@ -213,7 +417,7 @@ module.exports = Backbone.View.extend({
     if(count > 99) {
       count = "..";
     }
-    this.$el.find('.js-navNotifications').attr('data-count', count);
+    this.$el.find('.js-navNotifications .badge').attr('data-count', count);
   },
 
   navProfileClick: function(e){
@@ -222,6 +426,11 @@ module.exports = Backbone.View.extend({
     var targ = this.$el.find('.js-navProfileMenu');
     targ.siblings('.popMenu').addClass('hide');
     if(targ.hasClass('hide')){
+      // keep this stuff here for now, going to do something with this on my next branch. I basically hate how the user nav covers the chat panel. The plan is to collapse the sidebar when the nav is opened (to get it out of the way) and then reopen the side bar when the nav closes.
+      // $('#sideBar').removeClass('sideBarSlid');
+      // $('.container').removeClass('compressed');
+      // $('#obContainer').removeClass('noScrollBar');
+
       targ.removeClass('hide').addClass('popMenu-navBar-opened');
       $('#overlay').removeClass('hide');
       $('html').on('click.closeNav', function(e){
@@ -230,10 +439,29 @@ module.exports = Backbone.View.extend({
           $('#overlay').addClass('hide');
           $(this).off('.closeNav');
         }
+        // keep this stuff here for now, going to do something with this on my next branch. I basically hate how the user nav covers the chat panel. The plan is to collapse the sidebar when the nav is opened (to get it out of the way) and then reopen the side bar when the nav closes.
+        // if ( $('.chatConversation').css('bottom') === "-362px" ){
+        //   $('#sideBar').addClass('sideBarSlid');
+        //   $('.container').addClass('compressed');
+        //   $('.modal-child').addClass('modalCompressed');
+        //   $('.spinner-with-logo').addClass('modalCompressed');
+        //   $('#obContainer').addClass('noScrollBar');
+        //   $('#colorbox').addClass('marginLeftNeg115');
+        // }
       });
     }else{
       targ.addClass('hide');
       $('#overlay').addClass('hide');
+
+      // keep this stuff here for now, going to do something with this on my next branch. I basically hate how the user nav covers the chat panel. The plan is to collapse the sidebar when the nav is opened (to get it out of the way) and then reopen the side bar when the nav closes.
+      // if ( $('.chatConversation').css('bottom') === "-362px" ){
+      //   $('#sideBar').addClass('sideBarSlid');
+      //   $('.container').addClass('compressed');
+      //   $('.modal-child').addClass('modalCompressed');
+      //   $('.spinner-with-logo').addClass('modalCompressed');
+      //   $('#obContainer').addClass('noScrollBar');
+      //   $('#colorbox').addClass('marginLeftNeg115');
+      // }
     }
   },
 
@@ -276,20 +504,20 @@ module.exports = Backbone.View.extend({
     this.currentWindow.reload();
   },
 
+  addressBarFocus: function(e){
+    // on inital focus of input, select all text (this makes it easier to copy or delete the text)
+    $(e.target).one('mouseup', function () {
+      $('#addressBar').select();
+    });
+  },
+
   addressBarKeyup: function(e){
     "use strict";
     var barText = this.addressInput.val();
-    if(barText.length > 0){
-      //detect enter key
-      if (e.keyCode == 13){
-        this.addressBarProcess(barText);
-        this.addressBarGoBtn.addClass("fadeOut");
-      } else {
-        this.addressBarGoBtn.removeClass("fadeOut");
-        this.closeStatusBar();
-      }
+    //detect enter key
+    if (e.keyCode == 13){
+      this.addressBarProcess(barText);
     } else {
-      this.addressBarGoBtn.addClass("fadeOut");
       this.closeStatusBar();
     }
   },
@@ -300,21 +528,50 @@ module.exports = Backbone.View.extend({
         handle = "",
         state = "",
         itemHash = "",
-        addressTextArray = addressBarText.split("/");
+        addressTextArray = addressBarText.replace(/ /g, "").split("/");
 
     state = addressTextArray[1] ? "/" + addressTextArray[1] : "";
     itemHash = addressTextArray[2] ? "/" + addressTextArray[2] : "";
 
     if(addressTextArray[0].charAt(0) == "@"){
-      handle = addressTextArray[0];
-      this.showStatusBar('Navigation by handle is not supported yet.');
+      // user entered a handle
+      handle = addressTextArray[0].replace('@', '');
+      this.processHandle(handle);
+    } else if(!addressTextArray[0].length){
+      // user trying to go back to discover
+      Backbone.history.navigate('#home', {trigger:true});
     } else if(addressTextArray[0].length === 40){
+      // user entered a guid
       guid = addressTextArray[0];
       Backbone.history.navigate('#userPage/' + guid + state + itemHash, {trigger:true});
+    } else if(addressTextArray[0].charAt(0) == "#"){
+      // user entered a search term
+      Backbone.history.navigate('#home/products/' + addressTextArray[0].replace('#', ''), {trigger:true});
     } else {
-      this.showStatusBar('This is not a valid user GUID or handle.');
+      //user entered text that doesn't match a known pattern, assume it's a product search
+      Backbone.history.navigate('#home/products/' + addressTextArray[0], {trigger:true});
     }
+  },
 
+  processHandle: function(handle){
+    "use strict";
+    if(handle){
+      $.ajax({
+        url: this.model.get('resolver') + "/v2/users/" + handle,
+        dataType: "json"
+      }).done(function(resolverData){
+        if(resolverData[handle].profile && resolverData[handle].profile.account){
+          var account = resolverData[handle].profile.account.filter(function (accountObject) {
+            return accountObject.service == "openbazaar";
+          });
+          Backbone.history.navigate('#userPage/' + account[0].identifier, {trigger: true});
+        } else {
+          messageModal.show(window.polyglot.t('errorMessages.serverError'), window.polyglot.t('errorMessages.badHandle'));
+        }
+      }).fail(function(jqXHR, status, errorThrown){
+        messageModal.show(window.polyglot.t('errorMessages.serverError'), window.polyglot.t('errorMessages.badHandle'));
+      });
+    }
   },
 
   showStatusBar: function(msgText){
@@ -339,7 +596,7 @@ module.exports = Backbone.View.extend({
 
   currencySelect: function(e){
     "use strict";
-    var targ = $(e.currentTarget); //TODO: Rename variables to be more readable
+    var targ = $(e.currentTarget);
     //var crcy = targ.attr('data-name');
     var ccode = targ.attr('data-code');
     $('.js-homeModal-currencyList').find('input[type=radio]').prop("checked", false);
@@ -350,17 +607,14 @@ module.exports = Backbone.View.extend({
 
   languageSelect: function(e){
     "use strict";
-    var targ = $(e.currentTarget); //TODO: Rename variables to be more readable
-    var lang = targ.attr('data-code');
-    $('.js-homeModal-languageList').find('input[type=radio]').prop("checked", false);
-    targ.find('input[type=radio]').prop("checked", true);
+    var lang = $(e.currentTarget).attr('data-code');
     this.model.set('language', lang);
   },
 
   timeSelect: function(e){
     "use strict";
-    var inpt = $(e.target).closest('input[type=radio]'); //TODO: Rename variables to be more readable
-    var tz = inpt.attr('id');
+    var inpt = $(e.target).closest('input[type=radio]');
+    var tz = inpt.val();
     $('.js-homeModal-timezoneList').find('input[type=radio]').prop("checked", false);
     inpt.prop("checked", true);
     this.model.set('time_zone', tz);
@@ -395,9 +649,10 @@ module.exports = Backbone.View.extend({
         uploadImageFormData = new FormData();
 
     localStorage.setItem("onboardingComplete", "true");
+    $('#obContainer').removeClass("blur");
 
     if($('textarea#aboutInput').val() != ""){
-        self.model.set('about', $('textarea#aboutInput').val());
+        self.model.set('short_description', $('textarea#aboutInput').val());
     }
 
     if($('#storeHandleInput').val() != "" && /^@/.test($('#storeHandleInput').val()) ){
@@ -412,24 +667,18 @@ module.exports = Backbone.View.extend({
     }
 
 
-    var themeId = $('input[name=theme-selection]:checked').attr('id');
-    if(themeId){
+    var themeId = $('input[name=theme-selection]:checked');
+    if(themeId.length > 0){
+      var header = themeId.data('header');
+      var primaryColor = parseInt(themeId.data('primary-color').slice(1), 16);
+      var secondaryColor = parseInt(themeId.data('secondary-color').slice(1), 16);
+      var backgroundColor = parseInt(themeId.data('background-color').slice(1), 16);
+      var textColor = parseInt(themeId.data('text-color').slice(1), 16);
 
-        var primaryColor =  parseInt($($("label[for='"+themeId+"']")[0]).data('primary-color').replace("#","0x"));
-        var secondaryColor =   parseInt($($("label[for='"+themeId+"']")[0]).data('secondary-color').replace("#","0x"));
-        var backgroundColor =  parseInt($($("label[for='"+themeId+"']")[0]).data('background-color').replace("#","0x"));
-        var textColor =   parseInt($($("label[for='"+themeId+"']")[0]).data('text-color').replace("#","0x"));
-        var header = $($("label[for='"+themeId+"']")[0]).data('header');
-
-
-        self.model.set('primary_color', primaryColor);
-        self.model.set('secondary_color', secondaryColor);
-        self.model.set('text_color', backgroundColor);
-        self.model.set('background_color', textColor);
-        //TODO upload Image header
-        //From profile api : header= the hash of the header image. must have been previously uploaded using the upload_image api call. (40 character hex string)
-        //self.model.set('header', header);
-
+      self.model.set('primary_color', primaryColor);
+      self.model.set('secondary_color', secondaryColor);
+      self.model.set('text_color', textColor);
+      self.model.set('background_color', backgroundColor);
     }
 
     $.each(this.model.attributes,
@@ -437,7 +686,7 @@ module.exports = Backbone.View.extend({
                 if(i == "country") {
                     profileFormData.append("location",el);
                 }
-                if(i == "name" || i == "handle" || i =="about"|| (themeId && (i == "primary_color" || i == "secondary_color" || i == "text_color"|| i =="background_color" ))) {
+                if(i == "name" || i == "handle" || i =="short_description"|| (themeId && (i == "primary_color" || i == "secondary_color" || i == "text_color"|| i =="background_color" ))) {
                     profileFormData.append(i,""+el);
                 } else {
                     settingsFormData.append(i,el);
@@ -456,91 +705,103 @@ module.exports = Backbone.View.extend({
     }
 
 
-   var submit = function(img_hash) {
-            if(img_hash) {
-                profileFormData.append("avatar",img_hash);
-            }
+    var submit = function(img_hash) {
+      if(img_hash) {
+        profileFormData.append("avatar",img_hash);
+      }
 
+      $.ajax({
+        type: "POST",
+        url: server + "settings",
+        contentType: false,
+        processData: false,
+        data: settingsFormData,
+        dataType: "json",
+        success: function(data) {
+          if(data.success) {
             $.ajax({
-                type: "POST",
-                url: server + "settings",
-                contentType: false,
-                processData: false,
-                data: settingsFormData,
-                dataType: "json",
-                success: function(data) {
-                    if(data.success) {
-                        $.ajax({
-                            type: "POST",
-                            url: server + "profile",
-                            contentType: false,
-                            processData: false,
-                            data: profileFormData,
-                            dataType: "json",
-                            success: function(data) {
-                                 if(data.success == true) {
-                                   self.currentWindow.reload();
-                                 }
-                            },
-                            error: function(jqXHR, status, errorThrown){
-                                console.log(jqXHR);
-                                console.log(status);
-                                console.log(errorThrown);
-                            }
-                        });
-                    }
-                },
-                error: function(jqXHR, status, errorThrown){
-                    console.log(jqXHR);
-                    console.log(status);
-                    console.log(errorThrown);
+              type: "POST",
+              url: server + "profile",
+              contentType: false,
+              processData: false,
+              data: profileFormData,
+              dataType: "json",
+              success: function(data) {
+                if(data.success == true) {
+                  //self.currentWindow.reload();
+                  Backbone.history.loadUrl(Backbone.history.fragment);
+                  self.refreshProfile();
                 }
+              },
+              error: function(jqXHR, status, errorThrown){
+                console.log(jqXHR);
+                console.log(status);
+                console.log(errorThrown);
+              }
             });
-
-        };
-
-        //Lets upload the image first, if there is one
-        //to get the hash
-
-        if(imageURI) {
-            $.ajax({
-                type: "POST",
-                url: server + "upload_image",
-                contentType: false,
-                processData: false,
-                data: uploadImageFormData,
-                dataType: "JSON",
-                success: function(data) {
-                     var img_hash = data.image_hashes[0];
-                    if(data.success === true && img_hash !== "b472a266d0bd89c13706a4132ccfb16f7c3b9fcb" && img_hash.length == 40) {
-                        submit(img_hash);
-                    }
-                },
-                error: function(jqXHR, status, errorThrown){
-                    console.log(jqXHR);
-                    console.log(status);
-                    console.log(errorThrown);
-                }
-            });
-
-        } else { //Otherwise lets just submit right away
-            submit();
+          }
+        },
+        error: function(jqXHR, status, errorThrown){
+          console.log(jqXHR);
+          console.log(status);
+          console.log(errorThrown);
         }
+      });
+
+    };
+
+    //Lets upload the image first, if there is one
+    //to get the hash
+
+    if(imageURI) {
+      $.ajax({
+        type: "POST",
+        url: server + "upload_image",
+        contentType: false,
+        processData: false,
+        data: uploadImageFormData,
+        dataType: "JSON",
+        success: function(data) {
+          var img_hash = data.image_hashes[0];
+          if(data.success === true && img_hash !== "b472a266d0bd89c13706a4132ccfb16f7c3b9fcb" && img_hash.length == 40) {
+            submit(img_hash);
+          }
+        },
+        error: function(jqXHR, status, errorThrown){
+          console.log(jqXHR);
+          console.log(status);
+          console.log(errorThrown);
+        }
+      });
+
+    } else { //Otherwise lets just submit right away
+      submit();
+    }
     this.$el.find('.js-homeModal').hide();
-    
-    // Start application walkthrough (coming soon once I have better designs)
+
+    this.showDiscoverCallout = true;
+
     new Notification(window.polyglot.t('WelcomeToYourPage'));
+
+    // play notification sound
+    this.notifcationSound.play();
+
   },
 
-  closeModal: function(e){
+  settingsDoneKeypress: function(e) {
     "use strict";
-    $(e.target).closest('.modal').addClass('fadeOut');
+    this.triggerOnEnterSpace(e, this.settingsDone.bind(this));
   },
 
   navAdminPanel: function(){
     "use strict";
-    this.$el.find('.js-adminModal').removeClass('fadeOut');
+    this.$el.find('.js-adminModal').fadeIn(300);
     this.adminPanel.updatePage();
+  },
+
+  blockClicks: function(e) {
+    "use strict";
+    e.stopPropagation();
   },
 
   close: function(){
@@ -560,10 +821,16 @@ module.exports = Backbone.View.extend({
     // Needs to save to the object and update the dom
   },
 
-  shadeColor2: function shadeColor2(color, percent) {   
+  shadeColor2: function shadeColor2(color, percent) {
     var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
     return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
-  }
+  },
+
+  validateInput: function(e) {
+    "use strict";
+    e.target.checkValidity();
+    $(e.target).closest('.flexRow').addClass('formChecked');
+  },
 
 });
 

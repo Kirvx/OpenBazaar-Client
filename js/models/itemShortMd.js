@@ -19,6 +19,7 @@ module.exports = Backbone.Model.extend({
     handle: 0,
     avatar_hash: "",
     priceSet: 0, //set in Update Attribute below, so view can listen for it
+    short_description: "",
   },
 
   initialize: function(){
@@ -53,7 +54,7 @@ module.exports = Backbone.Model.extend({
             currency: userCCode
           }).format(vendorPrice*vendToUserBTCRatio);
         } else {
-          newAttributes.displayPrice = vendorBitCoinPrice.toFixed(4) + "btc";
+          newAttributes.displayPrice = vendorBitCoinPrice.toFixed(4) + " BTC";
         }
         //set to random so a change event is always fired
         newAttributes.priceSet = Math.random();
@@ -67,5 +68,7 @@ module.exports = Backbone.Model.extend({
     if(thumbnailHash === "b472a266d0bd89c13706a4132ccfb16f7c3b9fcb" || thumbnailHash.length !== 40) {
       this.set('thumbnail_hash', "");
     }
+
+    this.set('short_description', this.get('short_description'));
   }
 });

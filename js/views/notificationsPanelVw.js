@@ -14,7 +14,7 @@ module.exports = Backbone.View.extend({
     var self = this;
     this.options = options || {};
     this.parentEl = $(options.parentEl);
-    this.listWrapper = $('<div class="border0 custCol-border-secondary flexRow"></div>');
+    this.listWrapper = $('<div class="border0 custCol-border-secondary flexRow marginLeft1"></div>');
 
     this.notificationLimit = 30;
     this.notifications = new notificationsCollection();
@@ -45,6 +45,9 @@ module.exports = Backbone.View.extend({
       this.handleSocketMessage(response);
     });
 
+    this.notifcationSound = document.createElement('audio');
+    this.notifcationSound.setAttribute('src', './audio/notification.mp3');
+
     this.subViews = [];
 
   },
@@ -57,9 +60,11 @@ module.exports = Backbone.View.extend({
     this.listWrapper.prepend(notification.el);
     var serverUrl = this.options.serverUrl;
 
-    $.post(serverUrl + "mark_notification_as_read", {
-      "id": model.get('id')
-    });
+    if (model.get('read') != true) {
+      $.post(serverUrl + "mark_notification_as_read", {
+        "id": model.get('id')
+      });
+    }
   },
 
   renderNoneFound: function(){
@@ -70,7 +75,6 @@ module.exports = Backbone.View.extend({
     "use strict";
     var data = JSON.parse(response.data);
     if(data.hasOwnProperty('notification')) {
-      console.log('Got Notification from Websocket:', data.notification);
       var n = data.notification;
       var username = n.handle ? n.handle : n.guid;
       var avatar = n.image_hash ? this.options.serverUrl + 'get_image?hash=' + n.image_hash + '&guid=' + n.guid : 'imgs/defaultUser.png';
@@ -83,14 +87,18 @@ module.exports = Backbone.View.extend({
       }
 
       var new_notification = new Backbone.Model(n);
+      new_notification.set('avatarURL', avatar);
       this.renderNotification(new_notification);
-      var unread_count = $('.js-navNotifications:first').attr('data-count');
+      var unread_count = $('.js-navNotifications .badge').attr('data-count');
       if(unread_count) {
         unread_count = parseInt(unread_count) + 1;
       } else {
         unread_count = 1;
       }
       this.trigger('notificationsCounted', unread_count);
+
+      // play notification sound
+      this.notifcationSound.play();
     }
   },
 
@@ -107,4 +115,3 @@ module.exports = Backbone.View.extend({
     this.remove();
   }
 });
-

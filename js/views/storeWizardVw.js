@@ -3,12 +3,8 @@ var __ = require('underscore'),
     $ = require('jquery'),
     is = require('is_js'),
     loadTemplate = require('../utils/loadTemplate'),
-    userProfileModel = require('../models/userProfileMd'),
-    colpicker = require('../utils/colpick.js'),
-    countriesModel = require('../models/countriesMd'),
-    showErrorModal = require('../utils/showErrorModal.js'),
-    Taggle = require('taggle'),
-    chosen = require('../utils/chosen.jquery.min.js');
+    saveToAPI = require('../utils/saveToAPI'),
+    Taggle = require('taggle');
 
 module.exports = Backbone.View.extend({
 
@@ -26,7 +22,10 @@ module.exports = Backbone.View.extend({
     this.options = options || {};
     this.parentEl = $(options.parentEl);
     this.socketView = options.socketView;
-    this.model.set('headerURL', this.model.get('user').serverUrl+"get_image?hash="+this.model.get('page').profile.header_hash);
+    if(this.model.get('page').profile.header_hash){
+
+      this.model.set('headerURL', this.model.get('user').serverUrl+"get_image?hash="+this.model.get('page').profile.header_hash);
+    }
 
     this.listenTo(window.obEventBus, "socketMessageRecived", function(response){
       this.handleSocketMessage(response);
@@ -79,6 +78,8 @@ module.exports = Backbone.View.extend({
       self.parentEl.append(self.$el);
       self.initAccordion('.js-storeWizardAccordion');
       self.setValues();
+      // add blur to container
+      $('#obContainer').addClass('blur');
       // fade the modal in after it loads and focus the input
       self.$el.find('.js-storeWizardModal').removeClass('fadeOut');
       self.$el.find('#storeNameInput').focus();
@@ -92,6 +93,8 @@ module.exports = Backbone.View.extend({
     this.$el.find('#locationSelect').val(this.model.get('user').country);
     //activate tags plugin
     this.categoriesInput = new Taggle('categoriesInput', {
+      submitKeys: [188, 9, 13, 32],
+      preserveCase: true,
       saveOnBlur: true
     });
   },
@@ -110,13 +113,21 @@ module.exports = Backbone.View.extend({
     var moderatorDescription = (data.moderator.short_description) ? data.moderator.short_description : window.polyglot.t('NoDescriptionAdded');
     var moderatorHandle = (data.moderator.handle) ? data.moderator.handle : data.moderator.guid;
     var newModerator = $(
-        '<div class="pad10 flexRow custCol-border-secondary">' +
+        '<div class="pad10 flexRow custCol-border">' +
           '<input type="checkbox" id="inputModerator' + this.moderatorCount + '" class="fieldItem" data-guid="' + data.moderator.guid + '">' +
-          '<label for="inputModerator' + this.moderatorCount + '" class="row10 rowTop10 width100">' +
-            '<div class="thumbnail thumbnail-large-slim pull-left box-border" style="background-image: url('+moderatorAvatarURL+'), url(imgs/defaultUser.png);"></div>' +
-              '<div class="pull-left marginLeft6">' +
-              '<div class="clearfix"><div class="capitalize marginBottom2 marginRight5 floatLeft marginRight5 textOpacity1">' + data.moderator.name + '</div> <div class="floatLeft txt-fade">' + moderatorHandle + '</div></div>' +
-              '<div class="fontSize14 txt-fade textWeightNormal">' + moderatorDescription + '</div>' +
+          '<label for="inputModerator' + this.moderatorCount + '" class="row10 rowTop10 width100 table">' +
+            '<div>' +
+              '<div style="width: 80px;">' +
+                '<div class="thumbnail thumbnail-large-slim pull-left" style="background-image: url('+moderatorAvatarURL+'), url(imgs/defaultUser.png);">' +
+                '</div>' +
+              '</div>' +
+              '<div>' +
+                '<div class="clearfix">' +
+                  '<div class="capitalize marginBottom2 marginRight5 lineHeight21 textOpacity1 floatLeft">' + data.moderator.name + '</div> ' +
+                  '<div class="pull-left lineHeight21">' + moderatorHandle + '</div>' +
+                '</div>' +
+                '<div class="fontSize14 txt-fade textWeightNormal">' + moderatorDescription + '</div>' +
+               '</div>' +
             '</div>' +
           '</label>' +
         '</div>'
@@ -146,58 +157,41 @@ module.exports = Backbone.View.extend({
     "use strict";
     var self = this,
         profileForm = this.$el.find('#storeWizardForm'),
-        formData = new FormData(profileForm[0]),
-        moderatorsChecked = $('.js-storeWizardModeratorList input:checked');
-
-    //add formChecked class to form so invalid fields are styled as invalid
-    profileForm.addClass('formChecked');
+        moderatorsChecked = $('.js-storeWizardModeratorList input:checked'),
+        userProfile = this.model.get('page').profile,
+        modList = [],
+        wizData = {},
+        modData = {};
 
     //convert taggle tags to data in the form
     this.$el.find('#realCategoriesInput').val(this.categoriesInput.getTagValues().join(","));
 
-    if(profileForm[0].checkValidity()){
+    wizData.vendor = true;
 
-      //add data not in the form
-      formData.append('vendor', true);
-      if(moderatorsChecked.length > 0){
-        moderatorsChecked.each(function () {
-          formData.append('moderator_list', $(this).data('guid'));
-        });
-      } else {
-        formData.append('moderator_list', "");
-      }
+    moderatorsChecked.each(function() {
+      modList.push($(this).data('guid'));
+    });
 
-      $.ajax({
-        type: "POST",
-        url: self.model.get('user').serverUrl + "profile",
-        contentType: false,
-        processData: false,
-        data: formData,
-        dataType: "json",
-        success: function (data) {
-          if (data.success === true){
-            self.trigger('storeCreated');
-          }else if (data.success === false){
-            showErrorModal(window.polyglot.t('errorMessages.saveError'), "<i>" + data.reason + "</i>");
-          }else{
-            showErrorModal(window.polyglot.t('errorMessages.saveError'), "<i>" + window.polyglot.t('errorMessages.serverError') + "</i>");
-          }
-        },
-        error: function (jqXHR, status, errorThrown) {
-          console.log(jqXHR);
-          console.log(status);
-          console.log(errorThrown);
-        }
-      });
-    }else{
-      showErrorModal(window.polyglot.t('errorMessages.saveError'), window.polyglot.t('errorMessages.missingError'));
-    }
+    modData.moderators = modList.length > 0 ? modList : "";
 
+    wizData.primary_color = parseInt(userProfile.primary_color.slice(1), 16);
+    wizData.secondary_color = parseInt(userProfile.secondary_color.slice(1), 16);
+    wizData.background_color = parseInt(userProfile.background_color.slice(1), 16);
+    wizData.text_color = parseInt(userProfile.text_color.slice(1), 16);
+
+    saveToAPI(profileForm, this.model.get('page').profile, self.model.get('user').serverUrl + "profile", function(){
+      saveToAPI('', self.model.get('user'), self.model.get('user').serverUrl + "settings", function(){
+        self.trigger('storeCreated');
+        window.obEventBus.trigger("updateProfile");
+        window.obEventBus.trigger("updateUserModel");
+      }, '', modData);
+    }, '', wizData);
   },
 
   close: function(){
     this.unbind();
     this.remove();
+    $('#obContainer').removeClass('blur');
   }
 
 });
