@@ -83,8 +83,6 @@ module.exports = Backbone.Model.extend({
 
     //set the client language to match the language in the response
     response.language = response.language || "en-US";
-    window.polyglot = new Polyglot({locale: response.language});
-    window.polyglot.extend(__.where(this.languages.get('languages'), {langCode: response.language})[0]);
 
     response.moderators = response.moderators || [];
 
@@ -120,6 +118,12 @@ module.exports = Backbone.Model.extend({
 
     blockedGuids = this.get('blocked_guids').slice(0) || [];
     index = blockedGuids.indexOf(guid);
+
+
+    //take no action if this is user's own guid
+    if(guid == this.get('guid')){
+      return;
+    }
 
     if (block && index === -1) {
       blockedGuids.push(guid);

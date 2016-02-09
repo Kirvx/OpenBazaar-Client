@@ -20,7 +20,6 @@ var __ = require('underscore'),
     storeWizardVw = require('./storeWizardVw'),
     moderatorSettingsVw = require('./moderatorSettingsVw');
 
-//create a default item because a new itemModel will be created with only flat attributes
 var defaultItem = {
   "vendor_offer": {
     "signature": "",
@@ -63,15 +62,13 @@ var defaultItem = {
       },
       "moderators": [
         {
+          "fee": 0,
+          "name": "",
+          "blockchain_id": "",
+          "avatar": "",
+          "short_description": "",
           "pubkeys": {
-            "encryption": {
-              "key": "",
-              "signature": ""
-            },
-            "signing": {
-              "key": "",
-              "signature": ""
-            },
+            "guid": "",
             "bitcoin": {
               "key": "",
               "signature": ""
@@ -140,6 +137,8 @@ module.exports = baseVw.extend({
     'click .js-createStore': 'createStore',
     'click .js-follow': 'followUserClick',
     'click .js-unfollow': 'unfollowUserClick',
+    'click .js-moreButtonsOwnPage': 'moreButtonsOwnPageClick',
+    'click .js-moreButtonsNotOwnPage': 'moreButtonsNotOwnPageClick',
     'click .js-message': 'sendMessage',
     'click .js-moderatorSettings': 'showModeratorModal',
     'click .js-customizeSecondaryColor': 'displayCustomizeSecondaryColor',
@@ -164,8 +163,8 @@ module.exports = baseVw.extend({
     var self = this;
     this.options = options || {};
     /* expected options are:
-    userModel: this is set by app.js, then by a call to the settings API.
-    userProfile: this is set by app.js, it is not the same as the page's userProfile, it belongs to the current user
+    userModel: this is set by main.js, then by a call to the settings API.
+    userProfile: this is set by main.js, it is not the same as the page's userProfile, it belongs to the current user
     userID: if userID is in the route, it is set here
     state: if state is in the route, it is set here
     itemHash: if itemHash is in the route, it is set here
@@ -321,14 +320,6 @@ module.exports = baseVw.extend({
       self.undoCustomAttributes.text_color = self.model.get('page').profile.text_color;
       self.setCustomStyles();
       self.setState(self.state, self.options.itemHash);
-      self.$el.find('.js-externalLink').on('click', function(e){
-        e.preventDefault();
-        var extUrl = $(this).attr('href');
-        if (!/^https?:\/\//i.test(extUrl)) {
-          extUrl = 'http://' + extUrl;
-        }
-        require("shell").openExternal(extUrl);
-      });
 
       self.$el.find('#image-cropper').cropit({
         smallImage: "stretch",
@@ -365,11 +356,20 @@ module.exports = baseVw.extend({
         }
       });
 
-      var about = sanitizeHTML(self.model.get('page').profile.about, {
+      var about = sanitizeHTML(self.model.get('page').profile.displayAbout, {
         allowedTags: [ 'h2','h3', 'h4', 'h5', 'h6', 'p', 'a','u','ul', 'ol', 'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'hr', 'br', 'img', 'blockquote' ]
       });
 
       $('.js-userAbout').html(about);
+
+      self.$el.find('.js-userAbout a').on('click', function(e){
+        e.preventDefault();
+        var extUrl = $(this).attr('href');
+        if (!/^https?:\/\//i.test(extUrl)) {
+          extUrl = 'http://' + extUrl;
+        }
+        require("shell").openExternal(extUrl);
+      });
     });
 
     return this;
@@ -396,7 +396,8 @@ module.exports = baseVw.extend({
     "use strict";
     var currentAddress,
         addressState,
-        currentHandle = this.model.get('page').profile.handle;
+        currentHandle = this.model.get('page').profile.handle,
+        isItemType = false;
 
     if(state === "item"){
       //clear old templates
@@ -436,27 +437,26 @@ module.exports = baseVw.extend({
       this.state = state;
     }
 
+    if(state == "item" || state == "itemOld" || state == "itemNew") {
+      isItemType = true;
+    }
+
     //set address bar
-    //taking out handle for now, since lookup by handle is not available yet
-    /*
-    if(currentHandle){
-      currentAddress = currentHandle + "/" + state;
+    if(isItemType) {
+      addressState = "/item";
     } else {
-      currentAddress = this.model.get('page').profile.guid + "/" + state;
+      addressState = "/" + state;
     }
-    */
-    if(state == "itemOld" || state == "itemNew") {
-      addressState = "item";
-    } else {
-      addressState = state;
-    }
-    currentAddress = this.model.get('page').profile.guid + "/" + addressState;
-    if(addressState === "item" && hash) {
+    currentAddress = this.model.get('page').profile.guid + addressState;
+    currentHandle = currentHandle ? currentHandle + addressState : "";
+    if(isItemType && hash) {
       currentAddress += "/"+ hash;
+      currentHandle = currentHandle ? currentHandle += "/"+ hash : "";
     } else if(addressState === "createStore"){
       currentAddress = this.model.get('page').profile.guid;
     }
-    window.obEventBus.trigger("setAddressBar", currentAddress);
+
+    window.obEventBus.trigger("setAddressBar", {'addressText': currentAddress, 'handle': currentHandle});
   },
 
   setControls: function(state){
@@ -840,9 +840,9 @@ module.exports = baseVw.extend({
 
   tabClick: function(activeTab, showContent){
     "use strict";
-    this.$el.find('.js-tab').removeClass('active');
+    this.$('.js-userPageTabs > .js-tab').removeClass('active');
     activeTab.addClass('active');
-    this.$el.find('.js-tabTarg').addClass('hide');
+    this.$('.js-userPageSubViews > .js-tabTarg').addClass('hide');
     showContent.removeClass('hide');
   },
 
@@ -1178,6 +1178,7 @@ module.exports = baseVw.extend({
     this.subRender();
   },
 
+  /*
   deleteOldDone: function(newHash) {
     "use strict";
     if(newHash) {
@@ -1189,6 +1190,7 @@ module.exports = baseVw.extend({
       this.setState('store');
     }
   },
+  */
 
   cancelClick: function(){
     "use strict";
@@ -1269,6 +1271,25 @@ module.exports = baseVw.extend({
     this.unfollowUser({'guid': this.pageID});
   },
 
+  moreButtonsOwnPageClick: function(){
+    if ($('.js-extraButtonsOwnPage').hasClass('hide')){
+      $('.js-extraButtonsOwnPage').removeClass('hide');
+      $('.js-moreButtonsOwnPage').html('x');
+    }else{
+      $('.js-extraButtonsOwnPage').addClass('hide');
+      $('.js-moreButtonsOwnPage').html('...');
+    }
+  },
+  moreButtonsNotOwnPageClick: function(){
+    if ($('.js-extraButtonsNotOwnPage').hasClass('hide')){
+      $('.js-extraButtonsNotOwnPage').removeClass('hide');
+      $('.js-moreButtonsNotOwnPage').html('x');
+    }else{
+      $('.js-extraButtonsNotOwnPage').addClass('hide');
+      $('.js-moreButtonsNotOwnPage').html('...');
+    }
+  },
+
   followUser: function(options){
     "use strict";
     var self = this;
@@ -1315,7 +1336,7 @@ module.exports = baseVw.extend({
 
   sendMessage: function(){
     "use strict";
-    var key = this.userProfile.get('profile').encryption_key;
+    var key = this.userProfile.get('profile').public_key;
     var guid = this.userProfile.get('profile').guid;
     window.obEventBus.trigger("openChat", guid, key);
   },

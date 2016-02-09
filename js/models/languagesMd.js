@@ -9,19 +9,22 @@ module.exports = Backbone.Model.extend({
         langName: "English",
         langCode: "en-US",
         /* Use capitalized keys for widely reused text that must be capitalized */
+        IHaveAWalletNow: "I have a Wallet now",
         Next: "Next",
         IAgree: "I Agree",
         Back: "Back",
         EnterMessage: "Enter message...",
+        Recommended: "Recommended",
         Reload: "Reload",
         You: "You",
         Skip: "Skip",
         Done: "Done",
+        Status: "Status",
         Navigation: "Navigation", 
         Cancel: "Cancel",
         ClosingOpenBazaar: "Close (Your page will go offline)", 
-        Minimize: "Minimize", //notTranslated
-        Maximize: "Maximize", //notTranslated
+        Minimize: "Minimize",
+        Maximize: "Maximize",
         Close: "Close",
         Yes: "Yes",
         No: "No",
@@ -31,6 +34,9 @@ module.exports = Backbone.Model.extend({
         Excellent: "Excellent",
         Good: "Good",
         Poor: "Poor",
+        StillValidating: "Your handle is still validating",
+        CheckStatus: "Check Status",
+        ChangeCurrency: "Change currency",
         SKU: "SKU",
         Refurbished: "Refurbished",
         Physical: "Physical",
@@ -61,7 +67,7 @@ module.exports = Backbone.Model.extend({
         DontDelete: "Don't Delete",
         ConfirmDelete: "Confirm Delete",
         Website: "Website",
-        Guid: "OpenBazaar ID (GUID)",
+        Guid: "OpenBazaar ID",
         Welcome: "Welcome",
         CreateStore: "Become a Store",
         GoToMyPage: "My Page",
@@ -70,7 +76,7 @@ module.exports = Backbone.Model.extend({
         SearchFeedPlaceholder: "Type a keyword...",
         SearchForFollowersPlaceholder: "Type a name...",
         SearchForUsersPlaceholder: "Type a name...",
-        SearchOnUserStorePlaceholder: "Type a title...", //notTranslated
+        SearchOnUserStorePlaceholder: "Type a title...",
         EstDeliveryDomesticPlaceholder: "3-5 Business Days",
         EstDeliveryInternationalPlaceholder: "7-15 Business Days",
         OrderProcessingTimePlaceholder: "Enter time needed to process order",
@@ -106,7 +112,7 @@ module.exports = Backbone.Model.extend({
         Returns: "Returns",
         ReturnsPolicy: "Returns Policy",
         Ampersand: "&",
-        Tags: "Tags", //notTranslated
+        Tags: "Tags",
         Keywords: "Keywords",
         ShipsFrom: "Ships From",
         ShipsTo: "Ships To",
@@ -116,9 +122,9 @@ module.exports = Backbone.Model.extend({
         Changes: "Changes",
         SaveChanges: "Save Changes",
         YourName: "Your name",
-        BitcoinReturnAddress: "Bitcoin Return Address",
+        BitcoinReturnAddress: "Enter your Bitcoin Address",
         BitcoinReturnAddressPlaceholder: "Enter Bitcoin address...",
-        BitcoinReturnAddressInfo: "In case of a refund, your funds will be issued to the following address.",
+        BitcoinReturnAddressInfo: "If a refund is issued, the funds will need to be sent to a Bitcoin address. Please provide an address to your Wallet below.",
         LocalCurrency: "Local currency",
         TimeZone: "Time zone",
         ShipToName: "Name",
@@ -144,7 +150,7 @@ module.exports = Backbone.Model.extend({
         Theme: "Theme",
         Listing: "Listing",
         Listings: "Listings",
-        ViewPage: "View page", //notTranslated
+        ViewPage: "View page",
         Pages: "Pages",
         Page: "Page",
         Language: "Language",
@@ -157,7 +163,7 @@ module.exports = Backbone.Model.extend({
         Free: "Free",
         Category: "Category",
         ProcessingTime: "Processing Time",
-        SelectPhotos: "Select photos", //notTranslated
+        SelectPhotos: "Select photos",
         DragOrUploadPhotos: "Drag or upload photos",
         ExpirationDate: "Expires On",
         UploadCoverPhoto: "Upload a cover photo",
@@ -170,6 +176,8 @@ module.exports = Backbone.Model.extend({
         AboutPlaceholder: "Full description",
         BackgroundColor: "Background Color",
         NotificationFollow: "is now following you",
+        NotificationDispute: "has opened a new dispute",
+        NotificationNewOrder: "has made a purchase",
         NoNotifications: "No notifications",
         WelcomeToYourPage: "Welcome to your page!",
         SearchForCategory: "Search for category",
@@ -195,11 +203,11 @@ module.exports = Backbone.Model.extend({
         SaveAvatar: "Save Avatar",
         NewAvatar: "Select New Avatar",
         NewCoverImage: "Select New Cover Image",
-        Loading: "Loading...", // not translated
+        Loading: "Loading...",
         Purchases: "Purchases",
         Sales: "Sales",
         Cases: "Cases",
-        Enter: "Enter", //notTranslated
+        Enter: "Enter",
         Discover: "Discover",
         Block: "Block",
         Unblock: "Unblock",
@@ -244,39 +252,45 @@ module.exports = Backbone.Model.extend({
         NotFollowingAnyone: "Not following anyone",
         NoFollowers: "No followers",
         Moderator: "Moderator",
+        Firewall: "Firewall",
+        ReadOnly: "(This Field is Read Only)",
         HandleResolver: "Handle Resolver",
         moderatorSettings: {
-          ProvideResolution: "Provide dispute resolution",
+          DisputeResolution: "Dispute Resolution",
           ServiceFee: "Service fee",
-          ServiceFeeNote: "Percentage of transaction price (max 25)"
+          ServiceFeeNote: "Min: 0%, Max: 25%"
         },
         BecomeModerator: "Become a moderator",
         EditModerator: "Moderator Settings",
         transactions: {
-          SoldBy: "Sold By",
-          PurchasedBy: "Purchased By",
+          OrderDetails: "Order Details",
+          SoldBy: "Seller",
+          PurchasedBy: "Buyer",
           searchByOrder: "Search by order id or item name",
           sortByStatusAll: "All",
-          sortByStatus0: "Purchased",
-          sortByStatus1: "Paid (Funds Waiting)",
+          sortByStatus0: "Purchasing (Payment pending)",
+          sortByStatus1: "Ready to process (Paid in full)",
           sortByStatus2: "Confirmed/Shipped",
-          sortByStatus3: "Completed (Funds Released)",
+          sortByStatus3: "Completed (Payment released)",
           sortByStatus4: "Disputed",
           OrderID: "Order ID",
           OrderDate: "Order Date",
           OrderStatus: "Order Status",
-          OrderStatus0: "Purchased (Not Funded)",
-          OrderStatus1: "Paid (Funds Waiting)",
+          OrderStatus0: "Purchasing (Payment pending)",
+          OrderStatus1: "Ready to process (Paid in full)",
           OrderStatus2: "Confirmed/Shipped",
-          OrderStatus3: "Completed (Funds Released)",
+          OrderStatus3: "Completed (Payment released)",
           OrderStatus4: "Disputed",
+          InEscrow: "- In Escrow",
           OrderTotal: "Order Total",
           OrderTotalInBTC: "BTC Total",
           PaymentProtection: "Payment Protection",
           ShipTo: "Ship To",
-          ConfirmOrder: "Confirm this Order",
+          ConfirmOrder: "Confirm Order",
           ReceivingAddress: "Receiving Address",
           RecievingAddressPlaceholder: "Bitcoin address you will receive payment at",
+          Comments: "Comments",
+          CommentsPlaceHolder: "Comments on the order, if any",
           Shipper: "Item Shipped By",
           ShipperPlaceholder: "Name of the company shipping the item",
           TrackingNumber: "Tracking Number",
@@ -291,7 +305,8 @@ module.exports = Backbone.Model.extend({
           ModeratedTransaction: "Moderated transaction",
           Seller: "Seller",
           Buyer: "Buyer",
-          transferReceipt: "transferReceipt",
+          Moderator: "Moderator",
+          transferReceipt: "Transfer Receipt",
           copyTxid: "copy tx ID",
           Close: "Close",
           FundOrder: "Fund Order",
@@ -299,6 +314,7 @@ module.exports = Backbone.Model.extend({
           sortByDateOldest: "By Date, Oldest",
           PayPurchase: "Pay for this Purchase",
           CompleteOrder: "Complete this Order",
+          MarkAsShipped: "Mark as Shipped",
           RateThisTransaction: "Rate this Transaction",
           TransactionReview: "Transaction Review",
           OverallRating: "Overall Rating",
@@ -308,7 +324,12 @@ module.exports = Backbone.Model.extend({
           CustomerService: "Customer Service",
           Review: "Review",
           ReviewPlaceHolder: "Your review of this transaction",
-          NoneSent: "None sent"
+          NoneSent: "None sent",
+          ModerationFee: "Moderation Fee:",
+          DisputeTransaction: "Start a Dispute",
+          sendMessagePlaceholder: "Type your message here.",
+          DisputeInstructions: "To file a dispute for this transaction, type the reason for the dispute below, and click the Start a Dispute button. This will begin a discussion between you, the seller, and the moderator. The moderator will make the final decision as to whether any funds are returned to you, and how much. The moderator's fee will be paid out of the funds you have already sent.",
+          SendMessage: "Send"
         },
         errorMessages: {
           saveError: "Data could not be saved.",
@@ -318,27 +339,27 @@ module.exports = Backbone.Model.extend({
           userError: "Information for this ID could not be found",
           userNotFoundError: "This person's information is not available. They may have gone offline.",
           notFoundError: "Data could not be loaded for:",
-          socketError: "URL for WebSocket failed. Connecting to socket with default address of ws://localhost:18466",
-          contractError: "This Item Cannot be Purchased",
-          sellerError: "The seller's server has rejected the purchase request",
-          checkPurchaseData: "Check your purchase data, such as quantity and Bitcoin refund address, to make sure it is valid",
+          socketError: "URL for WebSocket failed. Connecting to socket with default address of ws://localhost:18466.",
+          contractError: "This Item Cannot be Purchased.",
+          sellerError: "The seller's server has rejected the purchase request. This may be due to a connection issue.",
+          checkPurchaseData: "Check your purchase data, such as quantity and Bitcoin refund address, to make sure it is valid. If it is valid, try again in a few seconds.",
           pageUnavailable: "This page is currently unavailable.",
-          badHandle: "The handle you entered does not have a valid OpenBazaar ID"//notTranslated
+          badHandle: "The handle you entered does not have a valid OpenBazaar ID."
         },
         aboutSection: {
           about: "<p>OpenBazaar is a network of users who buy and sell goods and services directly with each other, using Bitcoin. This network is decentralized and isn't controlled by any organization.</p><p>The software is open source and MIT licensed. You can view the code on <a href=\"https://github.com/OpenBazaar/\" target=\"_blank\">Github</a>.</p><p>OpenBazaar is a community project, and we welcome participation in our <a href=\"https://openbazaar-slackin-drwasho.herokuapp.com/\" target=\"_blank\">Slack</a> channel or on our <a href=\"http://www.reddit.com/r/openbazaar\" target=\"_blank\">subreddit</a>.</p><p>If you need help, read the OpenBazaar version 1.0 <a href=\"\" target=\"_blank\">Tutorial</a>.</p><p>If you still have questions, open an issue at our <a href=\"https://openbazaar.zendesk.com/hc/en-us/articles/203219995-Question-not-answered-Read-this-post\" target=\"_blank\">support desk</a>.</p>",
           contributors: "<p>OpenBazaar is made possible by an international community of developers and volunteers contributing their time to help make trade free. This is a partial list of people who have contributed to the project, either through code or other assistance.</p><ul><li>Giannis Adamopoulos</li><li>Ariadni-Karolina Alexiou</li><li>Tikhon Bernstam</li><li>Brad Burnham</li><li>George Chatzisofroniou</li><li>Patrick Connolly</li><li>Chris Dixon</li><li>Simon de la Rouviere</li><li>Braden Glasgow</li><li>Brian Hoffman</li><li>Ben Holden-Crowther</li><li>Joshua Jeffryes</li><li>Nikolas Korasidis</li><li>Regan Lawton</li><li>Sami Lehtinen</li><li>Angel Leon</li><li>Joye Lin</li><li>Joel Monegro</li><li>William Mougayar</li><li>Jonas David Nick</li><li>Onename</li><li>Chris Pacia</li><li>Sam Patterson</li><li>Chara Podimata</li><li>Samuel Reed</li><li>Washington Sanchez</li><li>Aeron Paul Sioson</li><li>Adrian Smith</li><li>Adam Snodgrass</li><li>Thomas Stilwell</li><li>Amir Taaki</li><li>Mike Wolf</li><li>Dionysis Zindros</li><li>secret-bitcoin-login</li><li>Rav3nPL</li><li>El--Presidente</li><li>Tinytin</li><li>ULRichard</li></ul>", 
           support: "<p>You can help OpenBazaar in several ways on our mission to make trade free.</p><p>Buying and selling goods and services on the network helps grow our community and make the platform more attractive to new users. Politely asking Bitcoin-accepting businesses to sell on the platform helps spread the word and shows demand for peer to peer trade.</p><p>If you're a developer, check out <a href=\"https://github.com/OpenBazaar/\" target=\"_blank\">our Github</a> and see where you can help us. Beyond helping with the core code, we hope the permissionless and open source nature of the project means you will build new services on top of the existing network.</p><p>You can also <a href=\"https://blockchain.info/address/3MXYUBLWNETa5HTewZp1xMTt7AW9kbFNqs\" target=\"_blank\">donate Bitcoin</a> to the project, which will be used to defray costs for visiting conferences, offering bounties for development, and promoting OpenBazaar.</p><p>Please <a href=\"https://openbazaar-slackin-drwasho.herokuapp.com/\" target=\"_blank\">join our Slack</a> if you have new ideas for OpenBazaar, or have questions for the core devs.</p>", //notTranslated
-          licensing: "<p>OpenBazaar is open source software using the MIT license. This license is permissive and designed to allow people to freely reuse the code for other open source projects or for proprietary software. The full license text is below.</p><h4>The MIT License (MIT)</h4><h5>Copyright &#169 2015 OpenBazaar Developers</h5><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p><h4>Libraries</h4><p>The following libraries are used in OpenBazaar:</p><ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>autobahn</li><li>python-obelisk</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li></ul>",
+          licensing: "<p>OpenBazaar is open source software using the MIT license. This license is permissive and designed to allow people to freely reuse the code for other open source projects or for proprietary software. The full license text is below.</p><h4>The MIT License (MIT)</h4><h5>Copyright &#169 2015 OpenBazaar Developers</h5><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p><h4>Libraries</h4><p>The following libraries are used in OpenBazaar:</p><ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>txws</li><li>python-libbitcoin client</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li><li>python-bitcoinlib</li></ul>",
         },
         saveMessages: {
           Saved: "Saved",
           SaveSuccess: "Your changes have been saved."
         },
         discover: {
-          searchDefaultText: "Scanning your network", //notTranslated
-          searchingText: "Scanning your network for", //notTranslated
-          noResults: "No listings found in your network tagged with" //notTranslated
+          searchDefaultText: "Scanning your network",
+          searchingText: "Scanning your network for",
+          noResults: "No listings found in your network tagged with"
         },
         filters: {
           pagesAllTypes: "All types",
@@ -350,7 +371,7 @@ module.exports = Backbone.Model.extend({
           categoryAll: "All"
         },
         nav: {
-          searchPlaceholder: "Type a @handle, GUID or #tag...",
+          searchPlaceholder: "Type a @handle, OpenBazaar ID or #tag...",
           myPage: "My Page",
           customizePage:"Customize Page",
           sellItem:"New",
@@ -366,7 +387,7 @@ module.exports = Backbone.Model.extend({
         onboarding: {
           intro: "OpenBazaar Configuration",
           Introduction: "Introduction",
-          IntroductionBody: "OpenBazaar is a peer-to-peer social market. It's like combining eBay&trade;, Twitter&trade; and BitTorrent into one. Only, there are no fees or restrictions and it's open-source. \n\n Please note that it may look and feel a bit different than what you're use to, so please be patient as you adjust.",
+          IntroductionBody: "OpenBazaar is a peer-to-peer social market. It's like combining eBay&trade;, Twitter&trade; and BitTorrent into one. Only, there are no fees or restrictions and OpenBazaar is open-source. \n\n Please note that it may look and feel a bit different than what you're use to, so please be patient as you adjust.",
           theme: "Select a Theme for your Page",
           chooseLanguage: "Select Your Language",
           contributors: "%{smart_count} Contributor |||| %{smart_count} Contributors",
@@ -392,10 +413,34 @@ module.exports = Backbone.Model.extend({
           connectExisting: "Connect Existing",
           avatar: "Set an Avatar",
           chooseAvatar: "Select Avatar",
-          discoverCallOut: "Explore Listings and Pages on OpenBazaar", //notTranslated
+          discoverCallOut: "Explore Listings and Pages on OpenBazaar",
           Finished: "Finished"
         },
+        walletProviders: {
+          CoinbaseTagline: "The world's most popular way to buy, sell, and use bitcoin.",
+          SamouraiTagline: "Secure mobile wallet. Emphasis on privacy.",
+          AirbitzTagline: "Privacy. Security. Autonomy. Decentralized.",
+          BreadwalletTagline: "Connects directly to the bitcoin network, no servers. Beautiful simplicity, maximum security.",
+          RushWalletTagline: "Get a Bitcoin address quickly and easily in your browser.",
+          MyceliumTagline: "One of the longest in market, most secure and reliable Bitcoin wallets.",
+          CoinkiteTagline: "The Most Powerful Bitcoin Wallet",
+          BlockchaininfoTagline: "The world's most popular bitcoin wallet. Safer, Friendlier, Easier.",
+          DuoMoneyTagline: "Euro wallet for dead-easy Bitcoin payments. OpenBazaar for Grandma."
+        },
         buyFlow: {
+          PayForOrder: "Pay for Order",
+          NeedTempAddress: "I need a temporary Bitcoin address",
+          NeedTempAddressHelper: "Please bookmark the url to your temporary bitcoin address",
+          CantFindAddress: "I can't find my bitcoin address",
+          BitcoinWallet: "Bitcoin Wallet",
+          ModeratedPaymentDescription: "Your payment is held in a secure wallet until the seller completes their end of the agreement. If issues arise, a Moderator will help.",
+          ModeratorFeeHelper: "The moderator may charge a fee, but only if a dispute arises.",
+          ModeratedPayment: "Moderated Payment",
+          DisputeFee: "Dispute fee",
+          HaveWallet: "Do you have a Bitcoin Wallet?",
+          QuickSetup: "It only takes a few minutes to set one up",
+          CreateWallet: "Create a Wallet",
+          DirectPaymentDescription: "Funds are sent directly to the seller. Only use on small purchases or when purchasing from a trusted seller.",
           DirectPayment: "Direct Payment",
           SendDirectlyTo: "Send direct payment to %{handle}",
           MustAddAddress: "You must add an address to ship to",
@@ -412,26 +457,46 @@ module.exports = Backbone.Model.extend({
           summaryMsg3: "You can check the status of your order on your",
           purchasesPage: "purchases page",
           returnAddress: "Return Address",
-          moderatorPaymentDisclaimer: "Only applies if the transaction ends in a dispute.",
+          moderatorPaymentDisclaimer: "Paid from the total if the transaction ends in a dispute.",
           directPaymentDisclaimer: "Use direct payment with caution, funds are irreversible",
-          directPaymentTo: "Direct Payment to",
           paymentSent: "Payment Sent!",
           total: "Total"
         },
         chat: {
           noSearchResultsFound: "No results found" //notTranslated
+        },
+        serverConnectModal: {
+          statusTryingToConnect: "Trying to connect to your server", //notTranslated
+          statusConnected: "Connected", //notTranslated
+          statusFailedConnection: "Unable to connect to your server", //notTranslated
+          statusFailedAuthentication: "Authentication failed", //notTranslated
+          serverConfiguration: "Server Configuration", //notTranslated
+          attempt: "Attempt", //notTranslated
+          intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
+          serverIP: "Server IP", //notTranslated
+          restApiPort: "Rest API port", //notTranslated
+          websocketApiPort: "Websocket API port", //notTranslated
+          heartbeatSocketApiPort: "Heartbeat socket port", //notTranslated
+          username: "Username", //notTranslated
+          password: "Password", //notTranslated                    
+          restoreDefaults: "Restore defaults", //notTranslated                    
+          saveChanges: "Save Changes", //notTranslated                    
+          retry: "Retry", //notTranslated 
         }
       },
       {
         langName: "Espa&ntilde;ol",
         langCode: "sp",
+        IHaveAWalletNow: "I have a Wallet now", //notTranslated
         Next: "Siguiente",
         IAgree: "Estoy de acuerdo",
         Back: "Atr&aacute;s",
+        Recommended: "Recommended", //notTranslated
         Reload: "Reload", //notTranslated
         You: "You", //notTranslated
         Skip: "Omitir",
         Done: "Hecho",
+        Status: "Status",
         Navigation: "Navigation", //notTranslated
         Cancel: "Cancelar",
         Yes: "S&iacute;",
@@ -442,6 +507,9 @@ module.exports = Backbone.Model.extend({
         Excellent: "Excelente",
         Good: "Bueno",
         Poor: "Deteriorado",
+        StillValidating: "Your handle is still validating", //notTranslated
+        CheckStatus: "Check Status", //notTranslated
+        ChangeCurrency: "Change currency", //notTranslated
         SKU: "SKU",
         Refurbished: "Restaurado",
         Physical: "F&iacute;sico",
@@ -471,7 +539,7 @@ module.exports = Backbone.Model.extend({
         DontDelete: "No Borrar",
         ConfirmDelete: "Confirmar eliminaci&oacute;n",
         Website: "Sitio Web",
-        Guid: "OpenBazaar ID (GUID)",
+        Guid: "OpenBazaar ID",
         Welcome: "Bienvenido",
         CreateStore: "Crear Tienda",
         GoToMyPage: "Ir a mi p&aacute;gina",
@@ -523,9 +591,9 @@ module.exports = Backbone.Model.extend({
         Changes: "Cambios",
         SaveChanges: "Guardar Cambios",
         YourNombre: "Su nombre",
-        BitcoinReturnAddress: "Direcci&oacute;n de devoluciones Bitcoin",
+        BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
         BitcoinReturnAddressPlaceholder: "bitcoin address to return coins to", //not translated
-        BitcoinReturnAddressInfo: "In case of a refund, your funds will be issued to the following address.", //not translated
+        BitcoinReturnAddressInfo: "If a refund is issued, the funds will need to be sent to a Bitcoin address. Please provide an address to your Wallet below.", //not translated
         LocalCurrency: "Moneda local",
         TimeZone: "Zona horaria",
         ShipToName: "Env&iacute;r a nombre de",
@@ -649,19 +717,24 @@ module.exports = Backbone.Model.extend({
         NotFollowingAnyone: "Not following anyone", // not translated
         NoFollowers: "No followers", // not translated
         Moderator: "Moderator", // not translated
+        Firewall: "Firewall", //notTranslated
+        ReadOnly: "(This Field is Read Only)", //notTranslated
         HandleResolver: "Handle Resolver",  // not translated
         moderatorSettings: { // not translated
-          ProvideResolution: "Provide dispute resolution", // not translated
+          DisputeResolution: "Dispute Resolution", //notTranslated
           ServiceFee: "Service fee", // not translated
-          ServiceFeeNote: "Percentage of transaction price (max 25)" // not translated
+          ServiceFeeNote: "Min: 0%, Max: 25%"//notTranslated
         },
+        BecomeModerator: "Become a moderator",//notTranslated
+        EditModerator: "Moderator Settings",//notTranslated
         transactions: {
-          SoldBy: "Sold By", // not translated
-          PurchasedBy: "Purchased By", // not translated
+          OrderDetails: "Order Details", //notTranslated
+          SoldBy: "Seller", // not translated
+          PurchasedBy: "Buyer", // not translated
           searchByOrder: "Search by order id or item name", // not translated
           sortByStatusAll: "All", // not translated
           sortByStatus0: "Purchased", // not translated
-          sortByStatus1: "Paid (Funds Waiting)", // not translated
+          sortByStatus1: "Ready to process (Paid in full)", // not translated
           sortByStatus2: "Confirmed/Shipped", // not translated
           sortByStatus3: "Completed (Funds Released)", // not translated
           sortByStatus4: "Disputed", // not translated
@@ -669,17 +742,20 @@ module.exports = Backbone.Model.extend({
           OrderDate: "Order Date", // not translated
           OrderStatus: "Order Status", // not translated
           OrderStatus0: "Purchased (Not Funded)", // not translated
-          OrderStatus1: "Paid (Funds Waiting)", // not translated
+          OrderStatus1: "Ready to process (Paid in full)", // not translated
           OrderStatus2: "Confirmed/Shipped", // not translated
           OrderStatus3: "Completed (Funds Released)", // not translated
           OrderStatus4: "Disputed", // not translated
+          InEscrow: "- In Escrow", // not translated
           OrderTotal: "Order Total", // not translated
           OrderTotalInBTC: "BTC Total", // not translated
           PaymentProtection: "Payment Protection", // not translated
           ShipTo: "Ship To", // not translated
-          ConfirmOrder: "Confirm this Order", // not translated
+          ConfirmOrder: "Confirm Order", // not translated
           ReceivingAddress: "Receiving Address", // not translated
           RecievingAddressPlaceholder: "Bitcoin address you will receive payment at", // not translated
+          Comments: "Comments", // not translated
+          CommentsPlaceHolder: "Comments on the order, if any", // not translated
           Shipper: "Item Shipped By", // not translated
           ShipperPlaceholder: "Name of the company shipping the item", // not translated
           TrackingNumber: "Tracking Number", // not translated
@@ -694,7 +770,8 @@ module.exports = Backbone.Model.extend({
           ModeratedTransaction: "Moderated transaction", // not translated
           Seller: "Seller", // not translated
           Buyer: "Buyer", // not translated
-          transferReceipt: "transferReceipt", // not translated
+          Moderator: "Moderator", //not translated
+          transferReceipt: "Transfer Receipt", // not translated
           copyTxid: "copy tx ID", // not translated
           Close: "Close", // not translated
           FundOrder: "Fund Order", // not translated
@@ -711,7 +788,12 @@ module.exports = Backbone.Model.extend({
           CustomerService: "Customer Service", // not translated
           Review: "Review", // not translated
           ReviewPlaceHolder: "Your review of this transaction", // not translated
-          NoneSent: "None sent" // not translated
+          NoneSent: "None sent", // not translated
+          ModerationFee: "Moderation Fee:", // not translated
+          DisputeTransaction: "Start a Dispute", // not translated
+          sendMessagePlaceholder: "Type your message here.", // not translated
+          DisputeInstructions: "To file a dispute for this transaction, type the reason for the dispute below, and click the Start a Dispute button. This will begin a discussion between you, the seller, and the moderator. The moderator will make the final decision as to whether any funds are returned to you, and how much. The moderator's fee will be paid out of the funds you have already sent.", // not translated
+          SendMessage: "Send" // not translated
         },
         errorMessages: {
           saveError: "Los datos no se pudieron guardar.",
@@ -723,7 +805,7 @@ module.exports = Backbone.Model.extend({
           notFoundError: "Los datos no se pudieron cargar para:",
           socketError: "La URL del WebSocket fall&oacute;. Conectando a socket con la direcci&oacute;n predeterminada de ws://localhost:18466",
           contractError: "Este artículo no puede ser comprado" ,
-          sellerError: "El servidor del vendedor ha rechazado la solicitud de compra",
+          sellerError: "El servidor del vendedor ha rechazado la solicitud de compra. This may be due to a connection issue.", // not translated
           checkPurchaseData: "Check your purchase data, such as quantity and Bitcoin refund address, to make sure it is valid", //not translated
           pageUnavailable: "This page is currently unavailable.",  //notTranslated
           badHandle: "The handle you entered does not have a valid OpenBazaar ID"//notTranslated
@@ -732,7 +814,7 @@ module.exports = Backbone.Model.extend({
           about: "", //notTranslated
           contributors: "<ul><li>Giannis Adamopoulos</li><li>Ariadni-Karolina Alexiou</li><li>Tikhon Bernstam</li><li>Brad Burnham</li><li>George Chatzisofroniou</li><li>Patrick Connolly</li><li>Chris Dixon</li><li>Simon de la Rouviere</li><li>Braden Glasgow</li><li>Brian Hoffman</li><li>Ben Holden-Crowther</li><li>Joshua Jeffryes</li><li>Nikolas Korasidis</li><li>Regan Lawton</li><li>Sami Lehtinen</li><li>Angel Leon</li><li>Joye Lin</li><li>Joel Monegro</li><li>William Mougayar</li><li>Jonas David Nick</li><li>Onename</li><li>Chris Pacia</li><li>Sam Patterson</li><li>Chara Podimata</li><li>Samuel Reed</li><li>Washington Sanchez</li><li>Aeron Paul Sioson</li><li>Adrian Smith</li><li>Adam Snodgrass</li><li>Thomas Stilwell</li><li>Amir Taaki</li><li>Mike Wolf</li><li>Dionysis Zindros</li><li>secret-bitcoin-login</li><li>Rav3nPL</li><li>El--Presidente</li><li>Tinytin</li><li>ULRichard</li></ul>", //notTranslated
           support: "", //notTranslated
-          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>autobahn</li><li>python-obelisk</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li></ul>", //notTranslated
+          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>txws</li><li>python-libbitcoin client</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li><li>python-bitcoinlib</li></ul>", //notTranslated
         },
         saveMessages: {
           Saved: "Guardado",
@@ -752,7 +834,7 @@ module.exports = Backbone.Model.extend({
           listingsAll: "De dodas las tiendas"
         },
         nav: {
-          searchPlaceholder: "Type a @handle, GUID or #tag...", //notTranslated
+          searchPlaceholder: "Type a @handle, OpenBazaar ID or #tag...", //notTranslated
           myPage: "Mi p&aacute;gina",
           customizePage:"Personalizar P&aacute;gina",
           sellItem:"Nuevo",
@@ -798,6 +880,19 @@ module.exports = Backbone.Model.extend({
           Finished: "Finished" //notTranslated
         },
         buyFlow: {
+          PayForOrder: "Pay for Order", //notTranslated
+          NeedTempAddress: "I need a temporary Bitcoin address", //notTranslated
+          NeedTempAddressHelper: "Please bookmark the url to your temporary bitcoin address", //notTranslated
+          CantFindAddress: "I can't find my bitcoin address", //notTranslated
+          BitcoinWallet: "Bitcoin Wallet", //notTranslated
+          ModeratedPaymentDescription: "Your payment is held in a secure wallet until the seller completes their end of the agreement. If issues arise, a Moderator will help.", //notTranslated
+          ModeratorFeeHelper: "The moderator may charge a fee, but only if a dispute arises.", //notTranslated
+          ModeratedPayment: "Moderated Payment", //notTranslated
+          DisputeFee: "Dispute fee", //notTranslated
+          HaveWallet: "Do you have a Bitcoin Wallet?", //notTranslated
+          QuickSetup: "It only takes a few minutes to set one up", //notTranslated
+          CreateWallet: "Create a Wallet", //notTranslated
+          DirectPaymentDescription: "Funds are sent directly to the seller. Only use on small purchases or when purchasing from a trusted seller.", //notTranslated
           DirectPayment: "Direct Payment", //notTranslated
           SendDirectlyTo: "Send direct payment to %{handle}", //notTranslated
           MustAddAddress: "Usted debe agregar una dirección para env&iacute;os",
@@ -814,28 +909,48 @@ module.exports = Backbone.Model.extend({
           summaryMsg3: "You can check the status of your order on your", //notTranslated
           purchasesPage: "purchases page", //notTranslated
           returnAddress: "Return Address", //notTranslated
-          moderatorPaymentDisclaimer: "Only applies if the transaction ends in a dispute.", //notTranslated
+          moderatorPaymentDisclaimer: "Paid from the total if the transaction ends in a dispute.", //notTranslated
           directPaymentDisclaimer: "Use direct payment with caution, funds are irreversible", //notTranslated
-          directPaymentTo: "Direct Payment to", //notTranslated
           paymentSent: "Payment Sent!", //notTranslated
           total: "Total" //notTranslated
         },
         chat: {
           noSearchResultsFound: "No results found" //notTranslated
+        },
+        serverConnectModal: {
+          statusTryingToConnect: "Trying to connect to your server", //notTranslated
+          statusConnected: "Connected", //notTranslated
+          statusFailedConnection: "Unable to connect to your server", //notTranslated
+          statusFailedAuthentication: "Authentication failed", //notTranslated
+          serverConfiguration: "Server Configuration", //notTranslated
+          attempt: "Attempt", //notTranslated
+          intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
+          serverIP: "Server IP", //notTranslated
+          restApiPort: "Rest API port", //notTranslated
+          websocketApiPort: "Websocket API port", //notTranslated
+          heartbeatSocketApiPort: "Heartbeat socket port", //notTranslated
+          username: "Username", //notTranslated
+          password: "Password", //notTranslated                    
+          restoreDefaults: "Restore defaults", //notTranslated                    
+          saveChanges: "Save Changes", //notTranslated                    
+          retry: "Retry", //notTranslated 
         }
       },
       {
         langName: "German",
         langCode: "de",
         /* Use capitalized keys for widely reused text that must be capitalized */
+        IHaveAWalletNow: "I have a Wallet now", //notTranslated
         Next: "Weiter",
         IAgree: "Akzeptieren",
         Back: "Zur&uuml;ck",
         EnterMessage: "Nachricht eingeben...",
+        Recommended: "Recommended", //notTranslated
         Reload: "Reload", //notTranslated
         You: "You", //notTranslated
         Skip: "&Uuml;berspringen",
         Done: "Fertig",
+        Status: "Status",
         Navigation: "Navigation", //notTranslated
         Cancel: "Abbrechen",
         Yes: "Ja",
@@ -846,6 +961,9 @@ module.exports = Backbone.Model.extend({
         Excellent: "Hervorragend",
         Good: "Gut",
         Poor: "Mangelhaft",
+        StillValidating: "Your handle is still validating", //notTranslated
+        CheckStatus: "Check Status", //notTranslated
+        ChangeCurrency: "Change currency", //notTranslated
         SKU: "SKU",
         Refurbished: "&Uuml;berholt",
         Physical: "Physisch",
@@ -876,15 +994,15 @@ module.exports = Backbone.Model.extend({
         DontDelete: "Nicht l&ouml;schen",
         ConfirmDelete: "L&ouml;schen best&auml;tigen",
         Website: "Webseite",
-        Guid: "OpenBazaar ID (GUID)",
+        Guid: "OpenBazaar ID",
         Welcome: "Willkommen",
         CreateStore: "Werde ein Verk&auml;ufer",
         GoToMyPage: "Zur eigenen Seite",
         SearchForItemsPlaceholder: "Type #games, #shoes or any #tag...", //notTranslated
         SearchForPagesPlaceholder: "Nach Name oder Schlagwort suchen",
-        SearchFeedPlaceholder: "Nach GUID oder Handle suchen",
-        SearchForFollowersPlaceholder: "Nach GUID oder Handle suchen",
-        SearchForUsersPlaceholder: "Nach GUID oder Handle suchen",
+        SearchFeedPlaceholder: "Nach OpenBazaar ID oder Handle suchen",
+        SearchForFollowersPlaceholder: "Nach OpenBazaar ID oder Handle suchen",
+        SearchForUsersPlaceholder: "Nach OpenBazaar ID oder Handle suchen",
         SearchOnUserStorePlaceholder: "Type a title...", //notTranslated
         EstDeliveryDomesticPlaceholder: "3-5 Werktage",
         EstDeliveryInternationalPlaceholder: "7-15 Werktage",
@@ -929,9 +1047,9 @@ module.exports = Backbone.Model.extend({
         Changes: "&Auml;nderungen",
         SaveChanges: "&Auml;nderungen speichern",
         YourName: "Dein Name",
-        BitcoinReturnAddress: "Bitcoin R&uuml;cksendeaddresse",
+        BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
         BitcoinReturnAddressPlaceholder: "bitcoin address to return coins to", //not translated
-        BitcoinReturnAddressInfo: "In case of a refund, your funds will be issued to the following address.", //not translated
+        BitcoinReturnAddressInfo: "If a refund is issued, the funds will need to be sent to a Bitcoin address. Please provide an address to your Wallet below.", //not translated
         LocalCurrency: "Lokale W&auml;hrung",
         TimeZone: "Zeitzone",
         ShipToName: "Empfänger",
@@ -985,6 +1103,8 @@ module.exports = Backbone.Model.extend({
         AboutPlaceholder: "Beschreibung",
         BackgroundColor: "Hintergrundfarbe",
         NotificationFollow: "folgt dir nun.",
+        NotificationDispute: "has opened a new dispute", //not translated
+        NotificationNewOrder: "has made a purchase", //not translated
         NoNotifications: "Keine Benachrichtigungen",
         WelcomeToYourPage: "Willkommen auf deiner Seite!",
         SearchForCategory: "Nach Kategorie suchen",
@@ -1059,19 +1179,24 @@ module.exports = Backbone.Model.extend({
         NotFollowingAnyone: "Not following anyone", // not translated
         NoFollowers: "No followers", // not translated
         Moderator: "Moderator", // not translated
+        Firewall: "Firewall", //notTranslated
+        ReadOnly: "(This Field is Read Only)", //notTranslated
         HandleResolver: "Handle Resolver",  // not translated
         moderatorSettings: { // not translated
-          ProvideResolution: "Provide dispute resolution", // not translated
+          DisputeResolution: "Dispute Resolution", //notTranslated
           ServiceFee: "Service fee", // not translated
-          ServiceFeeNote: "Percentage of transaction price (max 25)" // not translated
+          ServiceFeeNote: "Min: 0%, Max: 25%"//notTranslated
         },
+        BecomeModerator: "Become a moderator",//notTranslated
+        EditModerator: "Moderator Settings",//notTranslated
         transactions: {
-          SoldBy: "Sold By", // not translated
-          PurchasedBy: "Purchased By", // not translated
+          OrderDetails: "Order Details", //notTranslated
+          SoldBy: "Seller", // not translated
+          PurchasedBy: "Buyer", // not translated
           searchByOrder: "Search by order id or item name", // not translated
           sortByStatusAll: "All", // not translated
           sortByStatus0: "Purchased", // not translated
-          sortByStatus1: "Paid (Funds Waiting)", // not translated
+          sortByStatus1: "Ready to process (Paid in full)", // not translated
           sortByStatus2: "Confirmed/Shipped", // not translated
           sortByStatus3: "Completed (Funds Released)", // not translated
           sortByStatus4: "Disputed", // not translated
@@ -1079,17 +1204,20 @@ module.exports = Backbone.Model.extend({
           OrderDate: "Order Date", // not translated
           OrderStatus: "Order Status", // not translated
           OrderStatus0: "Purchased (Not Funded)", // not translated
-          OrderStatus1: "Paid (Funds Waiting)", // not translated
+          OrderStatus1: "Ready to process (Paid in full)", // not translated
           OrderStatus2: "Confirmed/Shipped", // not translated
           OrderStatus3: "Completed (Funds Released)", // not translated
           OrderStatus4: "Disputed", // not translated
+          InEscrow: "- In Escrow", // not translated
           OrderTotal: "Order Total", // not translated
           OrderTotalInBTC: "BTC Total", // not translated
           PaymentProtection: "Payment Protection", // not translated
           ShipTo: "Ship To", // not translated
-          ConfirmOrder: "Confirm this Order", // not translated
+          ConfirmOrder: "Confirm Order", // not translated
           ReceivingAddress: "Receiving Address", // not translated
           RecievingAddressPlaceholder: "Bitcoin address you will receive payment at", // not translated
+          Comments: "Comments", // not translated
+          CommentsPlaceHolder: "Comments on the order, if any", // not translated
           Shipper: "Item Shipped By", // not translated
           ShipperPlaceholder: "Name of the company shipping the item", // not translated
           TrackingNumber: "Tracking Number", // not translated
@@ -1104,7 +1232,8 @@ module.exports = Backbone.Model.extend({
           ModeratedTransaction: "Moderated transaction", // not translated
           Seller: "Seller", // not translated
           Buyer: "Buyer", // not translated
-          transferReceipt: "transferReceipt", // not translated
+          Moderator: "Moderator", //not translated
+          transferReceipt: "Transfer Receipt", // not translated
           copyTxid: "copy tx ID", // not translated
           Close: "Close", // not translated
           FundOrder: "Fund Order", // not translated
@@ -1121,7 +1250,12 @@ module.exports = Backbone.Model.extend({
           CustomerService: "Customer Service", // not translated
           Review: "Review", // not translated
           ReviewPlaceHolder: "Your review of this transaction", // not translated
-          NoneSent: "None sent" // not translated
+          NoneSent: "None sent", // not translated
+          ModerationFee: "Moderation Fee:", // not translated
+          DisputeTransaction: "Start a Dispute", // not translated
+          sendMessagePlaceholder: "Type your message here.", // not translated
+          DisputeInstructions: "To file a dispute for this transaction, type the reason for the dispute below, and click the Start a Dispute button. This will begin a discussion between you, the seller, and the moderator. The moderator will make the final decision as to whether any funds are returned to you, and how much. The moderator's fee will be paid out of the funds you have already sent.", // not translated
+          SendMessage: "Send" // not translated
         },
         errorMessages: {
           saveError: "Daten konnten nicht gespeichert werden.",
@@ -1133,7 +1267,7 @@ module.exports = Backbone.Model.extend({
           notFoundError: "Daten konnten nicht geladen werden f&uuml;r:",
           socketError: "URL f&uuml;r den Websocket ist fehlgschlagen. Verbindung mit der Standard-Addresse ws://localhost:18466 wird aufgebaut.",
           contractError: "Dieser Artikel kann nicht gekauft werden",
-          sellerError: "Die Kaufanfrage wurde vom Server des Verkäufers abgelehnt",
+          sellerError: "Die Kaufanfrage wurde vom Server des Verkäufers abgelehnt. This may be due to a connection issue.", // not translated
           checkPurchaseData: "Check your purchase data, such as quantity and Bitcoin refund address, to make sure it is valid", //not translated
           pageUnavailable: "This page is currently unavailable.",  //notTranslated
           badHandle: "The handle you entered does not have a valid OpenBazaar ID"//notTranslated
@@ -1142,7 +1276,7 @@ module.exports = Backbone.Model.extend({
           about: "", //notTranslated
           contributors: "<ul><li>Giannis Adamopoulos</li><li>Ariadni-Karolina Alexiou</li><li>Tikhon Bernstam</li><li>Brad Burnham</li><li>George Chatzisofroniou</li><li>Patrick Connolly</li><li>Chris Dixon</li><li>Simon de la Rouviere</li><li>Braden Glasgow</li><li>Brian Hoffman</li><li>Ben Holden-Crowther</li><li>Joshua Jeffryes</li><li>Nikolas Korasidis</li><li>Regan Lawton</li><li>Sami Lehtinen</li><li>Angel Leon</li><li>Joye Lin</li><li>Joel Monegro</li><li>William Mougayar</li><li>Jonas David Nick</li><li>Onename</li><li>Chris Pacia</li><li>Sam Patterson</li><li>Chara Podimata</li><li>Samuel Reed</li><li>Washington Sanchez</li><li>Aeron Paul Sioson</li><li>Adrian Smith</li><li>Adam Snodgrass</li><li>Thomas Stilwell</li><li>Amir Taaki</li><li>Mike Wolf</li><li>Dionysis Zindros</li><li>secret-bitcoin-login</li><li>Rav3nPL</li><li>El--Presidente</li><li>Tinytin</li><li>ULRichard</li></ul>", //notTranslated
           support: "", //notTranslated
-          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>autobahn</li><li>python-obelisk</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li></ul>", //notTranslated
+          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>txws</li><li>python-libbitcoin client</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li><li>python-bitcoinlib</li></ul>", //notTranslated
         },
         saveMessages: {
           Saved: "Gespeichert",
@@ -1162,7 +1296,7 @@ module.exports = Backbone.Model.extend({
           listingsAll: "Von allen L&auml;den"
         },
         nav: {
-          searchPlaceholder: "Type a @handle, GUID or #tag...", //notTranslated
+          searchPlaceholder: "Type a @handle, OpenBazaar ID or #tag...", //notTranslated
           myPage: "Meine Seite",
           customizePage:"Seite anpassen",
           sellItem:"Neu",
@@ -1208,6 +1342,19 @@ module.exports = Backbone.Model.extend({
           Finished: "Finished" //notTranslated
         },
         buyFlow: {
+          PayForOrder: "Pay for Order", //notTranslated
+          NeedTempAddress: "I need a temporary Bitcoin address", //notTranslated
+          NeedTempAddressHelper: "Please bookmark the url to your temporary bitcoin address", //notTranslated
+          CantFindAddress: "I can't find my bitcoin address", //notTranslated
+          BitcoinWallet: "Bitcoin Wallet", //notTranslated
+          ModeratedPaymentDescription: "Your payment is held in a secure wallet until the seller completes their end of the agreement. If issues arise, a Moderator will help.", //notTranslated
+          ModeratorFeeHelper: "The moderator may charge a fee, but only if a dispute arises.", //notTranslated
+          ModeratedPayment: "Moderated Payment", //notTranslated
+          DisputeFee: "Dispute fee", //notTranslated
+          HaveWallet: "Do you have a Bitcoin Wallet?", //notTranslated
+          QuickSetup: "It only takes a few minutes to set one up", //notTranslated
+          CreateWallet: "Create a Wallet", //notTranslated
+          DirectPaymentDescription: "Funds are sent directly to the seller. Only use on small purchases or when purchasing from a trusted seller.", //notTranslated
           DirectPayment: "Direct Payment", //notTranslated
           SendDirectlyTo: "Send direct payment to %{handle}", //notTranslated
           MustAddAddress: "Sie m&uuml;ssen eine Versandadresse hinzuzuf&uuml;gen",
@@ -1224,28 +1371,48 @@ module.exports = Backbone.Model.extend({
           summaryMsg3: "You can check the status of your order on your", //notTranslated
           purchasesPage: "purchases page", //notTranslated
           returnAddress: "Return Address", //notTranslated
-          moderatorPaymentDisclaimer: "Only applies if the transaction ends in a dispute.", //notTranslated
+          moderatorPaymentDisclaimer: "Paid from the total if the transaction ends in a dispute.", //notTranslated
           directPaymentDisclaimer: "Use direct payment with caution, funds are irreversible", //notTranslated
-          directPaymentTo: "Direct Payment to", //notTranslated
           paymentSent: "Payment Sent!", //notTranslated
           total: "Total" //notTranslated
         },
         chat: {
           noSearchResultsFound: "No results found" //notTranslated
+        },
+        serverConnectModal: {
+          statusTryingToConnect: "Trying to connect to your server", //notTranslated
+          statusConnected: "Connected", //notTranslated
+          statusFailedConnection: "Unable to connect to your server", //notTranslated
+          statusFailedAuthentication: "Authentication failed", //notTranslated
+          serverConfiguration: "Server Configuration", //notTranslated
+          attempt: "Attempt", //notTranslated
+          intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
+          serverIP: "Server IP", //notTranslated
+          restApiPort: "Rest API port", //notTranslated
+          websocketApiPort: "Websocket API port", //notTranslated
+          heartbeatSocketApiPort: "Heartbeat socket port", //notTranslated
+          username: "Username", //notTranslated
+          password: "Password", //notTranslated                    
+          restoreDefaults: "Restore defaults", //notTranslated                    
+          saveChanges: "Save Changes", //notTranslated                    
+          retry: "Retry" //notTranslated 
         }        
       },
       {
         langName: "Italiano",
         langCode: "it",
         /* Use capitalized keys for widely reused text that must be capitalized */
+        IHaveAWalletNow: "I have a Wallet now", //notTranslated
         Next: "Avanti",
         IAgree: "Sono d'accordo",
         Back: "Indietro",
         EnterMessage: "Inserire messaggio...",
+        Recommended: "Recommended", //notTranslated
         Reload: "Ricaricare",
         You: "Tu",
         Skip: "Salta",
         Done: "Finito",
+        Status: "Status",
         Navigation: "Navigation", //notTranslated
         Cancel: "Annulla",
         ClosingOpenBazaar: "Close (Your page will go offline)", //notTranslated
@@ -1260,6 +1427,9 @@ module.exports = Backbone.Model.extend({
         Excellent: "Eccellente",
         Good: "Buono",
         Poor: "Scarso",
+        StillValidating: "Your handle is still validating", //notTranslated
+        CheckStatus: "Check Status", //notTranslated
+        ChangeCurrency: "Change currency", //notTranslated
         SKU: "SKU",
         Refurbished: "Ricondizionato",
         Physical: "Fisico",
@@ -1290,15 +1460,15 @@ module.exports = Backbone.Model.extend({
         DontDelete: "Non eliminare",
         ConfirmDelete: "Conferma cancellazione",
         Website: "Sito web",
-        Guid: "OpenBazaar ID (GUID)",
+        Guid: "OpenBazaar ID",
         Welcome: "Benvenuto",
         CreateStore: "Diventa un negozio",
         GoToMyPage: "Vai alla mia pagina",
         SearchForItemsPlaceholder: "Type #games, #shoes or any #tag...", //notTranslated
         SearchForPagesPlaceholder: "Cerca per nome o parola chiave",
-        SearchFeedPlaceholder: "Cerca per nickname o guid",
-        SearchForFollowersPlaceholder: "Cerca per nickname o guid",
-        SearchForUsersPlaceholder: "Cerca per nickname o guid",
+        SearchFeedPlaceholder: "Cerca per nickname o OpenBazaar ID",
+        SearchForFollowersPlaceholder: "Cerca per nickname o OpenBazaar ID",
+        SearchForUsersPlaceholder: "Cerca per nickname o OpenBazaar ID",
         SearchOnUserStorePlaceholder: "Type a title...", //notTranslated
         EstDeliveryDomesticPlaceholder: "3-5 giorni di lavoro",
         EstDeliveryInternationalPlaceholder: "7-15 giorni di lavoro",
@@ -1345,9 +1515,9 @@ module.exports = Backbone.Model.extend({
         Changes: "Modifiche",
         SaveChanges: "Salva modifiche",
         YourName: "Tuo nome",
-        BitcoinReturnAddress: "Indirizzo Bitcoin di restituzione",
+        BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
         BitcoinReturnAddressPlaceholder: "Inserire indirizzo bitcoin...",
-        BitcoinReturnAddressInfo: "In caso di restituzione, i tuoi soldi verranno messi nel seguente indirizzo.",
+        BitcoinReturnAddressInfo: "If a refund is issued, the funds will need to be sent to a Bitcoin address. Please provide an address to your Wallet below.", //notTranslated
         LocalCurrency: "Moneta locale",
         TimeZone: "Fuso orario",
         ShipToName: "Invia a nominativo",
@@ -1399,6 +1569,8 @@ module.exports = Backbone.Model.extend({
         AboutPlaceholder: "Descrizione completa",
         BackgroundColor: "Colore di sfondo",
         NotificationFollow: "ora ti sta seguendo",
+        NotificationDispute: "has opened a new dispute", //not translated
+        NotificationNewOrder: "has made a purchase", //not translated
         NoNotifications: "Nessuna notifica",
         WelcomeToYourPage: "Benvenuto alla tua pagina!",
         SearchForCategory: "Cerca per categoria",
@@ -1473,13 +1645,18 @@ module.exports = Backbone.Model.extend({
         NotFollowingAnyone: "Not following anyone", // not translated
         NoFollowers: "No followers", // not translated
         Moderator: "Moderator", // not translated
+        Firewall: "Firewall", //notTranslated
+        ReadOnly: "(This Field is Read Only)", //notTranslated
         HandleResolver: "Handle Resolver",  // not translated
         moderatorSettings: { // not translated
-          ProvideResolution: "Provide dispute resolution", // not translated
+          DisputeResolution: "Dispute Resolution", //notTranslated
           ServiceFee: "Service fee", // not translated
-          ServiceFeeNote: "Percentage of transaction price (max 25)" // not translated
+          ServiceFeeNote: "Min: 0%, Max: 25%"//notTranslated
         },
+        BecomeModerator: "Become a moderator",//notTranslated
+        EditModerator: "Moderator Settings",//notTranslated
         transactions: {
+          OrderDetails: "Order Details", //notTranslated
           SoldBy: "Venduto da",
           PurchasedBy: "Comprato da",
           searchByOrder: "Ricerca per ID di ordine o nome articolo",
@@ -1497,13 +1674,16 @@ module.exports = Backbone.Model.extend({
           OrderStatus2: "Confermato/Inviato",
           OrderStatus3: "Completato (fondi rilasciati)",
           OrderStatus4: "Contestato",
+          InEscrow: "- In Escrow", // not translated
           OrderTotal: "Totale ordine",
           OrderTotalInBTC: "BTC Total", // not translated
           PaymentProtection: "Payment Protection", // not translated
           ShipTo: "Ship To", // not translated
-          ConfirmOrder: "Confirm this Order", // not translated
+          ConfirmOrder: "Confirm Order", // not translated
           ReceivingAddress: "Receiving Address", // not translated
           RecievingAddressPlaceholder: "Bitcoin address you will receive payment at", // not translated
+          Comments: "Comments", // not translated
+          CommentsPlaceHolder: "Comments on the order, if any", // not translated
           Shipper: "Item Shipped By", // not translated
           ShipperPlaceholder: "Name of the company shipping the item", // not translated
           TrackingNumber: "Tracking Number", // not translated
@@ -1518,7 +1698,8 @@ module.exports = Backbone.Model.extend({
           ModeratedTransaction: "Moderated transaction", // not translated
           Seller: "Seller", // not translated
           Buyer: "Buyer", // not translated
-          transferReceipt: "transferReceipt", // not translated
+          Moderator: "Moderator", //not translated
+          transferReceipt: "Transfer Receipt", // not translated
           copyTxid: "copy tx ID", // not translated
           Close: "Close", // not translated
           FundOrder: "Fund Order", // not translated
@@ -1535,7 +1716,12 @@ module.exports = Backbone.Model.extend({
           CustomerService: "Customer Service", // not translated
           Review: "Review", // not translated
           ReviewPlaceHolder: "Your review of this transaction", // not translated
-          NoneSent: "None sent" // not translated
+          NoneSent: "None sent", // not translated
+          ModerationFee: "Moderation Fee:", // not translated
+          DisputeTransaction: "Start a Dispute", // not translated
+          sendMessagePlaceholder: "Type your message here.", // not translated
+          DisputeInstructions: "To file a dispute for this transaction, type the reason for the dispute below, and click the Start a Dispute button. This will begin a discussion between you, the seller, and the moderator. The moderator will make the final decision as to whether any funds are returned to you, and how much. The moderator's fee will be paid out of the funds you have already sent.", // not translated
+          SendMessage: "Send" // not translated
         },
         errorMessages: {
           saveError: "I dati non sono stati salvati.",
@@ -1547,7 +1733,7 @@ module.exports = Backbone.Model.extend({
           notFoundError: "I dati non sono stati caricati per:",
           socketError: "Connessione all'URL per WebSocket fallita. Connettere al socket con l'indirizzo di default ws://localhost:18466",
           contractError: "Questo articolo non pu&ograve; essere acquistato",
-          sellerError: "Il server del venditore ha respinto la richiesta di acquisto",
+          sellerError: "Il server del venditore ha respinto la richiesta di acquisto. This may be due to a connection issue.", // not translated
           checkPurchaseData: "Controlla i tuoi dati di acquisto, come la quantit&agrave; e l'indirizzo Bitcoin di restituzione, per essere sicuro che sia tutto corretto",
           pageUnavailable: "This page is currently unavailable.",  //notTranslated
           badHandle: "The handle you entered does not have a valid OpenBazaar ID"//notTranslated
@@ -1556,7 +1742,7 @@ module.exports = Backbone.Model.extend({
           about: "", //notTranslated
           contributors: "<ul><li>Giannis Adamopoulos</li><li>Ariadni-Karolina Alexiou</li><li>Tikhon Bernstam</li><li>Brad Burnham</li><li>George Chatzisofroniou</li><li>Patrick Connolly</li><li>Chris Dixon</li><li>Simon de la Rouviere</li><li>Braden Glasgow</li><li>Brian Hoffman</li><li>Ben Holden-Crowther</li><li>Joshua Jeffryes</li><li>Nikolas Korasidis</li><li>Regan Lawton</li><li>Sami Lehtinen</li><li>Angel Leon</li><li>Joye Lin</li><li>Joel Monegro</li><li>William Mougayar</li><li>Jonas David Nick</li><li>Onename</li><li>Chris Pacia</li><li>Sam Patterson</li><li>Chara Podimata</li><li>Samuel Reed</li><li>Washington Sanchez</li><li>Aeron Paul Sioson</li><li>Adrian Smith</li><li>Adam Snodgrass</li><li>Thomas Stilwell</li><li>Amir Taaki</li><li>Mike Wolf</li><li>Dionysis Zindros</li><li>secret-bitcoin-login</li><li>Rav3nPL</li><li>El--Presidente</li><li>Tinytin</li><li>ULRichard</li></ul>", //notTranslated
           support: "", //notTranslated
-          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>autobahn</li><li>python-obelisk</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li></ul>", //notTranslated
+          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>txws</li><li>python-libbitcoin client</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li><li>python-bitcoinlib</li></ul>", //notTranslated
         },
         saveMessages: {
           Saved: "Salvato",
@@ -1576,7 +1762,7 @@ module.exports = Backbone.Model.extend({
           listingsAll: "Da tutti i negozi"
         },
         nav: {
-          searchPlaceholder: "Type a @handle, GUID or #tag...", //notTranslated
+          searchPlaceholder: "Type a @handle, OpenBazaar ID or #tag...", //notTranslated
           myPage: "La mia pagina",
           customizePage: "Personalizza pagina",
           sellItem: "Nuovo",
@@ -1622,6 +1808,19 @@ module.exports = Backbone.Model.extend({
           Finished: "Finito"
         },
         buyFlow: {
+          PayForOrder: "Pay for Order", //notTranslated
+          NeedTempAddress: "I need a temporary Bitcoin address", //notTranslated
+          NeedTempAddressHelper: "Please bookmark the url to your temporary bitcoin address", //notTranslated
+          CantFindAddress: "I can't find my bitcoin address", //notTranslated
+          BitcoinWallet: "Bitcoin Wallet", //notTranslated
+          ModeratedPaymentDescription: "Your payment is held in a secure wallet until the seller completes their end of the agreement. If issues arise, a Moderator will help.", //notTranslated
+          ModeratorFeeHelper: "The moderator may charge a fee, but only if a dispute arises.", //notTranslated
+          ModeratedPayment: "Moderated Payment", //notTranslated
+          DisputeFee: "Dispute fee", //notTranslated
+          HaveWallet: "Do you have a Bitcoin Wallet?", //notTranslated
+          QuickSetup: "It only takes a few minutes to set one up", //notTranslated
+          CreateWallet: "Create a Wallet", //notTranslated
+          DirectPaymentDescription: "Funds are sent directly to the seller. Only use on small purchases or when purchasing from a trusted seller.", //notTranslated
           DirectPayment: "Pagamento diretto",
           SendDirectlyTo: "Invia pagamento diretto a %{handle}",
           MustAddAddress: "&Egrave; necessario aggiungere un indirizzo da spedire ai",
@@ -1638,28 +1837,48 @@ module.exports = Backbone.Model.extend({
           summaryMsg3: "Puoi controllare lo stato del tuo ordine sulla tua",
           purchasesPage: "pagina acquisti",
           returnAddress: "Indirizzi di ritorno",
-          moderatorPaymentDisclaimer: "Si applica solo se l'operazione si conclude in una contestazione.",
+          moderatorPaymentDisclaimer: "Paid from the total if the transaction ends in a dispute.", // not translated
           directPaymentDisclaimer: "Usa il pagamento diretto con cauzione, i fondi sono irreversibili",
-          directPaymentTo: "Pagamento diretto a",
           paymentSent: "Pagamento inviato!",
           total: "Totale"
         },
         chat: {
           noSearchResultsFound: "No results found" //notTranslated
+        },
+        serverConnectModal: {
+          statusTryingToConnect: "Trying to connect to your server", //notTranslated
+          statusConnected: "Connected", //notTranslated
+          statusFailedConnection: "Unable to connect to your server", //notTranslated
+          statusFailedAuthentication: "Authentication failed", //notTranslated
+          serverConfiguration: "Server Configuration", //notTranslated
+          attempt: "Attempt", //notTranslated
+          intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
+          serverIP: "Server IP", //notTranslated
+          restApiPort: "Rest API port", //notTranslated
+          websocketApiPort: "Websocket API port", //notTranslated
+          heartbeatSocketApiPort: "Heartbeat socket port", //notTranslated
+          username: "Username", //notTranslated
+          password: "Password", //notTranslated                    
+          restoreDefaults: "Restore defaults", //notTranslated                    
+          saveChanges: "Save Changes", //notTranslated                    
+          retry: "Retry" //notTranslated 
         }        
       },
       {
         langName: "Français",
         langCode: "fr-FR",
         /* Use capitalized keys for widely reused text that must be capitalized */
+        IHaveAWalletNow: "J'ai maintenant un portefeuille",
         Next: "Suivant",
         IAgree: "Je suis d'accord",
         Back: "Retour",
         EnterMessage: "Entrer un message...",
+        Recommended: "Recommandé",
         Reload: "Actualiser",
         You: "Vous",
         Skip: "Passer",
         Done: "Terminé",
+        Status: "Status",
         Navigation: "Navigation",
         Cancel: "Annuler",
         ClosingOpenBazaar: "Fermer (votre page sera déconnectée)",
@@ -1674,6 +1893,9 @@ module.exports = Backbone.Model.extend({
         Excellent: "Excellent",
         Good: "Bon",
         Poor: "Médiocre",
+        StillValidating: "Votre identifiant est toujours en cours de validation",
+        CheckStatus: "Vérifier l'état",
+        ChangeCurrency: "Changer la devise",
         SKU: "SKU",
         Refurbished: "Remis à neuf",
         Physical: "Physique",
@@ -1704,7 +1926,7 @@ module.exports = Backbone.Model.extend({
         DontDelete: "Ne pas supprimer",
         ConfirmDelete: "Confirmer la suppression",
         Website: "Site web",
-        Guid: "OpenBazaar ID (GUID)",
+        Guid: "OpenBazaar ID",
         Welcome: "Bienvenue",
         CreateStore: "Devenir une boutique",
         GoToMyPage: "Ma page",
@@ -1759,9 +1981,9 @@ module.exports = Backbone.Model.extend({
         Changes: "Changements",
         SaveChanges: "Sauvegarder les changements",
         YourName: "Votre nom",
-        BitcoinReturnAddress: "Adresse Bitcoin de retour",
+        BitcoinReturnAddress: "Entrez votre adresse Bitcoin",
         BitcoinReturnAddressPlaceholder: "l'adresse bitcoin de remboursement",
-        BitcoinReturnAddressInfo: "En cas de remboursement, vos fonds seront envoyés à l'adresse suivante.",
+        BitcoinReturnAddressInfo: "Si un remboursement est émis, les fonds devront être envoyés à une adresse Bitcoin. Veuillez fournir ci-dessous une adresse de votre portefeuille.",
         LocalCurrency: "Devise locale",
         TimeZone: "Fuseau horaire",
         ShipToName: "Nom",
@@ -1801,9 +2023,9 @@ module.exports = Backbone.Model.extend({
         Category: "Catégorie",
         ProcessingTime: "Délai de traitement",
         SelectPhotos: "Sélectionner des photos",
-        DragOrUploadPhotos: "Glisser ou uploader des photos",
+        DragOrUploadPhotos: "Glisser ou sélectionner des photos",
         ExpirationDate: "Expire le",
-        UploadCoverPhoto: "Uploader une photo de couverture",
+        UploadCoverPhoto: "Sélectionner une photo de couverture",
         ShortDescription: "Brève description",
         UpTo140Characters: "Jusqu'à 140 caractères",
         PrimaryColor: "Couleur primaire",
@@ -1813,6 +2035,8 @@ module.exports = Backbone.Model.extend({
         AboutPlaceholder: "Description complète",
         BackgroundColor: "Couleur de fond",
         NotificationFollow: "vous suit",
+        NotificationDispute: "a ouvert un nouveau litige",
+        NotificationNewOrder: "a effectué un achat",
         NoNotifications: "Aucune notification",
         WelcomeToYourPage: "Bienvenue sur votre page !",
         SearchForCategory: "Rechercher par catégorie",
@@ -1860,7 +2084,7 @@ module.exports = Backbone.Model.extend({
         DomesticShippingTime: "Délai d'expédition nationale",
         InternationalShippingTime: "Délai d'expédition internationale",
         DisplayNSFWcontent: "Afficher le contenu NSFW ?",
-        Basic: "Basic",
+        Basic: "Général",
         Content: "Contenu",
         StandardThemes: "Thèmes standards",
         NoPhotosAdded: "Aucune photo ajoutée",
@@ -1887,30 +2111,36 @@ module.exports = Backbone.Model.extend({
         NotFollowingAnyone: "Aucun abonnement",
         NoFollowers: "Aucun abonné",
         Moderator: "Modérateur",
-      HandleResolver: "Handle Resolver",  // not translated
+        Firewall: "Pare-feu",
+        ReadOnly: "(Ce champ est en lecture seule)",
+        HandleResolver: "Résolveur d'identifiant",
         moderatorSettings: {
-          ProvideResolution: "Apporter des résolutions aux conflits",
+          DisputeResolution: "Résolution de litige",
           ServiceFee: "Frais de service",
-          ServiceFeeNote: "Pourcentage du prix de la transaction (25 max)"
+          ServiceFeeNote: "Min: 0%, Max: 25%"
         },
+        BecomeModerator: "Devenir modérateur",
+        EditModerator: "Paramètres de modérateur",
         transactions: {
+          OrderDetails: "Détails de la commande",
           SoldBy: "Vendu par",
           PurchasedBy: "Acheté par",
           searchByOrder: "Rechercher par ID de commande ou par nom d'article",
           sortByStatusAll: "Tout",
-          sortByStatus0: "Acheté",
-          sortByStatus1: "Payé (fonds en attente)",
+          sortByStatus0: "Achat (paiement en attente)",
+          sortByStatus1: "Prêt à traiter (entièrement payé)",
           sortByStatus2: "Confirmé/Expédié",
-          sortByStatus3: "Terminé (fonds reçus)",
+          sortByStatus3: "Terminé (paiement délivré)",
           sortByStatus4: "Contesté",
-          OrderID: "ID de commande",
-          OrderDate: "Date de commande",
-          OrderStatus: "Statut de commande",
-          OrderStatus0: "Acheté (non payé)",
-          OrderStatus1: "Payé (fonds en attente)",
+          OrderID: "ID de la commande",
+          OrderDate: "Date de la commande",
+          OrderStatus: "État de la commande",
+          OrderStatus0: "Achat (paiement en attente)",
+          OrderStatus1: "Prêt à traiter (entièrement payé)",
           OrderStatus2: "Confirmé/Expédié",
-          OrderStatus3: "Terminé (fonds reçus)",
+          OrderStatus3: "Terminé (paiement délivré)",
           OrderStatus4: "Contesté",
+          InEscrow: "- Sous séquestre",
           OrderTotal: "Total de la commande",
           OrderTotalInBTC: "Total BTC",
           PaymentProtection: "Protection de paiement",
@@ -1918,6 +2148,8 @@ module.exports = Backbone.Model.extend({
           ConfirmOrder: "Confirmer cette commande",
           ReceivingAddress: "Adresse de réception",
           RecievingAddressPlaceholder: "L'adresse Bitcoin à laquelle vous recevrez le paiement",
+          Comments: "Comments", // not translated
+          CommentsPlaceHolder: "Comments on the order, if any", // not translated
           Shipper: "Article expédié par",
           ShipperPlaceholder: "Nom de l'entreprise expédiant l'article",
           TrackingNumber: "Numéro de suivi",
@@ -1932,7 +2164,8 @@ module.exports = Backbone.Model.extend({
           ModeratedTransaction: "Transaction modérée",
           Seller: "Vendeur",
           Buyer: "Acheteur",
-          transferReceipt: "transferReceipt", // not translated
+          Moderator: "Moderator", //not translated
+          transferReceipt: "Reçu de transfert",
           copyTxid: "copier l'ID de transaction",
           Close: "Fermer",
           FundOrder: "Financer la commande",
@@ -1949,7 +2182,12 @@ module.exports = Backbone.Model.extend({
           CustomerService: "Service client",
           Review: "Avis",
           ReviewPlaceHolder: "Votre avis sur cette transaction",
-          NoneSent: "None sent" // not translated
+          NoneSent: "Aucun avis envoyé",
+          ModerationFee: "Frais de modération :",
+          DisputeTransaction: "Initier un litige",
+          sendMessagePlaceholder: "Écrivez ici votre message.",
+          DisputeInstructions: "Afin de déposer un litige pour cette transaction, écrivez ci-dessous la raison du litige, et cliquez sur le bouton Initier un litige. Cela amorcera une discussion entre vous, le vendeur, et le modérateur. Le modérateur prendra la décision finale quant à savoir si les fonds doivent vous être retournés, et combien. Les frais du modérateur seront payés avec les fonds que vous avez déjà envoyés.",
+          SendMessage: "Envoyer"
         },
         errorMessages: {
           saveError: "Impossible de sauvegarder les données.",
@@ -1961,16 +2199,16 @@ module.exports = Backbone.Model.extend({
           notFoundError: "Les données ne peuvent pas être récupérées pour :",
           socketError: "L'URL pour WebSocket a échoué. Connexion au socket avec l'adresse par défaut de ws://localhost:18466",
           contractError: "Cet article ne peut pas être acheté",
-          sellerError: "Le serveur du vendeur a rejeté la demande d'achat",
+          sellerError: "Le serveur du vendeur a rejeté la demande d'achat. Cela peut être dû à un problème de connexion.",
           checkPurchaseData: "Vérifiez vos données d'achat, telles que la quantité et l'adresse Bitcoin de remboursement, pour vous assurer que tout est conforme",
-          pageUnavailable: "This page is currently unavailable.",  //notTranslated
-          badHandle: "The handle you entered does not have a valid OpenBazaar ID"//notTranslated
+          pageUnavailable: "Cette page est actuellement indisponible.",
+          badHandle: "L'identifiant que vous avez entré n'a pas un ID OpenBazaar valide"
         },
         aboutSection: {
           about: "<p>OpenBazaar est un réseau d’utilisateurs qui achètent et vendent directement entre eux des biens et services, en utilisant Bitcoin. Ce réseau est décentralisé et n’est pas contrôlé par une quelconque organisation.</p><p>Ce logiciel est open-source et sous licence MIT. Vous pouvez voir le code sur <a href=\"https://github.com/OpenBazaar/\" target=\"_blank\">Github</a>.</p><p>OpenBazaar est un projet communautaire, et les participations sont les bienvenues sur notre cannal <a href=\"https://openbazaar-slackin-drwasho.herokuapp.com/\" target=\"_blank\">Slack</a> ou sur notre <a href=\"http://www.reddit.com/r/openbazaar\" target=\"_blank\">subreddit</a>.</p><p>Si vous avez besoin d’aide, lisez le <a href=\"\" target=\"_blank\">Tutoriel</a> d’OpenBazaar version 1.0.</p><p>Si vous avez encore des questions, créez une question sur notre <a href=\"https://openbazaar.zendesk.com/hc/en-us/articles/203219995-Question-not-answered-Read-this-post\" target=\"_blank\">centre d’aide</a>.</p>",
           contributors: "<ul><li>Giannis Adamopoulos</li><li>Ariadni-Karolina Alexiou</li><li>Tikhon Bernstam</li><li>Brad Burnham</li><li>George Chatzisofroniou</li><li>Patrick Connolly</li><li>Chris Dixon</li><li>Simon de la Rouviere</li><li>Braden Glasgow</li><li>Brian Hoffman</li><li>Ben Holden-Crowther</li><li>Joshua Jeffryes</li><li>Nikolas Korasidis</li><li>Regan Lawton</li><li>Sami Lehtinen</li><li>Angel Leon</li><li>Joye Lin</li><li>Joel Monegro</li><li>William Mougayar</li><li>Jonas David Nick</li><li>Onename</li><li>Chris Pacia</li><li>Sam Patterson</li><li>Chara Podimata</li><li>Samuel Reed</li><li>Washington Sanchez</li><li>Aeron Paul Sioson</li><li>Adrian Smith</li><li>Adam Snodgrass</li><li>Thomas Stilwell</li><li>Amir Taaki</li><li>Mike Wolf</li><li>Dionysis Zindros</li><li>secret-bitcoin-login</li><li>Rav3nPL</li><li>El--Presidente</li><li>Tinytin</li><li>ULRichard</li></ul>",
           support: "", //notTranslated
-          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>autobahn</li><li>python-obelisk</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li></ul>",
+          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>txws</li><li>python-libbitcoin client</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li><li>python-bitcoinlib</li></ul>",
         },
         saveMessages: {
           Saved: "Enregistrés",
@@ -1991,7 +2229,7 @@ module.exports = Backbone.Model.extend({
           categoryAll: "Toutes"
         },
         nav: {
-          searchPlaceholder: "Tapez un @nom_d_utilisateur, GUID ou un #mot_clé...",
+          searchPlaceholder: "Tapez un @identifiant, OpenBazaar ID ou un #mot_clé...",
           myPage: "Ma page",
           customizePage:"Personnaliser ma page",
           sellItem:"Nouveau",
@@ -2007,13 +2245,13 @@ module.exports = Backbone.Model.extend({
         onboarding: {
           intro: "Configuration d'OpenBazaar",
           Introduction: "Présentation",
-          IntroductionBody: "OpenBazaar est un marché social pair à pair, semblable à une fusion entre eBay&trade;, Twitter&trade; et BitTorrent. OpenBazaar est un projet open-source qui n'applique pas de frais ou de restrictions particulières. \n\n Veuillez noter que l’expérience d’utilisation peut être différente de celles que vous avez, essayez d’être patient pendant la phase de découverte.",
+          IntroductionBody: "OpenBazaar est un marché social pair à pair, semblable à une fusion entre eBay&trade;, Twitter&trade; et BitTorrent. Ce projet est open-source et n'applique pas de frais ou de restrictions particulières. \n\n Veuillez noter que l’expérience d’utilisation peut être différente de celles que vous avez, essayez d’être patient pendant la phase de découverte.",
           Theme: "Sélectionner un thème pour votre page",
           chooseLanguage: "Sélectionner votre langue",
           contributors: "%{smart_count} Contributeur |||| %{smart_count} Contributeur",
           configure: "Configurez votre expérience",
           disclaimer_title: "Clause de non-responsabilité",
-          disclaimer_body: "OpenBazaar est un réseau commercial de biens et services de personne à personne - utilisant Bitcoin - sans aucune organisation centrale exerçant une autorité sur la plate-forme. Cela signifie que vous êtes seul responsable de votre activité sur le réseau. \n\nLes utilisateurs d'OpenBazaar ne sont pas anonymes par défaut. La plupart des communications entre les partis sont chiffrées, mais les adresses IP sont publiques et peuvent être associées à une activité sur le réseau. Des partis malveillants pourraient utiliser ces informations contre vous ; protéger votre vie privée est votre propre responsabilité. \n\nLes utilisateurs d'OpenBazaar doivent respecter les lois de leur propre juridiction ainsi que leur conscience. Les développeurs d'OpenBazaar ne tolèrent pas - et ne sont pas responsables -  de toute utilisation de la plate-forme pour une activité illégale. \n\nLa communauté des développeurs d'OpenBazaar a travaillé sans relâche afin d'offrir une plate-forme commerciale libre et mondiale. Mais, comme avec tout logiciel, des bugs seront trouvés. Les développeurs ne sont pas responsables de toute perte monétaire associée à des problèmes dans le logiciel. \n\nEn utilisant OpenBazaar vous êtes seul responsable de vos actions sur le réseau d'OpenBazaar.",
+          disclaimer_body: "OpenBazaar est un réseau commercial de biens et services de personne à personne - utilisant Bitcoin - sans aucune organisation centrale exerçant une autorité sur la plate-forme. Cela signifie que vous êtes seul responsable de votre activité sur le réseau. \n\nLes utilisateurs d'OpenBazaar ne sont pas anonymes par défaut. La plupart des communications entre les partis sont chiffrées, mais les adresses IP sont publiques et peuvent être associées à une activité sur le réseau. Des partis malveillants pourraient utiliser ces informations contre vous ; protéger votre vie privée est votre propre responsabilité. \n\nLes utilisateurs d'OpenBazaar doivent respecter les lois de leur propre juridiction aussi bien que leur conscience. Les développeurs d'OpenBazaar ne tolèrent pas - et ne sont pas responsables -  de toute utilisation de la plate-forme à des fins illégales. \n\nLa communauté des développeurs d'OpenBazaar a travaillé sans relâche afin d'offrir une plate-forme commerciale libre et mondiale. Mais, comme avec tout logiciel, des bugs seront trouvés. Les développeurs ne sont pas responsables de toute perte monétaire associée à des problèmes dans le logiciel. \n\nEn utilisant OpenBazaar vous êtes seul responsable de vos actions sur le réseau d'OpenBazaar.",
           yourCountry: "Sélectionner votre pays",
           localCurrency: "Sélectionner votre devise",
           LanguagePlaceholder: "Rechercher par langue",
@@ -2024,10 +2262,10 @@ module.exports = Backbone.Model.extend({
           timeZone: "Sélectionner votre fuseau horaire",
           yourDetails: "Définir vos informations",
           yourDescription: "Description",
-          handle: "Nom d'utilisateur",
-          chooseHandle: "Choisissez un nom d'utilisateur",
+          handle: "Identifiant",
+          chooseHandle: "Choisissez un identifiant",
           knownAs: "Vous êtes actuellement connu comme :",
-          wouldYou: "Voulez-vous enregistrer un nom d'utilisateur facilement mémorisable ?",
+          wouldYou: "Voulez-vous enregistrer un identifiant facilement mémorisable ?",
           registerNew: "Enregistrer",
           recommended: "Pages recommandées à suivre",
           connectExisting: "Connect Existing",
@@ -2037,6 +2275,19 @@ module.exports = Backbone.Model.extend({
           Finished: "Terminé"
         },
         buyFlow: {
+          PayForOrder: "Payer pour commander",
+          NeedTempAddress: "J'ai besoin d'une adresse Bitcoin temporaire",
+          NeedTempAddressHelper: "Veuillez mettre en favoris l'url de votre adresse Bitcoin temporaire",
+          CantFindAddress: "Je ne trouve pas mon adresse Bitcoin",
+          BitcoinWallet: "Portefeuille Bitcoin",
+          ModeratedPaymentDescription: "Votre paiement est retenu dans un portefeuille sécurisé jusqu'à ce que le vendeur respecte les conditions l'accord. Si des problèmes surviennent, un modérateur aidera.",
+          ModeratorFeeHelper: "Le modérateur peut facturer des frais, mais uniquement en cas de litige.",
+          ModeratedPayment: "Paiement modéré",
+          DisputeFee: "Frais de litige",
+          HaveWallet: "Avez-vous un portefeuille Bitcoin ?",
+          QuickSetup: "La création d'un portefeuille ne prend que quelques minutes",
+          CreateWallet: "Créer un portefeuille",
+          DirectPaymentDescription: "Les fonds sont envoyés directement au vendeur. À utiliser pour un petit achat ou avec un vendeur de confiance.",
           DirectPayment: "Paiement direct",
           SendDirectlyTo: "Envoyer un paiement direct à %{handle}",
           MustAddAddress: "Vous devez ajouter une adresse pour expédier",
@@ -2044,37 +2295,57 @@ module.exports = Backbone.Model.extend({
           DoesNotShipHere: "N'expédie pas ici",
           Send: "Envoyer",
           BTCto: "BTC à",
-          SendBTCtoAddress: "Envoyer %{amount} BTC à",
+          SendBTCtoAddress: "Envoyez %{amount} BTC à",
           OpenAddress: "Ouvrir dans le portefeuille local",
           CopyAddress: "Copier dans le presse-papier",
-          RefreshPayment: "Actualiser le statut du paiement",
+          RefreshPayment: "Actualiser l'état du paiement",
           summaryMsg1: "Votre paiement a été envoyé à %{recipient}",
-          summaryMsg2: "Le temps de traitement prévu pour cette commande est",
-          summaryMsg3: "Vous pouvez vérifier le statut de votre commande sur votre",
+          summaryMsg2: "Le temps de traitement prévu pour cette commande est de",
+          summaryMsg3: "Vous pouvez vérifier l'état de votre commande sur votre",
           purchasesPage: "page d'achat",
           returnAddress: "Adresse de retour",
-          moderatorPaymentDisclaimer: "N'appliquer que si la transaction se termine par un litige.",
+          moderatorPaymentDisclaimer: "Paid from the total if the transaction ends in a dispute.", // not translated
           directPaymentDisclaimer: "Utilisez le paiement direct avec prudence, les fonds sont irréversibles",
-          directPaymentTo: "Paiement direct à",
           paymentSent: "Paiement envoyé !",
           total: "Total"
         },
         chat: {
-          noSearchResultsFound: "No results found" //notTranslated
+          noSearchResultsFound: "Aucun résultat trouvé"
+        },
+        serverConnectModal: {
+          statusTryingToConnect: "Trying to connect to your server", //notTranslated
+          statusConnected: "Connected", //notTranslated
+          statusFailedConnection: "Unable to connect to your server", //notTranslated
+          statusFailedAuthentication: "Authentication failed", //notTranslated
+          serverConfiguration: "Server Configuration", //notTranslated
+          attempt: "Attempt", //notTranslated
+          intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
+          serverIP: "Server IP", //notTranslated
+          restApiPort: "Rest API port", //notTranslated
+          websocketApiPort: "Websocket API port", //notTranslated
+          heartbeatSocketApiPort: "Heartbeat socket port", //notTranslated
+          username: "Username", //notTranslated
+          password: "Password", //notTranslated                    
+          restoreDefaults: "Restore defaults", //notTranslated                    
+          saveChanges: "Save Changes", //notTranslated                    
+          retry: "Retry", //notTranslated 
         }        
       },
       {
         langName: "Română",
         langCode: "ro",
         /* Use capitalized keys for widely reused text that must be capitalized */
+        IHaveAWalletNow: "I have a Wallet now", //notTranslated
         Next: "Următorul",
         IAgree: "Sunt de acord",
         Back: "Înapoi",
         EnterMessage: "Introduceți mesajul...",
+        Recommended: "Recommended", //notTranslated
         Reload: "Reload", //notTranslated
         You: "You", //notTranslated
         Skip: "Sari peste",
         Done: "Efectuat",
+        Status: "Status",
         Navigation: "Navigation", //notTranslated
         Cancel: "Anulare",
         Yes: "Da",
@@ -2085,6 +2356,9 @@ module.exports = Backbone.Model.extend({
         Excellent: "Excelent",
         Good: "Bun",
         Poor: "Prost",
+        StillValidating: "Your handle is still validating", //notTranslated
+        CheckStatus: "Check Status", //notTranslated
+        ChangeCurrency: "Change currency", //notTranslated
         SKU: "SKU",
         Refurbished: "Renovat",
         Physical: "Fizic",
@@ -2115,15 +2389,15 @@ module.exports = Backbone.Model.extend({
         DontDelete: "Nu Ștergeți",
         ConfirmDelete: "Confirmați Ștergerea",
         Website: "Website",
-        Guid: "OpenBazaar ID (GUID)",
+        Guid: "OpenBazaar ID",
         Welcome: "Bun Venit",
         CreateStore: "Deveniți un Magazin",
         GoToMyPage: "Pagina Mea",
         SearchForItemsPlaceholder: "Type #games, #shoes or any #tag...", //notTranslated
         SearchForPagesPlaceholder: "Căutare după nume sau cuvânt cheie",
-        SearchFeedPlaceholder: "Căutare după nume sau GUID",
-        SearchForFollowersPlaceholder: "Căutare după nume sau GUID",
-        SearchForUsersPlaceholder: "Căutare după nume sau GUID",
+        SearchFeedPlaceholder: "Căutare după nume sau OpenBazaar ID",
+        SearchForFollowersPlaceholder: "Căutare după nume sau OpenBazaar ID",
+        SearchForUsersPlaceholder: "Căutare după nume sau OpenBazaar ID",
         SearchOnUserStorePlaceholder: "Type a title...", //notTranslated
         EstDeliveryDomesticPlaceholder: "3-5 Zile Lucrătoare",
         EstDeliveryInternationalPlaceholder: "7-15 Zile Lucrătoare",
@@ -2168,9 +2442,9 @@ module.exports = Backbone.Model.extend({
         Changes: "Modificări",
         SaveChanges: "Salvare Modificări",
         YourName: "Numele dvs.",
-        BitcoinReturnAddress: "Adresa Bitcoin",
+        BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
         BitcoinReturnAddressPlaceholder: "bitcoin address to return coins to", //not translated
-        BitcoinReturnAddressInfo: "In case of a refund, your funds will be issued to the following address.", //not translated
+        BitcoinReturnAddressInfo: "If a refund is issued, the funds will need to be sent to a Bitcoin address. Please provide an address to your Wallet below.", //not translated
         LocalCurrency: "Valuta locală",
         TimeZone: "Fus orar",
         ShipToName: "Numele",
@@ -2224,6 +2498,8 @@ module.exports = Backbone.Model.extend({
         AboutPlaceholder: "Descrierea completă",
         BackgroundColor: "Culoarea de Fundal",
         NotificationFollow: "acum vă urmărește",
+        NotificationDispute: "has opened a new dispute", //not translated
+        NotificationNewOrder: "has made a purchase", //not translated
         NoNotifications: "Nu sunt notificări",
         WelcomeToYourPage: "Bun venit pe pagina dvs.!",
         SearchForCategory: "Căutare categorie",
@@ -2298,19 +2574,24 @@ module.exports = Backbone.Model.extend({
         NotFollowingAnyone: "Not following anyone", // not translated
         NoFollowers: "No followers", // not translated
         Moderator: "Moderator", // not translated
+        Firewall: "Firewall", //notTranslated
+        ReadOnly: "(This Field is Read Only)", //notTranslated
         HandleResolver: "Handle Resolver",  // not translated
         moderatorSettings: { // not translated
-          ProvideResolution: "Provide dispute resolution", // not translated
+          DisputeResolution: "Dispute Resolution", //notTranslated
           ServiceFee: "Service fee", // not translated
-          ServiceFeeNote: "Percentage of transaction price (max 25)" // not translated
+          ServiceFeeNote: "Min: 0%, Max: 25%"//notTranslated
         },
+        BecomeModerator: "Become a moderator",//notTranslated
+        EditModerator: "Moderator Settings",//notTranslated
         transactions: {
-          SoldBy: "Sold By", // not translated
-          PurchasedBy: "Purchased By", // not translated
+          OrderDetails: "Order Details", //notTranslated
+          SoldBy: "Seller", // not translated
+          PurchasedBy: "Buyer", // not translated
           searchByOrder: "Search by order id or item name", // not translated
           sortByStatusAll: "All", // not translated
           sortByStatus0: "Purchased", // not translated
-          sortByStatus1: "Paid (Funds Waiting)", // not translated
+          sortByStatus1: "Ready to process (Paid in full)", // not translated
           sortByStatus2: "Confirmed/Shipped", // not translated
           sortByStatus3: "Completed (Funds Released)", // not translated
           sortByStatus4: "Disputed", // not translated
@@ -2318,17 +2599,20 @@ module.exports = Backbone.Model.extend({
           OrderDate: "Order Date", // not translated
           OrderStatus: "Order Status", // not translated
           OrderStatus0: "Purchased (Not Funded)", // not translated
-          OrderStatus1: "Paid (Funds Waiting)", // not translated
+          OrderStatus1: "Ready to process (Paid in full)", // not translated
           OrderStatus2: "Confirmed/Shipped", // not translated
           OrderStatus3: "Completed (Funds Released)", // not translated
           OrderStatus4: "Disputed", // not translated
+          InEscrow: "- In Escrow", // not translated
           OrderTotal: "Order Total", // not translated
           OrderTotalInBTC: "BTC Total", // not translated
           PaymentProtection: "Payment Protection", // not translated
           ShipTo: "Ship To", // not translated
-          ConfirmOrder: "Confirm this Order", // not translated
+          ConfirmOrder: "Confirm Order", // not translated
           ReceivingAddress: "Receiving Address", // not translated
           RecievingAddressPlaceholder: "Bitcoin address you will receive payment at", // not translated
+          Comments: "Comments", // not translated
+          CommentsPlaceHolder: "Comments on the order, if any", // not translated
           Shipper: "Item Shipped By", // not translated
           ShipperPlaceholder: "Name of the company shipping the item", // not translated
           TrackingNumber: "Tracking Number", // not translated
@@ -2343,7 +2627,8 @@ module.exports = Backbone.Model.extend({
           ModeratedTransaction: "Moderated transaction", // not translated
           Seller: "Seller", // not translated
           Buyer: "Buyer", // not translated
-          transferReceipt: "transferReceipt", // not translated
+          Moderator: "Moderator", //not translated
+          transferReceipt: "Transfer Receipt", // not translated
           copyTxid: "copy tx ID", // not translated
           Close: "Close", // not translated
           FundOrder: "Fund Order", // not translated
@@ -2360,7 +2645,12 @@ module.exports = Backbone.Model.extend({
           CustomerService: "Customer Service", // not translated
           Review: "Review", // not translated
           ReviewPlaceHolder: "Your review of this transaction", // not translated
-          NoneSent: "None sent" // not translated
+          NoneSent: "None sent", // not translated
+          ModerationFee: "Moderation Fee:", // not translated
+          DisputeTransaction: "Start a Dispute", // not translated
+          sendMessagePlaceholder: "Type your message here.", // not translated
+          DisputeInstructions: "To file a dispute for this transaction, type the reason for the dispute below, and click the Start a Dispute button. This will begin a discussion between you, the seller, and the moderator. The moderator will make the final decision as to whether any funds are returned to you, and how much. The moderator's fee will be paid out of the funds you have already sent.", // not translated
+          SendMessage: "Send" // not translated
         },
         errorMessages: {
           saveError: "Datele nu au putut fi salvate.",
@@ -2372,7 +2662,7 @@ module.exports = Backbone.Model.extend({
           notFoundError: "Nu pot fi încarcate datele pentru:",
           socketError: "URL pentru WebSocket a eșuat. Conectarea la socket cu adresa implicită ws://localhost:18466",
           contractError: "Acest Articol Nu Poate Fi Procurat",
-          sellerError: "Serverul vânzătorului a respins cererea de cumpărare",
+          sellerError: "Serverul vânzătorului a respins cererea de cumpărare. This may be due to a connection issue.", // not translated
           checkPurchaseData: "Check your purchase data, such as quantity and Bitcoin refund address, to make sure it is valid", //not translated
           pageUnavailable: "This page is currently unavailable.",  //notTranslated
           badHandle: "The handle you entered does not have a valid OpenBazaar ID"//notTranslated
@@ -2381,7 +2671,7 @@ module.exports = Backbone.Model.extend({
           about: "", //notTranslated
           contributors: "<ul><li>Giannis Adamopoulos</li><li>Ariadni-Karolina Alexiou</li><li>Tikhon Bernstam</li><li>Brad Burnham</li><li>George Chatzisofroniou</li><li>Patrick Connolly</li><li>Chris Dixon</li><li>Simon de la Rouviere</li><li>Braden Glasgow</li><li>Brian Hoffman</li><li>Ben Holden-Crowther</li><li>Joshua Jeffryes</li><li>Nikolas Korasidis</li><li>Regan Lawton</li><li>Sami Lehtinen</li><li>Angel Leon</li><li>Joye Lin</li><li>Joel Monegro</li><li>William Mougayar</li><li>Jonas David Nick</li><li>Onename</li><li>Chris Pacia</li><li>Sam Patterson</li><li>Chara Podimata</li><li>Samuel Reed</li><li>Washington Sanchez</li><li>Aeron Paul Sioson</li><li>Adrian Smith</li><li>Adam Snodgrass</li><li>Thomas Stilwell</li><li>Amir Taaki</li><li>Mike Wolf</li><li>Dionysis Zindros</li><li>secret-bitcoin-login</li><li>Rav3nPL</li><li>El--Presidente</li><li>Tinytin</li><li>ULRichard</li></ul>", //notTranslated
           support: "", //notTranslated
-          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>autobahn</li><li>python-obelisk</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li></ul>", //notTranslated
+          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>txws</li><li>python-libbitcoin client</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li><li>python-bitcoinlib</li></ul>", //notTranslated
         },
         saveMessages: {
           Saved: "Salvat",
@@ -2401,7 +2691,7 @@ module.exports = Backbone.Model.extend({
           listingsAll: "Din toate magazinele"
         },
         nav: {
-          searchPlaceholder: "Type a @handle, GUID or #tag...", //notTranslated
+          searchPlaceholder: "Type a @handle, OpenBazaar ID or #tag...", //notTranslated
           myPage: "Pagina mea",
           customizePage:"Customizare Pagină",
           sellItem:"Nou",
@@ -2447,6 +2737,19 @@ module.exports = Backbone.Model.extend({
           Finished: "Finished" //notTranslated
         },
         buyFlow: {
+          PayForOrder: "Pay for Order", //notTranslated
+          NeedTempAddress: "I need a temporary Bitcoin address", //notTranslated
+          NeedTempAddressHelper: "Please bookmark the url to your temporary bitcoin address", //notTranslated
+          CantFindAddress: "I can't find my bitcoin address", //notTranslated
+          BitcoinWallet: "Bitcoin Wallet", //notTranslated
+          ModeratedPaymentDescription: "Your payment is held in a secure wallet until the seller completes their end of the agreement. If issues arise, a Moderator will help.", //notTranslated
+          ModeratorFeeHelper: "The moderator may charge a fee, but only if a dispute arises.", //notTranslated
+          ModeratedPayment: "Moderated Payment", //notTranslated
+          DisputeFee: "Dispute fee", //notTranslated
+          HaveWallet: "Do you have a Bitcoin Wallet?", //notTranslated
+          QuickSetup: "It only takes a few minutes to set one up", //notTranslated
+          CreateWallet: "Create a Wallet", //notTranslated
+          DirectPaymentDescription: "Funds are sent directly to the seller. Only use on small purchases or when purchasing from a trusted seller.", //notTranslated
           DirectPayment: "Direct Payment", //notTranslated
           SendDirectlyTo: "Send direct payment to %{handle}", //notTranslated
           MustAddAddress: "Trebuie să adăugați o adesă pentru livrare",
@@ -2463,28 +2766,49 @@ module.exports = Backbone.Model.extend({
           summaryMsg3: "You can check the status of your order on your", //notTranslated
           purchasesPage: "purchases page", //notTranslated
           returnAddress: "Return Address", //notTranslated
-          moderatorPaymentDisclaimer: "Only applies if the transaction ends in a dispute.", //notTranslated
+          moderatorPaymentDisclaimer: "Paid from the total if the transaction ends in a dispute.", //notTranslated
           directPaymentDisclaimer: "Use direct payment with caution, funds are irreversible", //notTranslated
-          directPaymentTo: "Direct Payment to", //notTranslated
           paymentSent: "Payment Sent!", //notTranslated
           total: "Total" //notTranslated
         },
         chat: {
           noSearchResultsFound: "No results found" //notTranslated
+        },
+        serverConnectModal: {
+          statusTryingToConnect: "Trying to connect to your server", //notTranslated
+          statusConnected: "Connected", //notTranslated
+          statusFailedConnection: "Unable to connect to your server", //notTranslated
+          statusFailedAuthentication: "Authentication failed", //notTranslated
+          statusFailedAuthentication: "Authentication failed", //notTranslated
+          serverConfiguration: "Server Configuration", //notTranslated
+          attempt: "Attempt", //notTranslated
+          intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
+          serverIP: "Server IP", //notTranslated
+          restApiPort: "Rest API port", //notTranslated
+          websocketApiPort: "Websocket API port", //notTranslated
+          heartbeatSocketApiPort: "Heartbeat socket port", //notTranslated
+          username: "Username", //notTranslated
+          password: "Password", //notTranslated                    
+          restoreDefaults: "Restore defaults", //notTranslated                    
+          saveChanges: "Save Changes", //notTranslated                    
+          retry: "Retry", //notTranslated 
         }        
       },
       {
         langName: "Russian",
         langCode: "ru",
         /* Use capitalized keys for widely reused text that must be capitalized */
+        IHaveAWalletNow: "I have a Wallet now", //notTranslated
         Next: "Далее",
         IAgree: "Согласен",
         Back: "Назад",
         EnterMessage: "Ввести сообщение...",
+        Recommended: "Recommended", //notTranslated
         Reload: "Обновить",
         You: "Вы",
         Skip: "Пропустить",
         Done: "Готово",
+        Status: "Status",
         Navigation: "Навигация",
         Cancel: "Отмена",
         Yes: "Да",
@@ -2495,6 +2819,9 @@ module.exports = Backbone.Model.extend({
         Excellent: "Идеальное",
         Good: "Хорошее",
         Poor: "Плохое",
+        StillValidating: "Your handle is still validating", //notTranslated
+        CheckStatus: "Check Status", //notTranslated
+        ChangeCurrency: "Change currency", //notTranslated
         SKU: "SKU",
         Refurbished: "Восстановленный",
         Physical: "Физический",
@@ -2525,15 +2852,15 @@ module.exports = Backbone.Model.extend({
         DontDelete: "Не удалять",
         ConfirmDelete: "Да, удалить",
         Website: "Веб-сайт",
-        Guid: "OpenBazaar ID (GUID)",
+        Guid: "OpenBazaar ID",
         Welcome: "Welcome",
         CreateStore: "Создать магазин",
         GoToMyPage: "Моя страница",
         SearchForItemsPlaceholder: "Type #games, #shoes or any #tag...", //notTranslated
         SearchForPagesPlaceholder: "Поиск по имени или ключевому слову",
-        SearchFeedPlaceholder: "Поиск по имени или GUID",
-        SearchForFollowersPlaceholder: "Поиск по имени или GUID",
-        SearchForUsersPlaceholder: "Поиск по имени или GUID",
+        SearchFeedPlaceholder: "Поиск по имени или OpenBazaar ID",
+        SearchForFollowersPlaceholder: "Поиск по имени или OpenBazaar ID",
+        SearchForUsersPlaceholder: "Поиск по имени или OpenBazaar ID",
         SearchOnUserStorePlaceholder: "Type a title...", //notTranslated
         EstDeliveryDomesticPlaceholder: "3-5 рабочих дней",
         EstDeliveryInternationalPlaceholder: "7-15 рабочих дней",
@@ -2578,9 +2905,9 @@ module.exports = Backbone.Model.extend({
         Changes: "Изменения",
         SaveChanges: "Применить",
         YourName: "Ваше имя",
-        BitcoinReturnAddress: "Биткойн-адрес",
+        BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
         BitcoinReturnAddressPlaceholder: "bitcoin address to return coins to", //not translated
-        BitcoinReturnAddressInfo: "In case of a refund, your funds will be issued to the following address.", //not translated
+        BitcoinReturnAddressInfo: "If a refund is issued, the funds will need to be sent to a Bitcoin address. Please provide an address to your Wallet below.", //not translated
         LocalCurrency: "Местная валюта",
         TimeZone: "Часовой пояс",
         ShipToName: "Имя",
@@ -2634,6 +2961,8 @@ module.exports = Backbone.Model.extend({
         AboutPlaceholder: "Полное описание",
         BackgroundColor: "Фоновый цвет",
         NotificationFollow: "подписан на вас",
+        NotificationDispute: "has opened a new dispute", //not translated
+        NotificationNewOrder: "has made a purchase", //not translated
         NoNotifications: "Нет уведомлений",
         WelcomeToYourPage: "Добро пожаловать!",
         SearchForCategory: "Поиск категории",
@@ -2708,13 +3037,18 @@ module.exports = Backbone.Model.extend({
         NotFollowingAnyone: "Not following anyone", // not translated
         NoFollowers: "No followers", // not translated
         Moderator: "Moderator", // not translated
+        Firewall: "Firewall", //notTranslated
+        ReadOnly: "(This Field is Read Only)", //notTranslated
         HandleResolver: "Handle Resolver",  // not translated
         moderatorSettings: { // not translated
-          ProvideResolution: "Provide dispute resolution", // not translated
+          DisputeResolution: "Dispute Resolution", //notTranslated
           ServiceFee: "Service fee", // not translated
-          ServiceFeeNote: "Percentage of transaction price (max 25)" // not translated
+          ServiceFeeNote: "Min: 0%, Max: 25%"//notTranslated
         },
+        BecomeModerator: "Become a moderator",//notTranslated
+        EditModerator: "Moderator Settings",//notTranslated
         transactions: {
+          OrderDetails: "Order Details", //notTranslated
           SoldBy: "Продано",
           PurchasedBy: "Куплено",
           searchByOrder: "Искать по номеру заказа",
@@ -2732,13 +3066,16 @@ module.exports = Backbone.Model.extend({
           OrderStatus2: "Подтверждено/выслано",
           OrderStatus3: "Завершено (средства освобождены)",
           OrderStatus4: "Оспорено",
+          InEscrow: "- In Escrow", // not translated
           OrderTotal: "Всего заказов",
           OrderTotalInBTC: "BTC Total", // not translated
           PaymentProtection: "Payment Protection", // not translated
           ShipTo: "Ship To", // not translated
-          ConfirmOrder: "Confirm this Order", // not translated
+          ConfirmOrder: "Confirm Order", // not translated
           ReceivingAddress: "Receiving Address", // not translated
           RecievingAddressPlaceholder: "Bitcoin address you will receive payment at", // not translated
+          Comments: "Comments", // not translated
+          CommentsPlaceHolder: "Comments on the order, if any", // not translated
           Shipper: "Item Shipped By", // not translated
           ShipperPlaceholder: "Name of the company shipping the item", // not translated
           TrackingNumber: "Tracking Number", // not translated
@@ -2753,7 +3090,8 @@ module.exports = Backbone.Model.extend({
           ModeratedTransaction: "Moderated transaction", // not translated
           Seller: "Seller", // not translated
           Buyer: "Buyer", // not translated
-          transferReceipt: "transferReceipt", // not translated
+          Moderator: "Moderator", //not translated
+          transferReceipt: "Transfer Receipt", // not translated
           copyTxid: "copy tx ID", // not translated
           Close: "Close", // not translated
           FundOrder: "Fund Order", // not translated
@@ -2770,7 +3108,12 @@ module.exports = Backbone.Model.extend({
           CustomerService: "Customer Service", // not translated
           Review: "Review", // not translated
           ReviewPlaceHolder: "Your review of this transaction", // not translated
-          NoneSent: "None sent" // not translated
+          NoneSent: "None sent", // not translated
+          ModerationFee: "Moderation Fee:", // not translated
+          DisputeTransaction: "Start a Dispute", // not translated
+          sendMessagePlaceholder: "Type your message here.", // not translated
+          DisputeInstructions: "To file a dispute for this transaction, type the reason for the dispute below, and click the Start a Dispute button. This will begin a discussion between you, the seller, and the moderator. The moderator will make the final decision as to whether any funds are returned to you, and how much. The moderator's fee will be paid out of the funds you have already sent.", // not translated
+          SendMessage: "Send" // not translated
         },
         errorMessages: {
           saveError: "Данные невозможно сохранить.",
@@ -2782,7 +3125,7 @@ module.exports = Backbone.Model.extend({
           notFoundError: "Данные нельзя загрузить для:",
           socketError: "URL для WebSocket недоступен. Подключаемся к адресу по умолчанию ws://localhost:18466",
           contractError: "Этот товар недоступен для продажи",
-          sellerError: "Сервер продавца отключил эту возможность",
+          sellerError: "Сервер продавца отключил эту возможность. This may be due to a connection issue.", // not translated
           checkPurchaseData: "Проверьте пожалуйста данные ваших покупок, такие как кол-во и адрес возврата Биткойнов, чтобы убедиться ", //not translated
           pageUnavailable: "This page is currently unavailable.",  //notTranslated
           badHandle: "The handle you entered does not have a valid OpenBazaar ID"//notTranslated
@@ -2791,7 +3134,7 @@ module.exports = Backbone.Model.extend({
           about: "о нас",
           contributors: "<ul><li>Giannis Adamopoulos</li><li>Ariadni-Karolina Alexiou</li><li>Tikhon Bernstam</li><li>Brad Burnham</li><li>George Chatzisofroniou</li><li>Patrick Connolly</li><li>Chris Dixon</li><li>Simon de la Rouviere</li><li>Braden Glasgow</li><li>Brian Hoffman</li><li>Ben Holden-Crowther</li><li>Joshua Jeffryes</li><li>Nikolas Korasidis</li><li>Regan Lawton</li><li>Sami Lehtinen</li><li>Angel Leon</li><li>Joye Lin</li><li>Joel Monegro</li><li>William Mougayar</li><li>Jonas David Nick</li><li>Onename</li><li>Chris Pacia</li><li>Sam Patterson</li><li>Chara Podimata</li><li>Samuel Reed</li><li>Washington Sanchez</li><li>Aeron Paul Sioson</li><li>Adrian Smith</li><li>Adam Snodgrass</li><li>Thomas Stilwell</li><li>Amir Taaki</li><li>Mike Wolf</li><li>Dionysis Zindros</li><li>secret-bitcoin-login</li><li>Rav3nPL</li><li>El--Presidente</li><li>Tinytin</li><li>ULRichard</li></ul>",
           support: "поддержка",
-          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>autobahn</li><li>python-obelisk</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li></ul>",
+          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>txws</li><li>python-libbitcoin client</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li><li>python-bitcoinlib</li></ul>",
         },
         saveMessages: {
           Saved: "Сохранено",
@@ -2811,7 +3154,7 @@ module.exports = Backbone.Model.extend({
           listingsAll: "Со всех магазинов"
         },
         nav: {
-          searchPlaceholder: "Type a @handle, GUID or #tag...", //notTranslated
+          searchPlaceholder: "Type a @handle, OpenBazaar ID or #tag...", //notTranslated
           myPage: "Моя страница",
           customizePage:"Настроить страницу",
           sellItem:"Разместить товар",
@@ -2857,6 +3200,19 @@ module.exports = Backbone.Model.extend({
           Finished: "Завершено"
         },
         buyFlow: {
+          PayForOrder: "Pay for Order", //notTranslated
+          NeedTempAddress: "I need a temporary Bitcoin address", //notTranslated
+          NeedTempAddressHelper: "Please bookmark the url to your temporary bitcoin address", //notTranslated
+          CantFindAddress: "I can't find my bitcoin address", //notTranslated
+          BitcoinWallet: "Bitcoin Wallet", //notTranslated
+          ModeratedPaymentDescription: "Your payment is held in a secure wallet until the seller completes their end of the agreement. If issues arise, a Moderator will help.", //notTranslated
+          ModeratorFeeHelper: "The moderator may charge a fee, but only if a dispute arises.", //notTranslated
+          ModeratedPayment: "Moderated Payment", //notTranslated
+          DisputeFee: "Dispute fee", //notTranslated
+          HaveWallet: "Do you have a Bitcoin Wallet?", //notTranslated
+          QuickSetup: "It only takes a few minutes to set one up", //notTranslated
+          CreateWallet: "Create a Wallet", //notTranslated
+          DirectPaymentDescription: "Funds are sent directly to the seller. Only use on small purchases or when purchasing from a trusted seller.", //notTranslated
           DirectPayment: "Оплатить напрямую",
           SendDirectlyTo: "Отправка прямого платежа %{handle}",
           MustAddAddress: "Вы должны указать адрес для доставки",
@@ -2873,28 +3229,48 @@ module.exports = Backbone.Model.extend({
           summaryMsg3: "Чтобы проверить статус вашего заказа, загляните в",
           purchasesPage: "интерфейс покупок",
           returnAddress: "адрес возврата",
-          moderatorPaymentDisclaimer: "Применяется только в случаях если транзакция имеет статус спора.",
+          moderatorPaymentDisclaimer: "Paid from the total if the transaction ends in a dispute.", // not translated
           directPaymentDisclaimer: "Будьте осторожны при отправке средств напрямую, средства невозвратимы",
-          directPaymentTo: "Прямой платёж",
           paymentSent: "Платёж отправлен!",
           total: "Всего"
         },
         chat: {
           noSearchResultsFound: "No results found" //notTranslated
+        },
+        serverConnectModal: {
+          statusTryingToConnect: "Trying to connect to your server", //notTranslated
+          statusConnected: "Connected", //notTranslated
+          statusFailedConnection: "Unable to connect to your server", //notTranslated
+          statusFailedAuthentication: "Authentication failed", //notTranslated
+          serverConfiguration: "Server Configuration", //notTranslated
+          attempt: "Attempt", //notTranslated
+          intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
+          serverIP: "Server IP", //notTranslated
+          restApiPort: "Rest API port", //notTranslated
+          websocketApiPort: "Websocket API port", //notTranslated
+          heartbeatSocketApiPort: "Heartbeat socket port", //notTranslated
+          username: "Username", //notTranslated
+          password: "Password", //notTranslated                    
+          restoreDefaults: "Restore defaults", //notTranslated                    
+          saveChanges: "Save Changes", //notTranslated                    
+          retry: "Retry", //notTranslated 
         }        
       },
       {
         langName: "Slovak",
         langCode: "sk",
         /* Use capitalized keys for widely reused text that must be capitalized */
+        IHaveAWalletNow: "I have a Wallet now", //notTranslated
         Next: "Ďalej",
         IAgree: "Súhlasím",
         Back: "Späť",
         EnterMessage: "Vložte správu...",
+        Recommended: "Recommended", //notTranslated
         Reload: "Reload", //notTranslated
         You: "You", //notTranslated
         Skip: "Preskočiť",
         Done: "Hotovo",
+        Status: "Status",
         Navigation: "Navigation", //notTranslated
         Cancel: "Zrušiť",
         Yes: "Áno",
@@ -2905,6 +3281,9 @@ module.exports = Backbone.Model.extend({
         Excellent: "Výborné",
         Good: "Dobré",
         Poor: "Nič moc",
+        StillValidating: "Your handle is still validating", //notTranslated
+        CheckStatus: "Check Status", //notTranslated
+        ChangeCurrency: "Change currency", //notTranslated
         SKU: "SKU",
         Refurbished: "Renovované",
         Physical: "Fyzické",
@@ -2934,15 +3313,15 @@ module.exports = Backbone.Model.extend({
         DontDelete: "Nevymazávajte",
         ConfirmDelete: "Potvrďte vymazanie",
         Website: "Webstránka",
-        Guid: "OpenBazaar ID (GUID)",
+        Guid: "OpenBazaar ID",
         Welcome: "Vitajte",
         CreateStore: "Vytvorte si obchod",
         GoToMyPage: "Moja stránka",
         SearchForItemsPlaceholder: "Type #games, #shoes or any #tag...", //notTranslated
         SearchForPagesPlaceholder: "Vyhľadať podľa mena alebo kľúčového slova",
-        SearchFeedPlaceholder: "Vyhľadať podľa prezývky alebo GUID",
-        SearchForFollowersPlaceholder: "Vyhľadať podľa prezývky alebo GUID",
-        SearchForUsersPlaceholder: "Vyhľadať podľa prezývky alebo GUID",
+        SearchFeedPlaceholder: "Vyhľadať podľa prezývky alebo OpenBazaar ID",
+        SearchForFollowersPlaceholder: "Vyhľadať podľa prezývky alebo OpenBazaar ID",
+        SearchForUsersPlaceholder: "Vyhľadať podľa prezývky alebo OpenBazaar ID",
         SearchOnUserStorePlaceholder: "Type a title...", //notTranslated
         EstDeliveryDomesticPlaceholder: "3-5 pracovných dní",
         EstDeliveryInternationalPlaceholder: "7-15 pracovných dní",
@@ -2987,9 +3366,9 @@ module.exports = Backbone.Model.extend({
         Changes: "Zmeny",
         SaveChanges: "Uložiť zmeny",
         YourName: "Vaše meno",
-        BitcoinReturnAddress: "Bitcoinová adresa",
+        BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
         BitcoinReturnAddressPlaceholder: "bitcoin address to return coins to", //not translated
-        BitcoinReturnAddressInfo: "In case of a refund, your funds will be issued to the following address.", //not translated
+        BitcoinReturnAddressInfo: "If a refund is issued, the funds will need to be sent to a Bitcoin address. Please provide an address to your Wallet below.", //not translated
         LocalCurrency: "Lokálna mena",
         TimeZone: "Časové pásmo",
         ShipToName: "Meno",
@@ -3044,6 +3423,8 @@ module.exports = Backbone.Model.extend({
         AboutPlaceholder: "Plný popis",
         BackgroundColor: "Farba pozadia",
         NotificationFollow: "vás od teraz sleduje",
+        NotificationDispute: "has opened a new dispute", //not translated
+        NotificationNewOrder: "has made a purchase", //not translated
         NoNotifications: "Žiadne notifikácie",
         WelcomeToYourPage: "Vitajte na svojej stránke!",
         SearchForCategory: "Hľadať kategóriu",
@@ -3118,19 +3499,24 @@ module.exports = Backbone.Model.extend({
         NotFollowingAnyone: "Not following anyone", // not translated
         NoFollowers: "No followers", // not translated
         Moderator: "Moderator", // not translated
+        Firewall: "Firewall", //notTranslated
+        ReadOnly: "(This Field is Read Only)", //notTranslated
         HandleResolver: "Handle Resolver",  // not translated
         moderatorSettings: { // not translated
-          ProvideResolution: "Provide dispute resolution", // not translated
+          DisputeResolution: "Dispute Resolution", //notTranslated
           ServiceFee: "Service fee", // not translated
-          ServiceFeeNote: "Percentage of transaction price (max 25)" // not translated
+          ServiceFeeNote: "Min: 0%, Max: 25%"//notTranslated
         },
+        BecomeModerator: "Become a moderator",//notTranslated
+        EditModerator: "Moderator Settings",//notTranslated
         transactions: {
-          SoldBy: "Sold By", // not translated
-          PurchasedBy: "Purchased By", // not translated
+          OrderDetails: "Order Details", //notTranslated
+          SoldBy: "Seller", // not translated
+          PurchasedBy: "Buyer", // not translated
           searchByOrder: "Search by order id or item name", // not translated
           sortByStatusAll: "All", // not translated
           sortByStatus0: "Purchased", // not translated
-          sortByStatus1: "Paid (Funds Waiting)", // not translated
+          sortByStatus1: "Ready to process (Paid in full)", // not translated
           sortByStatus2: "Confirmed/Shipped", // not translated
           sortByStatus3: "Completed (Funds Released)", // not translated
           sortByStatus4: "Disputed", // not translated
@@ -3138,17 +3524,20 @@ module.exports = Backbone.Model.extend({
           OrderDate: "Order Date", // not translated
           OrderStatus: "Order Status", // not translated
           OrderStatus0: "Purchased (Not Funded)", // not translated
-          OrderStatus1: "Paid (Funds Waiting)", // not translated
+          OrderStatus1: "Ready to process (Paid in full)", // not translated
           OrderStatus2: "Confirmed/Shipped", // not translated
           OrderStatus3: "Completed (Funds Released)", // not translated
           OrderStatus4: "Disputed", // not translated
+          InEscrow: "- In Escrow", // not translated
           OrderTotal: "Order Total", // not translated
           OrderTotalInBTC: "BTC Total", // not translated
           PaymentProtection: "Payment Protection", // not translated
           ShipTo: "Ship To", // not translated
-          ConfirmOrder: "Confirm this Order", // not translated
+          ConfirmOrder: "Confirm Order", // not translated
           ReceivingAddress: "Receiving Address", // not translated
           RecievingAddressPlaceholder: "Bitcoin address you will receive payment at", // not translated
+          Comments: "Comments", // not translated
+          CommentsPlaceHolder: "Comments on the order, if any", // not translated
           Shipper: "Item Shipped By", // not translated
           ShipperPlaceholder: "Name of the company shipping the item", // not translated
           TrackingNumber: "Tracking Number", // not translated
@@ -3163,7 +3552,8 @@ module.exports = Backbone.Model.extend({
           ModeratedTransaction: "Moderated transaction", // not translated
           Seller: "Seller", // not translated
           Buyer: "Buyer", // not translated
-          transferReceipt: "transferReceipt", // not translated
+          Moderator: "Moderator", //not translated
+          transferReceipt: "Transfer Receipt", // not translated
           copyTxid: "copy tx ID", // not translated
           Close: "Close", // not translated
           FundOrder: "Fund Order", // not translated
@@ -3180,7 +3570,12 @@ module.exports = Backbone.Model.extend({
           CustomerService: "Customer Service", // not translated
           Review: "Review", // not translated
           ReviewPlaceHolder: "Your review of this transaction", // not translated
-          NoneSent: "None sent" // not translated
+          NoneSent: "None sent", // not translated
+          ModerationFee: "Moderation Fee:", // not translated
+          DisputeTransaction: "Start a Dispute", // not translated
+          sendMessagePlaceholder: "Type your message here.", // not translated
+          DisputeInstructions: "To file a dispute for this transaction, type the reason for the dispute below, and click the Start a Dispute button. This will begin a discussion between you, the seller, and the moderator. The moderator will make the final decision as to whether any funds are returned to you, and how much. The moderator's fee will be paid out of the funds you have already sent.", // not translated
+          SendMessage: "Send" // not translated
         },
         errorMessages: {
           saveError: "Nepodarilo sa uložiť údaje.",
@@ -3192,7 +3587,7 @@ module.exports = Backbone.Model.extend({
           notFoundError: "Nepodarilo sa načítať údaje o:",
           socketError: "URL for WebSocket failed. Connecting to socket with default address of ws://localhost:18466",
           contractError: "Nákup položky neprebehol.",
-          sellerError: "Predajcov server odmietol žiadosť o nákup.",
+          sellerError: "Predajcov server odmietol žiadosť o nákup. This may be due to a connection issue.", // not translated
           checkPurchaseData: "Check your purchase data, such as quantity and Bitcoin refund address, to make sure it is valid", //not translated
           pageUnavailable: "This page is currently unavailable.",  //notTranslated
           badHandle: "The handle you entered does not have a valid OpenBazaar ID"//notTranslated
@@ -3201,7 +3596,7 @@ module.exports = Backbone.Model.extend({
           about: "", //notTranslated
           contributors: "<ul><li>Giannis Adamopoulos</li><li>Ariadni-Karolina Alexiou</li><li>Tikhon Bernstam</li><li>Brad Burnham</li><li>George Chatzisofroniou</li><li>Patrick Connolly</li><li>Chris Dixon</li><li>Simon de la Rouviere</li><li>Braden Glasgow</li><li>Brian Hoffman</li><li>Ben Holden-Crowther</li><li>Joshua Jeffryes</li><li>Nikolas Korasidis</li><li>Regan Lawton</li><li>Sami Lehtinen</li><li>Angel Leon</li><li>Joye Lin</li><li>Joel Monegro</li><li>William Mougayar</li><li>Jonas David Nick</li><li>Onename</li><li>Chris Pacia</li><li>Sam Patterson</li><li>Chara Podimata</li><li>Samuel Reed</li><li>Washington Sanchez</li><li>Aeron Paul Sioson</li><li>Adrian Smith</li><li>Adam Snodgrass</li><li>Thomas Stilwell</li><li>Amir Taaki</li><li>Mike Wolf</li><li>Dionysis Zindros</li><li>secret-bitcoin-login</li><li>Rav3nPL</li><li>El--Presidente</li><li>Tinytin</li><li>ULRichard</li></ul>", //notTranslated
           support: "", //notTranslated
-          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>autobahn</li><li>python-obelisk</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li></ul>", //notTranslated
+          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>txws</li><li>python-libbitcoin client</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li><li>python-bitcoinlib</li></ul>", //notTranslated
         },
         saveMessages: {
           Saved: "Uložené",
@@ -3221,7 +3616,7 @@ module.exports = Backbone.Model.extend({
           listingsAll: "Zo všetkých obchodov"
         },
         nav: {
-          searchPlaceholder: "Type a @handle, GUID or #tag...", //notTranslated
+          searchPlaceholder: "Type a @handle, OpenBazaar ID or #tag...", //notTranslated
           myPage: "Moja stránka",
           customizePage:"Upraviť stránku",
           sellItem:"Nová položka",
@@ -3267,6 +3662,19 @@ module.exports = Backbone.Model.extend({
           Finished: "Finished" //notTranslated
         },
         buyFlow: {
+          PayForOrder: "Pay for Order", //notTranslated
+          NeedTempAddress: "I need a temporary Bitcoin address", //notTranslated
+          NeedTempAddressHelper: "Please bookmark the url to your temporary bitcoin address", //notTranslated
+          CantFindAddress: "I can't find my bitcoin address", //notTranslated
+          BitcoinWallet: "Bitcoin Wallet", //notTranslated
+          ModeratedPaymentDescription: "Your payment is held in a secure wallet until the seller completes their end of the agreement. If issues arise, a Moderator will help.", //notTranslated
+          ModeratorFeeHelper: "The moderator may charge a fee, but only if a dispute arises.", //notTranslated
+          ModeratedPayment: "Moderated Payment", //notTranslated
+          DisputeFee: "Dispute fee", //notTranslated
+          HaveWallet: "Do you have a Bitcoin Wallet?", //notTranslated
+          QuickSetup: "It only takes a few minutes to set one up", //notTranslated
+          CreateWallet: "Create a Wallet", //notTranslated
+          DirectPaymentDescription: "Funds are sent directly to the seller. Only use on small purchases or when purchasing from a trusted seller.", //notTranslated
           DirectPayment: "Direct Payment", //notTranslated
           SendDirectlyTo: "Send direct payment to %{handle}", //notTranslated
           MustAddAddress: "Musíte zadať adresu pre doručenie",
@@ -3283,28 +3691,48 @@ module.exports = Backbone.Model.extend({
           summaryMsg3: "You can check the status of your order on your", //notTranslated
           purchasesPage: "purchases page", //notTranslated
           returnAddress: "Return Address", //notTranslated
-          moderatorPaymentDisclaimer: "Only applies if the transaction ends in a dispute.", //notTranslated
+          moderatorPaymentDisclaimer: "Paid from the total if the transaction ends in a dispute.", //notTranslated
           directPaymentDisclaimer: "Use direct payment with caution, funds are irreversible", //notTranslated
-          directPaymentTo: "Direct Payment to", //notTranslated
           paymentSent: "Payment Sent!", //notTranslated
           total: "Total" //notTranslated
         },
         chat: {
           noSearchResultsFound: "No results found" //notTranslated
+        },
+        serverConnectModal: {
+          statusTryingToConnect: "Trying to connect to your server", //notTranslated
+          statusConnected: "Connected", //notTranslated
+          statusFailedConnection: "Unable to connect to your server", //notTranslated
+          statusFailedAuthentication: "Authentication failed", //notTranslated
+          serverConfiguration: "Server Configuration", //notTranslated
+          attempt: "Attempt", //notTranslated
+          intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
+          serverIP: "Server IP", //notTranslated
+          restApiPort: "Rest API port", //notTranslated
+          websocketApiPort: "Websocket API port", //notTranslated
+          heartbeatSocketApiPort: "Heartbeat socket port", //notTranslated
+          username: "Username", //notTranslated
+          password: "Password", //notTranslated                    
+          restoreDefaults: "Restore defaults", //notTranslated                    
+          saveChanges: "Save Changes", //notTranslated                    
+          retry: "Retry", //notTranslated 
         }        
       },
       {
         langName: "Turkish",
         langCode: "tr",
         /* Use capitalized keys for widely reused text that must be capitalized */
+        IHaveAWalletNow: "I have a Wallet now", //notTranslated
         Next: "Sonraki",
         IAgree: "Kabul ediyorum",
         Back: "Geri",
         EnterMessage: "İletinizi yazın...",
+        Recommended: "Recommended", //notTranslated
         Reload: "Reload", //notTranslated
         You: "You", //notTranslated
         Skip: "Atla",
         Done: "Tamam",
+        Status: "Status",
         Navigation: "Navigation", //notTranslated
         Cancel: "İptal",
         ClosingOpenBazaar: "Close (Your page will go offline)", //notTranslated
@@ -3319,6 +3747,9 @@ module.exports = Backbone.Model.extend({
         Excellent: "Çok iyi",
         Good: "İyi",
         Poor: "İyi değil",
+        StillValidating: "Your handle is still validating", //notTranslated
+        CheckStatus: "Check Status", //notTranslated
+        ChangeCurrency: "Change currency", //notTranslated
         SKU: "Stok Takip Kodu",
         Refurbished: "Yenilenmiş",
         Physical: "Fiziksel",
@@ -3349,15 +3780,15 @@ module.exports = Backbone.Model.extend({
         DontDelete: "Silme",
         ConfirmDelete: "Silmeyi Onayla",
         Website: "Websitesi",
-        Guid: "OpenBazaar ID (GUID)",
+        Guid: "OpenBazaar ID",
         Welcome: "Hoşgeldiniz",
         CreateStore: "Mağaza Oluşturun",
         GoToMyPage: "Sayfam",
         SearchForItemsPlaceholder: "Type #games, #shoes or any #tag...", //notTranslated
         SearchForPagesPlaceholder: "Bir ad ya da anahtar sözcük Ara",
-        SearchFeedPlaceholder: "Takma ad ya da GUID Ara",
-        SearchForFollowersPlaceholder: "Takma ad ya da GUID Ara",
-        SearchForUsersPlaceholder: "Takma ad ya da GUID Ara",
+        SearchFeedPlaceholder: "Takma ad ya da OpenBazaar ID Ara",
+        SearchForFollowersPlaceholder: "Takma ad ya da OpenBazaar ID Ara",
+        SearchForUsersPlaceholder: "Takma ad ya da OpenBazaar ID Ara",
         SearchOnUserStorePlaceholder: "Type a title...", //notTranslated
         EstDeliveryDomesticPlaceholder: "3-5 İş Günü",
         EstDeliveryInternationalPlaceholder: "7-15 İş Günü",
@@ -3404,9 +3835,9 @@ module.exports = Backbone.Model.extend({
         Changes: "Değişiklikler",
         SaveChanges: "Değişiklikleri Kaydet",
         YourName: "Adınız",
-        BitcoinReturnAddress: "Bitcoin adresiniz",
+        BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
         BitcoinReturnAddressPlaceholder: "bitcoin address to return coins to", //not translated
-        BitcoinReturnAddressInfo: "In case of a refund, your funds will be issued to the following address.", //not translated
+        BitcoinReturnAddressInfo: "If a refund is issued, the funds will need to be sent to a Bitcoin address. Please provide an address to your Wallet below.", //not translated
         LocalCurrency: "Yerel para birimi",
         TimeZone: "Saat Dilimi",
         ShipToName: "Ad",
@@ -3458,6 +3889,8 @@ module.exports = Backbone.Model.extend({
         AboutPlaceholder: "Tam açıklama",
         BackgroundColor: "Arkaplan Rengi",
         NotificationFollow: "sizi takip etmeye başladı",
+        NotificationDispute: "has opened a new dispute", //not translated
+        NotificationNewOrder: "has made a purchase", //not translated
         NoNotifications: "Bildirim yok",
         WelcomeToYourPage: "Sayfanıza hoşgeldiniz!",
         SearchForCategory: "Kategori Ara",
@@ -3532,19 +3965,24 @@ module.exports = Backbone.Model.extend({
         NotFollowingAnyone: "Not following anyone", // not translated
         NoFollowers: "No followers", // not translated
         Moderator: "Moderator", // not translated
+        Firewall: "Firewall", //notTranslated
+        ReadOnly: "(This Field is Read Only)", //notTranslated
         HandleResolver: "Handle Resolver",  // not translated
         moderatorSettings: { // not translated
-          ProvideResolution: "Provide dispute resolution", // not translated
+          DisputeResolution: "Dispute Resolution", //notTranslated
           ServiceFee: "Service fee", // not translated
-          ServiceFeeNote: "Percentage of transaction price (max 25)" // not translated
+          ServiceFeeNote: "Min: 0%, Max: 25%"//notTranslated
         },
+        BecomeModerator: "Become a moderator",//notTranslated
+        EditModerator: "Moderator Settings",//notTranslated
         transactions: {
-          SoldBy: "Sold By", // not translated
-          PurchasedBy: "Purchased By", // not translated
+          OrderDetails: "Order Details", //notTranslated
+          SoldBy: "Seller", // not translated
+          PurchasedBy: "Buyer", // not translated
           searchByOrder: "Search by order id or item name", // not translated
           sortByStatusAll: "All", // not translated
           sortByStatus0: "Purchased", // not translated
-          sortByStatus1: "Paid (Funds Waiting)", // not translated
+          sortByStatus1: "Ready to process (Paid in full)", // not translated
           sortByStatus2: "Confirmed/Shipped", // not translated
           sortByStatus3: "Completed (Funds Released)", // not translated
           sortByStatus4: "Disputed", // not translated
@@ -3552,17 +3990,20 @@ module.exports = Backbone.Model.extend({
           OrderDate: "Order Date", // not translated
           OrderStatus: "Order Status", // not translated
           OrderStatus0: "Purchased (Not Funded)", // not translated
-          OrderStatus1: "Paid (Funds Waiting)", // not translated
+          OrderStatus1: "Ready to process (Paid in full)", // not translated
           OrderStatus2: "Confirmed/Shipped", // not translated
           OrderStatus3: "Completed (Funds Released)", // not translated
           OrderStatus4: "Disputed", // not translated
+          InEscrow: "- In Escrow", // not translated
           OrderTotal: "Order Total", // not translated
           OrderTotalInBTC: "BTC Total", // not translated
           PaymentProtection: "Payment Protection", // not translated
           ShipTo: "Ship To", // not translated
-          ConfirmOrder: "Confirm this Order", // not translated
+          ConfirmOrder: "Confirm Order", // not translated
           ReceivingAddress: "Receiving Address", // not translated
           RecievingAddressPlaceholder: "Bitcoin address you will receive payment at", // not translated
+          Comments: "Comments", // not translated
+          CommentsPlaceHolder: "Comments on the order, if any", // not translated
           Shipper: "Item Shipped By", // not translated
           ShipperPlaceholder: "Name of the company shipping the item", // not translated
           TrackingNumber: "Tracking Number", // not translated
@@ -3577,7 +4018,8 @@ module.exports = Backbone.Model.extend({
           ModeratedTransaction: "Moderated transaction", // not translated
           Seller: "Seller", // not translated
           Buyer: "Buyer", // not translated
-          transferReceipt: "transferReceipt", // not translated
+          Moderator: "Moderator", //not translated
+          transferReceipt: "Transfer Receipt", // not translated
           copyTxid: "copy tx ID", // not translated
           Close: "Close", // not translated
           FundOrder: "Fund Order", // not translated
@@ -3594,7 +4036,12 @@ module.exports = Backbone.Model.extend({
           CustomerService: "Customer Service", // not translated
           Review: "Review", // not translated
           ReviewPlaceHolder: "Your review of this transaction", // not translated
-          NoneSent: "None sent" // not translated
+          NoneSent: "None sent", // not translated
+          ModerationFee: "Moderation Fee:", // not translated
+          DisputeTransaction: "Start a Dispute", // not translated
+          sendMessagePlaceholder: "Type your message here.", // not translated
+          DisputeInstructions: "To file a dispute for this transaction, type the reason for the dispute below, and click the Start a Dispute button. This will begin a discussion between you, the seller, and the moderator. The moderator will make the final decision as to whether any funds are returned to you, and how much. The moderator's fee will be paid out of the funds you have already sent.", // not translated
+          SendMessage: "Send" // not translated
         },
         errorMessages: {
           saveError: "Veri kaydedilemedi.",
@@ -3606,7 +4053,7 @@ module.exports = Backbone.Model.extend({
           notFoundError: "Verisi yükelenemeyen öğe:",
           socketError: "Websoket URL'si hata verdi. Sokete öntanımlı ws://localhost:18466 ile bağlanılıyor.",
           contractError: "Bu Öğe Satın Alınamaz",
-          sellerError: "Satıcının sunucusu alım talebini reddetti",
+          sellerError: "Satıcının sunucusu alım talebini reddetti. This may be due to a connection issue.", // not translated
           checkPurchaseData: "Check your purchase data, such as quantity and Bitcoin refund address, to make sure it is valid", //not translated
           pageUnavailable: "This page is currently unavailable.",  //notTranslated
           badHandle: "The handle you entered does not have a valid OpenBazaar ID"//notTranslated
@@ -3615,7 +4062,7 @@ module.exports = Backbone.Model.extend({
           about: "", //notTranslated
           contributors: "<ul><li>Giannis Adamopoulos</li><li>Ariadni-Karolina Alexiou</li><li>Tikhon Bernstam</li><li>Brad Burnham</li><li>George Chatzisofroniou</li><li>Patrick Connolly</li><li>Chris Dixon</li><li>Simon de la Rouviere</li><li>Braden Glasgow</li><li>Brian Hoffman</li><li>Ben Holden-Crowther</li><li>Joshua Jeffryes</li><li>Nikolas Korasidis</li><li>Regan Lawton</li><li>Sami Lehtinen</li><li>Angel Leon</li><li>Joye Lin</li><li>Joel Monegro</li><li>William Mougayar</li><li>Jonas David Nick</li><li>Onename</li><li>Chris Pacia</li><li>Sam Patterson</li><li>Chara Podimata</li><li>Samuel Reed</li><li>Washington Sanchez</li><li>Aeron Paul Sioson</li><li>Adrian Smith</li><li>Adam Snodgrass</li><li>Thomas Stilwell</li><li>Amir Taaki</li><li>Mike Wolf</li><li>Dionysis Zindros</li><li>secret-bitcoin-login</li><li>Rav3nPL</li><li>El--Presidente</li><li>Tinytin</li><li>ULRichard</li></ul>", //notTranslated
           support: "", //notTranslated
-          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>autobahn</li><li>python-obelisk</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li></ul>", //notTranslated
+          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>txws</li><li>python-libbitcoin client</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li><li>python-bitcoinlib</li></ul>", //notTranslated
         },
         saveMessages: {
           Saved: "Kaydedildi",
@@ -3635,7 +4082,7 @@ module.exports = Backbone.Model.extend({
           listingsAll: "Tüm mağazalardan"
         },
         nav: {
-          searchPlaceholder: "Type a @handle, GUID or #tag...", //notTranslated
+          searchPlaceholder: "Type a @handle, OpenBazaar ID or #tag...", //notTranslated
           myPage: "Sayfam",
           customizePage:"Sayfayı Özelleştir",
           sellItem:"Yeni",
@@ -3681,6 +4128,19 @@ module.exports = Backbone.Model.extend({
           Finished: "Finished" //notTranslated
         },
         buyFlow: {
+          PayForOrder: "Pay for Order", //notTranslated
+          NeedTempAddress: "I need a temporary Bitcoin address", //notTranslated
+          NeedTempAddressHelper: "Please bookmark the url to your temporary bitcoin address", //notTranslated
+          CantFindAddress: "I can't find my bitcoin address", //notTranslated
+          BitcoinWallet: "Bitcoin Wallet", //notTranslated
+          ModeratedPaymentDescription: "Your payment is held in a secure wallet until the seller completes their end of the agreement. If issues arise, a Moderator will help.", //notTranslated
+          ModeratorFeeHelper: "The moderator may charge a fee, but only if a dispute arises.", //notTranslated
+          ModeratedPayment: "Moderated Payment", //notTranslated
+          DisputeFee: "Dispute fee", //notTranslated
+          HaveWallet: "Do you have a Bitcoin Wallet?", //notTranslated
+          QuickSetup: "It only takes a few minutes to set one up", //notTranslated
+          CreateWallet: "Create a Wallet", //notTranslated
+          DirectPaymentDescription: "Funds are sent directly to the seller. Only use on small purchases or when purchasing from a trusted seller.", //notTranslated
           DirectPayment: "Direct Payment", //notTranslated
           SendDirectlyTo: "Send direct payment to %{handle}", //notTranslated
           MustAddAddress: "Gönderilecek bir adres eklemelisiniz",
@@ -3697,28 +4157,48 @@ module.exports = Backbone.Model.extend({
           summaryMsg3: "Siparişinizin durumunu kontrol edebileceğiniz yer",
           purchasesPage: "alımlar sayfası", //notTranslated
           returnAddress: "Return Address", //notTranslated
-          moderatorPaymentDisclaimer: "Only applies if the transaction ends in a dispute.", //notTranslated
+          moderatorPaymentDisclaimer: "Paid from the total if the transaction ends in a dispute.", //notTranslated
           directPaymentDisclaimer: "Use direct payment with caution, funds are irreversible", //notTranslated
-          directPaymentTo: "Direct Payment to", //notTranslated
           paymentSent: "Payment Sent!", //notTranslated
           total: "Total" //notTranslated
         },
         chat: {
           noSearchResultsFound: "No results found" //notTranslated
+        },
+        serverConnectModal: {
+          statusTryingToConnect: "Trying to connect to your server", //notTranslated
+          statusConnected: "Connected", //notTranslated
+          statusFailedConnection: "Unable to connect to your server", //notTranslated
+          statusFailedAuthentication: "Authentication failed", //notTranslated
+          serverConfiguration: "Server Configuration", //notTranslated
+          attempt: "Attempt", //notTranslated
+          intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
+          serverIP: "Server IP", //notTranslated
+          restApiPort: "Rest API port", //notTranslated
+          websocketApiPort: "Websocket API port", //notTranslated
+          heartbeatSocketApiPort: "Heartbeat socket port", //notTranslated
+          username: "Username", //notTranslated
+          password: "Password", //notTranslated                    
+          restoreDefaults: "Restore defaults", //notTranslated                    
+          saveChanges: "Save Changes", //notTranslated                    
+          retry: "Retry", //notTranslated 
         }        
       },
       {
         langName: "Klingon",
         langCode: "klg",
         /* Use capitalized keys for widely reused text that must be capitalized */
+        IHaveAWalletNow: "I have a Wallet now", //notTranslated
         Next: "Veb",
         IAgree: "jIQochbe'",
         Back: "Chap",
         EnterMessage: "QIn 'el...",
+        Recommended: "Recommended", //notTranslated
         Reload: "Reload", //notTranslated
         You: "You", //notTranslated
         Skip: "BuSHa'",
         Done: "PItlh",
+        Status: "Status",
         Navigation: "Navigation", //notTranslated
         Cancel: "QuvHa'ghach",
         ClosingOpenBazaar: "Close (Your page will go offline)", //notTranslated
@@ -3733,6 +4213,9 @@ module.exports = Backbone.Model.extend({
         Excellent: "Chon",
         Good: "Maj",
         Poor: "VIvup",
+        StillValidating: "Your handle is still validating", //notTranslated
+        CheckStatus: "Check Status", //notTranslated
+        ChangeCurrency: "Change currency", //notTranslated
         SKU: "SKU",
         Refurbished: "SabHa'",
         Physical: "Hap 'u'",
@@ -3762,15 +4245,15 @@ module.exports = Backbone.Model.extend({
         DontDelete: "Wej HoH",
         ConfirmDelete: "Qapla' HoH",
         Website: "'ej bebvo' Juh",
-        Guid: "OpenBazaar ID (GUID)",
+        Guid: "OpenBazaar ID",
         Welcome: "YI'el",
         CreateStore: "NgevwI' qach",
         GoToMyPage: "JuHwIj",
         SearchForItemsPlaceholder: "Type #games, #shoes or any #tag...", //notTranslated
         SearchForPagesPlaceholder: "Pong mu' joq nej",
-        SearchFeedPlaceholder: "Ngaj pong nej ghap GUID",
-        SearchForFollowersPlaceholder: "Ngaj pong nej ghap GUID",
-        SearchForUsersPlaceholder: "Ngaj pong nej ghap GUID",
+        SearchFeedPlaceholder: "Ngaj pong nej ghap OpenBazaar ID",
+        SearchForFollowersPlaceholder: "Ngaj pong nej ghap OpenBazaar ID",
+        SearchForUsersPlaceholder: "Ngaj pong nej ghap OpenBazaar ID",
         SearchOnUserStorePlaceholder: "Type a title...", //notTranslated
         EstDeliveryDomesticPlaceholder: "Wej pagh vagh jaj malja'",
         EstDeliveryInternationalPlaceholder: "Soch pagh wa'maH 'ej vagh jaj malja'",
@@ -3817,9 +4300,9 @@ module.exports = Backbone.Model.extend({
         Changes: "ChoH",
         SaveChanges: "ChoH toD",
         YourName: "PonglIj'e'",
-        BitcoinReturnAddress: "Bot SoQ mIr",
+        BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
         BitcoinReturnAddressPlaceholder: "bitcoin address to return coins to", //not translated
-        BitcoinReturnAddressInfo: "In case of a refund, your funds will be issued to the following address.", //not translated
+        BitcoinReturnAddressInfo: "If a refund is issued, the funds will need to be sent to a Bitcoin address. Please provide an address to your Wallet below.", //not translated
         LocalCurrency: "Huch lutu'lu'bej",
         TimeZone: "PoH mIch",
         ShipToName: "Pong",
@@ -3871,6 +4354,8 @@ module.exports = Backbone.Model.extend({
         AboutPlaceholder: "Bang naQ",
         BackgroundColor: "rItlh patmey lulo'ta'",
         NotificationFollow: "SoH tlha'",
+        NotificationDispute: "has opened a new dispute", //not translated
+        NotificationNewOrder: "has made a purchase", //not translated
         NoNotifications: "Pagh ghuHmoH",
         WelcomeToYourPage: "MajQa' Sucheghmo'!",
         SearchForCategory: "Nej Segh",
@@ -3945,19 +4430,24 @@ module.exports = Backbone.Model.extend({
         NotFollowingAnyone: "Not following anyone", // not translated
         NoFollowers: "No followers", // not translated
         Moderator: "Moderator", // not translated
+        Firewall: "Firewall", //notTranslated
+        ReadOnly: "(This Field is Read Only)", //notTranslated
         HandleResolver: "Handle Resolver",  // not translated
         moderatorSettings: { // not translated
-          ProvideResolution: "Provide dispute resolution", // not translated
+          DisputeResolution: "Dispute Resolution", //notTranslated
           ServiceFee: "Service fee", // not translated
-          ServiceFeeNote: "Percentage of transaction price (max 25)" // not translated
+          ServiceFeeNote: "Min: 0%, Max: 25%"//notTranslated
         },
+        BecomeModerator: "Become a moderator",//notTranslated
+        EditModerator: "Moderator Settings",//notTranslated
         transactions: {
-          SoldBy: "Sold By", // not translated
-          PurchasedBy: "Purchased By", // not translated
+          OrderDetails: "Order Details", //notTranslated
+          SoldBy: "Seller", // not translated
+          PurchasedBy: "Buyer", // not translated
           searchByOrder: "Search by order id or item name", // not translated
           sortByStatusAll: "All", // not translated
           sortByStatus0: "Purchased", // not translated
-          sortByStatus1: "Paid (Funds Waiting)", // not translated
+          sortByStatus1: "Ready to process (Paid in full)", // not translated
           sortByStatus2: "Confirmed/Shipped", // not translated
           sortByStatus3: "Completed (Funds Released)", // not translated
           sortByStatus4: "Disputed", // not translated
@@ -3965,17 +4455,20 @@ module.exports = Backbone.Model.extend({
           OrderDate: "Order Date", // not translated
           OrderStatus: "Order Status", // not translated
           OrderStatus0: "Purchased (Not Funded)", // not translated
-          OrderStatus1: "Paid (Funds Waiting)", // not translated
+          OrderStatus1: "Ready to process (Paid in full)", // not translated
           OrderStatus2: "Confirmed/Shipped", // not translated
           OrderStatus3: "Completed (Funds Released)", // not translated
           OrderStatus4: "Disputed", // not translated
+          InEscrow: "- In Escrow", // not translated
           OrderTotal: "Order Total", // not translated
           OrderTotalInBTC: "BTC Total", // not translated
           PaymentProtection: "Payment Protection", // not translated
           ShipTo: "Ship To", // not translated
-          ConfirmOrder: "Confirm this Order", // not translated
+          ConfirmOrder: "Confirm Order", // not translated
           ReceivingAddress: "Receiving Address", // not translated
           RecievingAddressPlaceholder: "Bitcoin address you will receive payment at", // not translated
+          Comments: "Comments", // not translated
+          CommentsPlaceHolder: "Comments on the order, if any", // not translated
           Shipper: "Item Shipped By", // not translated
           ShipperPlaceholder: "Name of the company shipping the item", // not translated
           TrackingNumber: "Tracking Number", // not translated
@@ -3990,7 +4483,8 @@ module.exports = Backbone.Model.extend({
           ModeratedTransaction: "Moderated transaction", // not translated
           Seller: "Seller", // not translated
           Buyer: "Buyer", // not translated
-          transferReceipt: "transferReceipt", // not translated
+          Moderator: "Moderator", //not translated
+          transferReceipt: "Transfer Receipt", // not translated
           copyTxid: "copy tx ID", // not translated
           Close: "Close", // not translated
           FundOrder: "Fund Order", // not translated
@@ -4007,7 +4501,12 @@ module.exports = Backbone.Model.extend({
           CustomerService: "Customer Service", // not translated
           Review: "Review", // not translated
           ReviewPlaceHolder: "Your review of this transaction", // not translated
-          NoneSent: "None sent" // not translated
+          NoneSent: "None sent", // not translated
+          ModerationFee: "Moderation Fee:", // not translated
+          DisputeTransaction: "Start a Dispute", // not translated
+          sendMessagePlaceholder: "Type your message here.", // not translated
+          DisputeInstructions: "To file a dispute for this transaction, type the reason for the dispute below, and click the Start a Dispute button. This will begin a discussion between you, the seller, and the moderator. The moderator will make the final decision as to whether any funds are returned to you, and how much. The moderator's fee will be paid out of the funds you have already sent.", // not translated
+          SendMessage: "Send" // not translated
         },
         errorMessages: {
           saveError: "Wej toDlu' De'.",
@@ -4019,7 +4518,7 @@ module.exports = Backbone.Model.extend({
           notFoundError: "LaH wej qaSmoHlu' De':",
           socketError: "Luj URL WebSocket. Rar socket SoQ ws://localhost:18466",
           contractError: "LaH wej je' Doch",
-          sellerError: "QuvHa' offer lajQo' loD 'Iv ngev",
+          sellerError: "QuvHa' offer lajQo' loD 'Iv ngev. This may be due to a connection issue.", // not translated
           checkPurchaseData: "Check your purchase data, such as quantity and Bitcoin refund address, to make sure it is valid", //not translated
           pageUnavailable: "This page is currently unavailable.",  //notTranslated
           badHandle: "The handle you entered does not have a valid OpenBazaar ID"//notTranslated
@@ -4028,7 +4527,7 @@ module.exports = Backbone.Model.extend({
           about: "", //notTranslated
           contributors: "<ul><li>Giannis Adamopoulos</li><li>Ariadni-Karolina Alexiou</li><li>Tikhon Bernstam</li><li>Brad Burnham</li><li>George Chatzisofroniou</li><li>Patrick Connolly</li><li>Chris Dixon</li><li>Simon de la Rouviere</li><li>Braden Glasgow</li><li>Brian Hoffman</li><li>Ben Holden-Crowther</li><li>Joshua Jeffryes</li><li>Nikolas Korasidis</li><li>Regan Lawton</li><li>Sami Lehtinen</li><li>Angel Leon</li><li>Joye Lin</li><li>Joel Monegro</li><li>William Mougayar</li><li>Jonas David Nick</li><li>Onename</li><li>Chris Pacia</li><li>Sam Patterson</li><li>Chara Podimata</li><li>Samuel Reed</li><li>Washington Sanchez</li><li>Aeron Paul Sioson</li><li>Adrian Smith</li><li>Adam Snodgrass</li><li>Thomas Stilwell</li><li>Amir Taaki</li><li>Mike Wolf</li><li>Dionysis Zindros</li><li>secret-bitcoin-login</li><li>Rav3nPL</li><li>El--Presidente</li><li>Tinytin</li><li>ULRichard</li></ul>", //notTranslated
           support: "", //notTranslated
-          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>autobahn</li><li>python-obelisk</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li></ul>", //notTranslated
+          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>txws</li><li>python-libbitcoin client</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li><li>python-bitcoinlib</li></ul>", //notTranslated
         },
         saveMessages: {
           Saved: "Choq",
@@ -4048,7 +4547,7 @@ module.exports = Backbone.Model.extend({
           listingsAll: "Vo' Hoch ngevwI'"
         },
         nav: {
-          searchPlaceholder: "Type a @handle, GUID or #tag...", //notTranslated
+          searchPlaceholder: "Type a @handle, OpenBazaar ID or #tag...", //notTranslated
           myPage: "JuHwIj",
           customizePage:"JuHwIj choH",
           sellItem:"Chu'",
@@ -4094,6 +4593,19 @@ module.exports = Backbone.Model.extend({
           Finished: "Finished" //notTranslated
         },
         buyFlow: {
+          PayForOrder: "Pay for Order", //notTranslated
+          NeedTempAddress: "I need a temporary Bitcoin address", //notTranslated
+          NeedTempAddressHelper: "Please bookmark the url to your temporary bitcoin address", //notTranslated
+          CantFindAddress: "I can't find my bitcoin address", //notTranslated
+          BitcoinWallet: "Bitcoin Wallet", //notTranslated
+          ModeratedPaymentDescription: "Your payment is held in a secure wallet until the seller completes their end of the agreement. If issues arise, a Moderator will help.", //notTranslated
+          ModeratorFeeHelper: "The moderator may charge a fee, but only if a dispute arises.", //notTranslated
+          ModeratedPayment: "Moderated Payment", //notTranslated
+          DisputeFee: "Dispute fee", //notTranslated
+          HaveWallet: "Do you have a Bitcoin Wallet?", //notTranslated
+          QuickSetup: "It only takes a few minutes to set one up", //notTranslated
+          CreateWallet: "Create a Wallet", //notTranslated
+          DirectPaymentDescription: "Funds are sent directly to the seller. Only use on small purchases or when purchasing from a trusted seller.", //notTranslated
           DirectPayment: "Direct Payment", //notTranslated
           SendDirectlyTo: "Send direct payment to %{handle}", //notTranslated
           MustAddAddress: "SoQ Duj ghob'e' chel SoH",
@@ -4110,28 +4622,48 @@ module.exports = Backbone.Model.extend({
           summaryMsg3: "LaH legh SoH tlham Dotlh",
           purchasesPage: "Tuq je'", //notTranslated
           returnAddress: "Return Address", //notTranslated
-          moderatorPaymentDisclaimer: "Only applies if the transaction ends in a dispute.", //notTranslated
+          moderatorPaymentDisclaimer: "Paid from the total if the transaction ends in a dispute.", //notTranslated
           directPaymentDisclaimer: "Use direct payment with caution, funds are irreversible", //notTranslated
-          directPaymentTo: "Direct Payment to", //notTranslated
           paymentSent: "Payment Sent!", //notTranslated
           total: "Total" //notTranslated
         },
         chat: {
           noSearchResultsFound: "No results found" //notTranslated
+        },
+        serverConnectModal: {
+          statusTryingToConnect: "Trying to connect to your server", //notTranslated
+          statusConnected: "Connected", //notTranslated
+          statusFailedConnection: "Unable to connect to your server", //notTranslated
+          statusFailedAuthentication: "Authentication failed", //notTranslated
+          serverConfiguration: "Server Configuration", //notTranslated
+          attempt: "Attempt", //notTranslated
+          intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
+          serverIP: "Server IP", //notTranslated
+          restApiPort: "Rest API port", //notTranslated
+          websocketApiPort: "Websocket API port", //notTranslated
+          heartbeatSocketApiPort: "Heartbeat socket port", //notTranslated
+          username: "Username", //notTranslated
+          password: "Password", //notTranslated                    
+          restoreDefaults: "Restore defaults", //notTranslated                    
+          saveChanges: "Save Changes", //notTranslated                    
+          retry: "Retry", //notTranslated 
         }        
       },
       {
         langName: "中文",
         langCode: "zh-CN",
         /* Use capitalized keys for widely reused text that must be capitalized */
+        IHaveAWalletNow: "I have a Wallet now", //notTranslated
         Next: "下一步",
         IAgree: "我同意",
         Back: "上一步",
         EnterMessage: "留言",
+        Recommended: "Recommended", //notTranslated
         Reload: "Reload", //notTranslated
         You: "You", //notTranslated
         Skip: "跳过",
         Done: "完成",
+        Status: "Status",
         Navigation: "Navigation", //notTranslated
         Cancel: "取消",
         ClosingOpenBazaar: "Close (Your page will go offline)", //notTranslated
@@ -4146,6 +4678,9 @@ module.exports = Backbone.Model.extend({
         Excellent: "出色",
         Good: "完好",
         Poor: "较差",
+        StillValidating: "Your handle is still validating", //notTranslated
+        CheckStatus: "Check Status", //notTranslated
+        ChangeCurrency: "Change currency", //notTranslated
         SKU: "SKU",
         Refurbished: "整修过",
         Physical: "实物",
@@ -4175,15 +4710,15 @@ module.exports = Backbone.Model.extend({
         DontDelete: "请不要删除",
         ConfirmDelete: "确认删除",
         Website: "网页",
-        Guid: "OpenBazaar用户名(GUID)",
+        Guid: "OpenBazaar用户名",
         Welcome: "欢迎",
         CreateStore: "开店铺",
         GoToMyPage: "我的主页",
         SearchForItemsPlaceholder: "Type #games, #shoes or any #tag...", //notTranslated
         SearchForPagesPlaceholder: "用名字或关键字查找",
-        SearchFeedPlaceholder: "用 handle 或 GUID 查找",
-        SearchForFollowersPlaceholder: "用 handle 或 GUID 查找",
-        SearchForUsersPlaceholder: "用 handle 或 GUID 查找",
+        SearchFeedPlaceholder: "用 handle 或 OpenBazaar ID 查找",
+        SearchForFollowersPlaceholder: "用 handle 或 OpenBazaar ID 查找",
+        SearchForUsersPlaceholder: "用 handle 或 OpenBazaar ID 查找",
         SearchOnUserStorePlaceholder: "Type a title...", //notTranslated
         EstDeliveryDomesticPlaceholder: "3-5 个工作日",
         EstDeliveryInternationalPlaceholder: "7-15 工作日",
@@ -4230,9 +4765,9 @@ module.exports = Backbone.Model.extend({
         Changes: "更改",
         SaveChanges: "保存更改",
         YourName: "您的姓名",
-        BitcoinReturnAddress: "比特币地址",
+        BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
         BitcoinReturnAddressPlaceholder: "bitcoin address to return coins to", //not translated
-        BitcoinReturnAddressInfo: "In case of a refund, your funds will be issued to the following address.", //not translated
+        BitcoinReturnAddressInfo: "If a refund is issued, the funds will need to be sent to a Bitcoin address. Please provide an address to your Wallet below.", //not translated
         LocalCurrency: "当地货币",
         TimeZone: "时区",
         ShipToName: "姓名",
@@ -4284,6 +4819,8 @@ module.exports = Backbone.Model.extend({
         AboutPlaceholder: "详细介绍",
         BackgroundColor: "背景颜色",
         NotificationFollow: "在关注您",
+        NotificationDispute: "has opened a new dispute", //not translated
+        NotificationNewOrder: "has made a purchase", //not translated
         NoNotifications: "无新消息",
         WelcomeToYourPage: "欢迎来到您的主页",
         SearchForCategory: "查找分类项目",
@@ -4358,19 +4895,24 @@ module.exports = Backbone.Model.extend({
         NotFollowingAnyone: "Not following anyone", // not translated
         NoFollowers: "No followers", // not translated
         Moderator: "Moderator", // not translated
+        Firewall: "Firewall", //notTranslated
+        ReadOnly: "(This Field is Read Only)", //notTranslated
         HandleResolver: "Handle Resolver",  // not translated
         moderatorSettings: { // not translated
-          ProvideResolution: "Provide dispute resolution", // not translated
+          DisputeResolution: "Dispute Resolution", //notTranslated
           ServiceFee: "Service fee", // not translated
-          ServiceFeeNote: "Percentage of transaction price (max 25)" // not translated
+          ServiceFeeNote: "Min: 0%, Max: 25%"//notTranslated
         },
+        BecomeModerator: "Become a moderator",//notTranslated
+        EditModerator: "Moderator Settings",//notTranslated
         transactions: {
-          SoldBy: "Sold By", // not translated
-          PurchasedBy: "Purchased By", // not translated
+          OrderDetails: "Order Details", //notTranslated
+          SoldBy: "Seller", // not translated
+          PurchasedBy: "Buyer", // not translated
           searchByOrder: "Search by order id or item name", // not translated
           sortByStatusAll: "All", // not translated
           sortByStatus0: "Purchased", // not translated
-          sortByStatus1: "Paid (Funds Waiting)", // not translated
+          sortByStatus1: "Ready to process (Paid in full)", // not translated
           sortByStatus2: "Confirmed/Shipped", // not translated
           sortByStatus3: "Completed (Funds Released)", // not translated
           sortByStatus4: "Disputed", // not translated
@@ -4378,17 +4920,20 @@ module.exports = Backbone.Model.extend({
           OrderDate: "Order Date", // not translated
           OrderStatus: "Order Status", // not translated
           OrderStatus0: "Purchased (Not Funded)", // not translated
-          OrderStatus1: "Paid (Funds Waiting)", // not translated
+          OrderStatus1: "Ready to process (Paid in full)", // not translated
           OrderStatus2: "Confirmed/Shipped", // not translated
           OrderStatus3: "Completed (Funds Released)", // not translated
           OrderStatus4: "Disputed", // not translated
+          InEscrow: "- In Escrow", // not translated
           OrderTotal: "Order Total", // not translated
           OrderTotalInBTC: "BTC Total", // not translated
           PaymentProtection: "Payment Protection", // not translated
           ShipTo: "Ship To", // not translated
-          ConfirmOrder: "Confirm this Order", // not translated
+          ConfirmOrder: "Confirm Order", // not translated
           ReceivingAddress: "Receiving Address", // not translated
           RecievingAddressPlaceholder: "Bitcoin address you will receive payment at", // not translated
+          Comments: "Comments", // not translated
+          CommentsPlaceHolder: "Comments on the order, if any", // not translated
           Shipper: "Item Shipped By", // not translated
           ShipperPlaceholder: "Name of the company shipping the item", // not translated
           TrackingNumber: "Tracking Number", // not translated
@@ -4403,7 +4948,8 @@ module.exports = Backbone.Model.extend({
           ModeratedTransaction: "Moderated transaction", // not translated
           Seller: "Seller", // not translated
           Buyer: "Buyer", // not translated
-          transferReceipt: "transferReceipt", // not translated
+          Moderator: "Moderator", //not translated
+          transferReceipt: "Transfer Receipt", // not translated
           copyTxid: "copy tx ID", // not translated
           Close: "Close", // not translated
           FundOrder: "Fund Order", // not translated
@@ -4420,7 +4966,12 @@ module.exports = Backbone.Model.extend({
           CustomerService: "Customer Service", // not translated
           Review: "Review", // not translated
           ReviewPlaceHolder: "Your review of this transaction", // not translated
-          NoneSent: "None sent" // not translated
+          NoneSent: "None sent", // not translated
+          ModerationFee: "Moderation Fee:", // not translated
+          DisputeTransaction: "Start a Dispute", // not translated
+          sendMessagePlaceholder: "Type your message here.", // not translated
+          DisputeInstructions: "To file a dispute for this transaction, type the reason for the dispute below, and click the Start a Dispute button. This will begin a discussion between you, the seller, and the moderator. The moderator will make the final decision as to whether any funds are returned to you, and how much. The moderator's fee will be paid out of the funds you have already sent.", // not translated
+          SendMessage: "Send" // not translated
         },
         errorMessages: {
           saveError: "数据没有被储存",
@@ -4432,7 +4983,7 @@ module.exports = Backbone.Model.extend({
           notFoundError: "有关数据未能调出",
           socketError: "WebSocket的URL地址失败。请使用ws://localhost:18466",
           contractError: "找不到此项货物",
-          sellerError: "卖家的服务器拒绝了这笔买卖",
+          sellerError: "卖家的服务器拒绝了这笔买卖. This may be due to a connection issue.", // not translated
           checkPurchaseData: "Check your purchase data, such as quantity and Bitcoin refund address, to make sure it is valid", //not translated
           pageUnavailable: "This page is currently unavailable.",  //notTranslated
           badHandle: "The handle you entered does not have a valid OpenBazaar ID"//notTranslated
@@ -4441,7 +4992,7 @@ module.exports = Backbone.Model.extend({
           about: "", //notTranslated
           contributors: "<ul><li>Giannis Adamopoulos</li><li>Ariadni-Karolina Alexiou</li><li>Tikhon Bernstam</li><li>Brad Burnham</li><li>George Chatzisofroniou</li><li>Patrick Connolly</li><li>Chris Dixon</li><li>Simon de la Rouviere</li><li>Braden Glasgow</li><li>Brian Hoffman</li><li>Ben Holden-Crowther</li><li>Joshua Jeffryes</li><li>Nikolas Korasidis</li><li>Regan Lawton</li><li>Sami Lehtinen</li><li>Angel Leon</li><li>Joye Lin</li><li>Joel Monegro</li><li>William Mougayar</li><li>Jonas David Nick</li><li>Onename</li><li>Chris Pacia</li><li>Sam Patterson</li><li>Chara Podimata</li><li>Samuel Reed</li><li>Washington Sanchez</li><li>Aeron Paul Sioson</li><li>Adrian Smith</li><li>Adam Snodgrass</li><li>Thomas Stilwell</li><li>Amir Taaki</li><li>Mike Wolf</li><li>Dionysis Zindros</li><li>secret-bitcoin-login</li><li>Rav3nPL</li><li>El--Presidente</li><li>Tinytin</li><li>ULRichard</li></ul>", //notTranslated
           support: "", //notTranslated
-          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>autobahn</li><li>python-obelisk</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li></ul>", //notTranslated
+          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>txws</li><li>python-libbitcoin client</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li><li>python-bitcoinlib</li></ul>", //notTranslated
         },
         saveMessages: {
           Saved: "以保存",
@@ -4461,7 +5012,7 @@ module.exports = Backbone.Model.extend({
           listingsAll: "所有点家里找"
         },
         nav: {
-          searchPlaceholder: "Type a @handle, GUID or #tag...", //notTranslated
+          searchPlaceholder: "Type a @handle, OpenBazaar ID or #tag...", //notTranslated
           myPage: "我的主页",
           customizePage:"个性化主页",
           sellItem:"新品",
@@ -4506,6 +5057,19 @@ module.exports = Backbone.Model.extend({
           Finished: "Finished" //notTranslated
         },
         buyFlow: {
+          PayForOrder: "Pay for Order", //notTranslated
+          NeedTempAddress: "I need a temporary Bitcoin address", //notTranslated
+          NeedTempAddressHelper: "Please bookmark the url to your temporary bitcoin address", //notTranslated
+          CantFindAddress: "I can't find my bitcoin address", //notTranslated
+          BitcoinWallet: "Bitcoin Wallet", //notTranslated
+          ModeratedPaymentDescription: "Your payment is held in a secure wallet until the seller completes their end of the agreement. If issues arise, a Moderator will help.", //notTranslated
+          ModeratorFeeHelper: "The moderator may charge a fee, but only if a dispute arises.", //notTranslated
+          ModeratedPayment: "Moderated Payment", //notTranslated
+          DisputeFee: "Dispute fee", //notTranslated
+          HaveWallet: "Do you have a Bitcoin Wallet?", //notTranslated
+          QuickSetup: "It only takes a few minutes to set one up", //notTranslated
+          CreateWallet: "Create a Wallet", //notTranslated
+          DirectPaymentDescription: "Funds are sent directly to the seller. Only use on small purchases or when purchasing from a trusted seller.", //notTranslated
           DirectPayment: "Direct Payment", //notTranslated
           SendDirectlyTo: "Send direct payment to %{handle}", //notTranslated
           MustAddAddress: "务必添加送货地址",
@@ -4522,14 +5086,31 @@ module.exports = Backbone.Model.extend({
           summaryMsg3: "到此查看您订单的状况",
           purchasesPage: "以购商品", //notTranslated
           returnAddress: "Return Address", //notTranslated
-          moderatorPaymentDisclaimer: "Only applies if the transaction ends in a dispute.", //notTranslated
+          moderatorPaymentDisclaimer: "Paid from the total if the transaction ends in a dispute.", //notTranslated
           directPaymentDisclaimer: "Use direct payment with caution, funds are irreversible", //notTranslated
-          directPaymentTo: "Direct Payment to", //notTranslated
           paymentSent: "Payment Sent!", //notTranslated
           total: "Total" //notTranslated
         },
         chat: {
           noSearchResultsFound: "No results found" //notTranslated
+        },
+        serverConnectModal: {
+          statusTryingToConnect: "Trying to connect to your server", //notTranslated
+          statusConnected: "Connected", //notTranslated
+          statusFailedConnection: "Unable to connect to your server", //notTranslated
+          statusFailedAuthentication: "Authentication failed", //notTranslated
+          serverConfiguration: "Server Configuration", //notTranslated
+          attempt: "Attempt", //notTranslated
+          intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
+          serverIP: "Server IP", //notTranslated
+          restApiPort: "Rest API port", //notTranslated
+          websocketApiPort: "Websocket API port", //notTranslated
+          heartbeatSocketApiPort: "Heartbeat socket port", //notTranslated
+          username: "Username", //notTranslated
+          password: "Password", //notTranslated                    
+          restoreDefaults: "Restore defaults", //notTranslated                    
+          saveChanges: "Save Changes", //notTranslated                    
+          retry: "Retry", //notTranslated 
         }        
       },
       {
@@ -4537,14 +5118,17 @@ module.exports = Backbone.Model.extend({
         langCode: "ko",
         /* Use capitalized keys for widely reused text that must be capitalized...
         Korean type doesn't have capitalized letters*/
+        IHaveAWalletNow: "I have a Wallet now", //notTranslated
         Next: "다음",
         IAgree: "동의",
         Back: "뒤",
         EnterMessage: "메세지 입력...",
+        Recommended: "Recommended", //notTranslated
         Reload: "Reload", //notTranslated
         You: "You", //notTranslated
         Skip: "거르다",
         Done: "끝난",
+        Status: "Status",
         Navigation: "Navigation", //notTranslated
         Cancel: "취소",
         ClosingOpenBazaar: "Close (Your page will go offline)", //notTranslated
@@ -4559,6 +5143,9 @@ module.exports = Backbone.Model.extend({
         Excellent: "훌륭한",
         Good: "줗은",
         Poor: "불량",
+        StillValidating: "Your handle is still validating", //notTranslated
+        CheckStatus: "Check Status", //notTranslated
+        ChangeCurrency: "Change currency", //notTranslated
         SKU: "SKU",
         Refurbished: "단장",
         Physical: "물질",
@@ -4589,15 +5176,15 @@ module.exports = Backbone.Model.extend({
         DontDelete: "삭제하지마",
         ConfirmDelete: "진짜삭제?",
         Website: "웹사이트",
-        Guid: "오픈바자 ID (GUID)",
+        Guid: "오픈바자 ID",
         Welcome: "어서오세요!",
         CreateStore: "가게 만들기",
         GoToMyPage: "내 페이지",
         SearchForItemsPlaceholder: "Type #games, #shoes or any #tag...", //notTranslated
         SearchForPagesPlaceholder: "이름과 주제어 검색",
-        SearchFeedPlaceholder: "핸들과 오픈바자 ID (GUID) 검색",
-        SearchForFollowersPlaceholder: "핸들과 오픈바자 ID (GUID) 검색",
-        SearchForUsersPlaceholder: "핸들과 오픈바자 ID (GUID) 검색",
+        SearchFeedPlaceholder: "핸들과 오픈바자 ID 검색",
+        SearchForFollowersPlaceholder: "핸들과 오픈바자 ID 검색",
+        SearchForUsersPlaceholder: "핸들과 오픈바자 ID 검색",
         SearchOnUserStorePlaceholder: "Type a title...", //notTranslated
         EstDeliveryDomesticPlaceholder: "3-5 영업일",
         EstDeliveryInternationalPlaceholder: "7-15 영업일",
@@ -4644,9 +5231,9 @@ module.exports = Backbone.Model.extend({
         Changes: "변경",
         SaveChanges: "변경 사항 저장",
         YourName: "당신 이름",
-        BitcoinReturnAddress: "당신 비트코인 주소",
+        BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
         BitcoinReturnAddressPlaceholder: "bitcoin address to return coins to", //not translated
-        BitcoinReturnAddressInfo: "In case of a refund, your funds will be issued to the following address.", //not translated
+        BitcoinReturnAddressInfo: "If a refund is issued, the funds will need to be sent to a Bitcoin address. Please provide an address to your Wallet below.", //not translated
         LocalCurrency: "지역 통화",
         TimeZone: "시간대",
         ShipToName: "이름",
@@ -4698,6 +5285,8 @@ module.exports = Backbone.Model.extend({
         AboutPlaceholder: "큰 설명",
         BackgroundColor: "배경색",
         NotificationFollow: "너를 팔로우하다",
+        NotificationDispute: "has opened a new dispute", //not translated
+        NotificationNewOrder: "has made a purchase", //not translated
         NoNotifications: "공지 없어",
         WelcomeToYourPage: "환영해 너의 페이지!",
         SearchForCategory: "항목 검색",
@@ -4772,19 +5361,24 @@ module.exports = Backbone.Model.extend({
         NotFollowingAnyone: "Not following anyone", // not translated
         NoFollowers: "No followers", // not translated
         Moderator: "Moderator", // not translated
+        Firewall: "Firewall", //notTranslated
+        ReadOnly: "(This Field is Read Only)", //notTranslated
         HandleResolver: "Handle Resolver",  // not translated
         moderatorSettings: { // not translated
-          ProvideResolution: "Provide dispute resolution", // not translated
+          DisputeResolution: "Dispute Resolution", //notTranslated
           ServiceFee: "Service fee", // not translated
-          ServiceFeeNote: "Percentage of transaction price (max 25)" // not translated
+          ServiceFeeNote: "Min: 0%, Max: 25%"//notTranslated
         },
+        BecomeModerator: "Become a moderator",//notTranslated
+        EditModerator: "Moderator Settings",//notTranslated
         transactions: {
-          SoldBy: "Sold By", // not translated
-          PurchasedBy: "Purchased By", // not translated
+          OrderDetails: "Order Details", //notTranslated
+          SoldBy: "Seller", // not translated
+          PurchasedBy: "Buyer", // not translated
           searchByOrder: "Search by order id or item name", // not translated
           sortByStatusAll: "All", // not translated
           sortByStatus0: "Purchased", // not translated
-          sortByStatus1: "Paid (Funds Waiting)", // not translated
+          sortByStatus1: "Ready to process (Paid in full)", // not translated
           sortByStatus2: "Confirmed/Shipped", // not translated
           sortByStatus3: "Completed (Funds Released)", // not translated
           sortByStatus4: "Disputed", // not translated
@@ -4792,17 +5386,20 @@ module.exports = Backbone.Model.extend({
           OrderDate: "Order Date", // not translated
           OrderStatus: "Order Status", // not translated
           OrderStatus0: "Purchased (Not Funded)", // not translated
-          OrderStatus1: "Paid (Funds Waiting)", // not translated
+          OrderStatus1: "Ready to process (Paid in full)", // not translated
           OrderStatus2: "Confirmed/Shipped", // not translated
           OrderStatus3: "Completed (Funds Released)", // not translated
           OrderStatus4: "Disputed", // not translated
+          InEscrow: "- In Escrow", // not translated
           OrderTotal: "Order Total", // not translated
           OrderTotalInBTC: "BTC Total", // not translated
           PaymentProtection: "Payment Protection", // not translated
           ShipTo: "Ship To", // not translated
-          ConfirmOrder: "Confirm this Order", // not translated
+          ConfirmOrder: "Confirm Order", // not translated
           ReceivingAddress: "Receiving Address", // not translated
           RecievingAddressPlaceholder: "Bitcoin address you will receive payment at", // not translated
+          Comments: "Comments", // not translated
+          CommentsPlaceHolder: "Comments on the order, if any", // not translated
           Shipper: "Item Shipped By", // not translated
           ShipperPlaceholder: "Name of the company shipping the item", // not translated
           TrackingNumber: "Tracking Number", // not translated
@@ -4817,7 +5414,8 @@ module.exports = Backbone.Model.extend({
           ModeratedTransaction: "Moderated transaction", // not translated
           Seller: "Seller", // not translated
           Buyer: "Buyer", // not translated
-          transferReceipt: "transferReceipt", // not translated
+          Moderator: "Moderator", //not translated
+          transferReceipt: "Transfer Receipt", // not translated
           copyTxid: "copy tx ID", // not translated
           Close: "Close", // not translated
           FundOrder: "Fund Order", // not translated
@@ -4834,7 +5432,12 @@ module.exports = Backbone.Model.extend({
           CustomerService: "Customer Service", // not translated
           Review: "Review", // not translated
           ReviewPlaceHolder: "Your review of this transaction", // not translated
-          NoneSent: "None sent" // not translated
+          NoneSent: "None sent", // not translated
+          ModerationFee: "Moderation Fee:", // not translated
+          DisputeTransaction: "Start a Dispute", // not translated
+          sendMessagePlaceholder: "Type your message here.", // not translated
+          DisputeInstructions: "To file a dispute for this transaction, type the reason for the dispute below, and click the Start a Dispute button. This will begin a discussion between you, the seller, and the moderator. The moderator will make the final decision as to whether any funds are returned to you, and how much. The moderator's fee will be paid out of the funds you have already sent.", // not translated
+          SendMessage: "Send" // not translated
         },
         errorMessages: {
           saveError: "데이타를 저장할수 없다.",
@@ -4846,7 +5449,7 @@ module.exports = Backbone.Model.extend({
           notFoundError: "데이터를 로딩 할 수 없습니다:",
           socketError: "웹 소켓의 URL에 실패했습니다.ws://localhost:18466 의 기본 주소와 소켓에 연결.",
           contractError: "이 제품은 지불 할수 없습니다 ",
-          sellerError: "판매자의 서버는 구매 요청을 거부했습니다.",
+          sellerError: "판매자의 서버는 구매 요청을 거부했습니다. This may be due to a connection issue.", // not translated
           checkPurchaseData: "Check your purchase data, such as quantity and Bitcoin refund address, to make sure it is valid", //not translated
           pageUnavailable: "This page is currently unavailable.",  //notTranslated
           badHandle: "The handle you entered does not have a valid OpenBazaar ID"//notTranslated
@@ -4855,7 +5458,7 @@ module.exports = Backbone.Model.extend({
           about: "", //notTranslated
           contributors: "<ul><li>Giannis Adamopoulos</li><li>Ariadni-Karolina Alexiou</li><li>Tikhon Bernstam</li><li>Brad Burnham</li><li>George Chatzisofroniou</li><li>Patrick Connolly</li><li>Chris Dixon</li><li>Simon de la Rouviere</li><li>Braden Glasgow</li><li>Brian Hoffman</li><li>Ben Holden-Crowther</li><li>Joshua Jeffryes</li><li>Nikolas Korasidis</li><li>Regan Lawton</li><li>Sami Lehtinen</li><li>Angel Leon</li><li>Joye Lin</li><li>Joel Monegro</li><li>William Mougayar</li><li>Jonas David Nick</li><li>Onename</li><li>Chris Pacia</li><li>Sam Patterson</li><li>Chara Podimata</li><li>Samuel Reed</li><li>Washington Sanchez</li><li>Aeron Paul Sioson</li><li>Adrian Smith</li><li>Adam Snodgrass</li><li>Thomas Stilwell</li><li>Amir Taaki</li><li>Mike Wolf</li><li>Dionysis Zindros</li><li>secret-bitcoin-login</li><li>Rav3nPL</li><li>El--Presidente</li><li>Tinytin</li><li>ULRichard</li></ul>", //notTranslated
           support: "", //notTranslated
-          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>autobahn</li><li>python-obelisk</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li></ul>", //notTranslated
+          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>txws</li><li>python-libbitcoin client</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li><li>python-bitcoinlib</li></ul>", //notTranslated
         },
         saveMessages: {
           Saved: "저장하다",
@@ -4875,7 +5478,7 @@ module.exports = Backbone.Model.extend({
           listingsAll: "모든 가게"
         },
         nav: {
-          searchPlaceholder: "Type a @handle, GUID or #tag...", //notTranslated
+          searchPlaceholder: "Type a @handle, OpenBazaar ID or #tag...", //notTranslated
           myPage: "내 페이지",
           customizePage:"사용자 페이지",
           sellItem:"새로운",
@@ -4921,6 +5524,19 @@ module.exports = Backbone.Model.extend({
           Finished: "Finished" //notTranslated
         },
         buyFlow: {
+          PayForOrder: "Pay for Order", //notTranslated
+          NeedTempAddress: "I need a temporary Bitcoin address", //notTranslated
+          NeedTempAddressHelper: "Please bookmark the url to your temporary bitcoin address", //notTranslated
+          CantFindAddress: "I can't find my bitcoin address", //notTranslated
+          BitcoinWallet: "Bitcoin Wallet", //notTranslated
+          ModeratedPaymentDescription: "Your payment is held in a secure wallet until the seller completes their end of the agreement. If issues arise, a Moderator will help.", //notTranslated
+          ModeratorFeeHelper: "The moderator may charge a fee, but only if a dispute arises.", //notTranslated
+          ModeratedPayment: "Moderated Payment", //notTranslated
+          DisputeFee: "Dispute fee", //notTranslated
+          HaveWallet: "Do you have a Bitcoin Wallet?", //notTranslated
+          QuickSetup: "It only takes a few minutes to set one up", //notTranslated
+          CreateWallet: "Create a Wallet", //notTranslated
+          DirectPaymentDescription: "Funds are sent directly to the seller. Only use on small purchases or when purchasing from a trusted seller.", //notTranslated
           DirectPayment: "Direct Payment", //notTranslated
           SendDirectlyTo: "Send direct payment to %{handle}", //notTranslated
           MustAddAddress: "당신 에게 제공할수 있는 배송지 주소를 추가",
@@ -4937,24 +5553,43 @@ module.exports = Backbone.Model.extend({
           summaryMsg3: "당신은 당신의 주문상태를 확인할수 있다",
           purchasesPage: "지불 페이지", //notTranslated
           returnAddress: "Return Address", //notTranslated
-          moderatorPaymentDisclaimer: "Only applies if the transaction ends in a dispute.", //notTranslated
+          moderatorPaymentDisclaimer: "Paid from the total if the transaction ends in a dispute.", //notTranslated
           directPaymentDisclaimer: "Use direct payment with caution, funds are irreversible", //notTranslated
-          directPaymentTo: "Direct Payment to", //notTranslated
           paymentSent: "Payment Sent!", //notTranslated
           total: "Total" //notTranslated
         },
         chat: {
           noSearchResultsFound: "No results found" //notTranslated
+        },
+        serverConnectModal: {
+          statusTryingToConnect: "Trying to connect to your server", //notTranslated
+          statusConnected: "Connected", //notTranslated
+          statusFailedConnection: "Unable to connect to your server", //notTranslated
+          statusFailedAuthentication: "Authentication failed", //notTranslated
+          serverConfiguration: "Server Configuration", //notTranslated
+          attempt: "Attempt", //notTranslated
+          intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
+          serverIP: "Server IP", //notTranslated
+          restApiPort: "Rest API port", //notTranslated
+          websocketApiPort: "Websocket API port", //notTranslated
+          heartbeatSocketApiPort: "Heartbeat socket port", //notTranslated
+          username: "Username", //notTranslated
+          password: "Password", //notTranslated                    
+          restoreDefaults: "Restore defaults", //notTranslated                    
+          saveChanges: "Save Changes", //notTranslated                    
+          retry: "Retry", //notTranslated 
         }        
       },
       {
         langName: "日本語 (Japanese)",
         langCode: "ja-JP",
         /* Use capitalized keys for widely reused text that must be capitalized */
+        IHaveAWalletNow: "I have a Wallet now", //notTranslated
         Next: "次へ",
         IAgree: "同意する",
         Back: "戻る",
         EnterMessage: "本文",
+        Recommended: "Recommended", //notTranslated
         Reload: "リロード",
         You: "アカウント",
         Skip: "スキップ",
@@ -4970,6 +5605,9 @@ module.exports = Backbone.Model.extend({
         Excellent: "極良質",
         Good: "良質",
         Poor: "まあまあ良い",
+        StillValidating: "Your handle is still validating", //notTranslated
+        CheckStatus: "Check Status", //notTranslated
+        ChangeCurrency: "Change currency", //notTranslated
         SKU: "SKU",
         Refurbished: "整備済製品", // check
         Physical: "商品", // check
@@ -4999,15 +5637,15 @@ module.exports = Backbone.Model.extend({
         DontDelete: "削除しない",
         ConfirmDelete: "削除する",
         Website: "ウェブサイト",
-        Guid: "OpenBazaar ID (GUID)",
+        Guid: "OpenBazaar ID",
         Welcome: "こんにちは",
         CreateStore: "出品する",
         GoToMyPage: "マイページ",
         SearchForItemsPlaceholder: "Type #games, #shoes or any #tag...", //notTranslated
         SearchForPagesPlaceholder: "商品名・キーワードで探す",
-        SearchFeedPlaceholder: "GUID・ユーザ名で探す",
-        SearchForFollowersPlaceholder: "GUID・ユーザ名で探す",
-        SearchForUsersPlaceholder: "GUID・ユーザ名で探す",
+        SearchFeedPlaceholder: "OpenBazaar ID・ユーザ名で探す",
+        SearchForFollowersPlaceholder: "OpenBazaar ID・ユーザ名で探す",
+        SearchForUsersPlaceholder: "OpenBazaar ID・ユーザ名で探す",
         SearchOnUserStorePlaceholder: "Type a title...", //notTranslated
         EstDeliveryDomesticPlaceholder: "3〜5営業日以内",
         EstDeliveryInternationalPlaceholder: "7〜15営業日以内",
@@ -5054,9 +5692,9 @@ module.exports = Backbone.Model.extend({
         Changes: "変更",
         SaveChanges: "変更を保存",
         YourName: "氏名",
-        BitcoinReturnAddress: "返品用ビットコインアドレス",
+        BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
         BitcoinReturnAddressPlaceholder: "返品用ビットコインアドレス",
-        BitcoinReturnAddressInfo: "In case of a refund, your funds will be issued to the following address.",
+        BitcoinReturnAddressInfo: "If a refund is issued, the funds will need to be sent to a Bitcoin address. Please provide an address to your Wallet below.", //notTranslated
         LocalCurrency: "現地通貨",
         TimeZone: "タイムゾーン",
         ShipToName: "氏名",
@@ -5108,6 +5746,8 @@ module.exports = Backbone.Model.extend({
         AboutPlaceholder: "商品の説明",
         BackgroundColor: "背景カラー",
         NotificationFollow: "があなたをフォローしました",
+        NotificationDispute: "has opened a new dispute", //not translated
+        NotificationNewOrder: "has made a purchase", //not translated
         NoNotifications: "新しい通知はありません。",
         WelcomeToYourPage: "マイページにようこそ！",
         SearchForCategory: "カテゴリーで検索する",
@@ -5172,13 +5812,18 @@ module.exports = Backbone.Model.extend({
         NotFollowingAnyone: "Not following anyone", // not translated
         NoFollowers: "No followers", // not translated
         Moderator: "Moderator", // not translated
+        Firewall: "Firewall", //notTranslated
+        ReadOnly: "(This Field is Read Only)", //notTranslated
         HandleResolver: "Handle Resolver",  // not translated
         moderatorSettings: { // not translated
-          ProvideResolution: "Provide dispute resolution", // not translated
+          DisputeResolution: "Dispute Resolution", //notTranslated
           ServiceFee: "Service fee", // not translated
-          ServiceFeeNote: "Percentage of transaction price (max 25)" // not translated
+          ServiceFeeNote: "Min: 0%, Max: 25%"//notTranslated
         },
+        BecomeModerator: "Become a moderator",//notTranslated
+        EditModerator: "Moderator Settings",//notTranslated
         transactions: {
+          OrderDetails: "Order Details", //notTranslated
           SoldBy: "出品者",
           PurchasedBy: "購入者",
           searchByOrder: "注文ID・商品名で探す",
@@ -5196,13 +5841,16 @@ module.exports = Backbone.Model.extend({
           OrderStatus2: "確認完了・出荷済",
           OrderStatus3: "Completed (Funds Released)",
           OrderStatus4: "異議・クレーム",
+          InEscrow: "- In Escrow", // not translated
           OrderTotal: "注文合計",
           OrderTotalInBTC: "BTC Total", // not translated
           PaymentProtection: "Payment Protection", // not translated
           ShipTo: "Ship To", // not translated
-          ConfirmOrder: "Confirm this Order", // not translated
+          ConfirmOrder: "Confirm Order", // not translated
           ReceivingAddress: "Receiving Address", // not translated
           RecievingAddressPlaceholder: "Bitcoin address you will receive payment at", // not translated
+          Comments: "Comments", // not translated
+          CommentsPlaceHolder: "Comments on the order, if any", // not translated
           Shipper: "Item Shipped By", // not translated
           ShipperPlaceholder: "Name of the company shipping the item", // not translated
           TrackingNumber: "Tracking Number", // not translated
@@ -5217,7 +5865,8 @@ module.exports = Backbone.Model.extend({
           ModeratedTransaction: "Moderated transaction", // not translated
           Seller: "Seller", // not translated
           Buyer: "Buyer", // not translated
-          transferReceipt: "transferReceipt", // not translated
+          Moderator: "Moderator", //not translated
+          transferReceipt: "Transfer Receipt", // not translated
           copyTxid: "copy tx ID", // not translated
           Close: "Close", // not translated
           FundOrder: "Fund Order", // not translated
@@ -5234,7 +5883,12 @@ module.exports = Backbone.Model.extend({
           CustomerService: "Customer Service", // not translated
           Review: "Review", // not translated
           ReviewPlaceHolder: "Your review of this transaction", // not translated
-          NoneSent: "None sent" // not translated
+          NoneSent: "None sent", // not translated
+          ModerationFee: "Moderation Fee:", // not translated
+          DisputeTransaction: "Start a Dispute", // not translated
+          sendMessagePlaceholder: "Type your message here.", // not translated
+          DisputeInstructions: "To file a dispute for this transaction, type the reason for the dispute below, and click the Start a Dispute button. This will begin a discussion between you, the seller, and the moderator. The moderator will make the final decision as to whether any funds are returned to you, and how much. The moderator's fee will be paid out of the funds you have already sent.", // not translated
+          SendMessage: "Send" // not translated
         },
         errorMessages: {
           saveError: "データの保存はできませんでした。",
@@ -5246,7 +5900,7 @@ module.exports = Backbone.Model.extend({
           notFoundError: "データは見つかりませんでした:",
           socketError: "URL for WebSocket failed. Connecting to socket with default address of ws://localhost:18466",
           contractError: "購入が完了できませんでした。",
-          sellerError: "出品者のサーバーは購入要求を拒否しました。",
+          sellerError: "出品者のサーバーは購入要求を拒否しました。. This may be due to a connection issue.", // not translated
           checkPurchaseData: "Check your purchase data, such as quantity and Bitcoin refund address, to make sure it is valid",
           pageUnavailable: "This page is currently unavailable.",  //notTranslated
           badHandle: "The handle you entered does not have a valid OpenBazaar ID"//notTranslated
@@ -5255,7 +5909,7 @@ module.exports = Backbone.Model.extend({
           about: "", //notTranslated
           contributors: "<ul><li>Giannis Adamopoulos</li><li>Ariadni-Karolina Alexiou</li><li>Tikhon Bernstam</li><li>Brad Burnham</li><li>George Chatzisofroniou</li><li>Patrick Connolly</li><li>Chris Dixon</li><li>Simon de la Rouviere</li><li>Braden Glasgow</li><li>Brian Hoffman</li><li>Ben Holden-Crowther</li><li>Joshua Jeffryes</li><li>Nikolas Korasidis</li><li>Regan Lawton</li><li>Sami Lehtinen</li><li>Angel Leon</li><li>Joye Lin</li><li>Joel Monegro</li><li>William Mougayar</li><li>Jonas David Nick</li><li>Onename</li><li>Chris Pacia</li><li>Sam Patterson</li><li>Chara Podimata</li><li>Samuel Reed</li><li>Washington Sanchez</li><li>Aeron Paul Sioson</li><li>Adrian Smith</li><li>Adam Snodgrass</li><li>Thomas Stilwell</li><li>Amir Taaki</li><li>Mike Wolf</li><li>Dionysis Zindros</li><li>secret-bitcoin-login</li><li>Rav3nPL</li><li>El--Presidente</li><li>Tinytin</li><li>ULRichard</li></ul>", //notTranslated
           support: "", //notTranslated
-          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>autobahn</li><li>python-obelisk</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li></ul>", //notTranslated
+          licensing: "<ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>txws</li><li>python-libbitcoin client</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li><li>python-bitcoinlib</li></ul>", //notTranslated
         },
         saveMessages: {
           Saved: "保存しました",
@@ -5276,7 +5930,7 @@ module.exports = Backbone.Model.extend({
           categoryAll: "すべて"
         },
         nav: {
-          searchPlaceholder: "Type a @handle, GUID or #tag...", //notTranslated
+          searchPlaceholder: "Type a @handle, OpenBazaar ID or #tag...", //notTranslated
           myPage: "マイページ",
           customizePage:"ページをカスタマイズ",
           sellItem:"出品する",
@@ -5320,6 +5974,19 @@ module.exports = Backbone.Model.extend({
           Finished: "完了"
         },
         buyFlow: {
+          PayForOrder: "Pay for Order", //notTranslated
+          NeedTempAddress: "I need a temporary Bitcoin address", //notTranslated
+          NeedTempAddressHelper: "Please bookmark the url to your temporary bitcoin address", //notTranslated
+          CantFindAddress: "I can't find my bitcoin address", //notTranslated
+          BitcoinWallet: "Bitcoin Wallet", //notTranslated
+          ModeratedPaymentDescription: "Your payment is held in a secure wallet until the seller completes their end of the agreement. If issues arise, a Moderator will help.", //notTranslated
+          ModeratorFeeHelper: "The moderator may charge a fee, but only if a dispute arises.", //notTranslated
+          ModeratedPayment: "Moderated Payment", //notTranslated
+          DisputeFee: "Dispute fee", //notTranslated
+          HaveWallet: "Do you have a Bitcoin Wallet?", //notTranslated
+          QuickSetup: "It only takes a few minutes to set one up", //notTranslated
+          CreateWallet: "Create a Wallet", //notTranslated
+          DirectPaymentDescription: "Funds are sent directly to the seller. Only use on small purchases or when purchasing from a trusted seller.", //notTranslated
           DirectPayment: "直接購入",
           SendDirectlyTo: "%{handle}に直接購入する",
           MustAddAddress: "お届け先住所を入力してください。",
@@ -5332,32 +5999,52 @@ module.exports = Backbone.Model.extend({
           CopyAddress: "アドレスをコピーする",
           RefreshPayment: "支払いステータスを更新する",
           summaryMsg1: "%{recipient}に直接購入しました。",
-          summaryMsg2: "The expected processing time for this order is",
+          summaryMsg2: "The expected processing time for this order is", //notTranslated
           summaryMsg3: "ご注文の状況はこちらで確認ができます",
           purchasesPage: "購入済み",
           returnAddress: "返品用アドレス",
-          moderatorPaymentDisclaimer: "Only applies if the transaction ends in a dispute.",
-          directPaymentDisclaimer: "Use direct payment with caution, funds are irreversible",
-          directPaymentTo: "%{handle}に直接購入",
+          moderatorPaymentDisclaimer: "Paid from the total if the transaction ends in a dispute.", //notTranslated
+          directPaymentDisclaimer: "Use direct payment with caution, funds are irreversible", //notTranslated
           paymentSent: "送金しました！",
           total: "注文合計"
         },
         chat: {
           noSearchResultsFound: "No results found" //notTranslated
+        },
+        serverConnectModal: {
+          statusTryingToConnect: "Trying to connect to your server", //notTranslated
+          statusConnected: "Connected", //notTranslated
+          statusFailedConnection: "Unable to connect to your server", //notTranslated
+          statusFailedAuthentication: "Authentication failed", //notTranslated
+          serverConfiguration: "Server Configuration", //notTranslated
+          attempt: "Attempt", //notTranslated
+          intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
+          serverIP: "Server IP", //notTranslated
+          restApiPort: "Rest API port", //notTranslated
+          websocketApiPort: "Websocket API port", //notTranslated
+          heartbeatSocketApiPort: "Heartbeat socket port", //notTranslated
+          username: "Username", //notTranslated
+          password: "Password", //notTranslated                    
+          restoreDefaults: "Restore defaults", //notTranslated                    
+          saveChanges: "Save Changes", //notTranslated                    
+          retry: "Retry", //notTranslated 
         }       
       },
       {
         langName: "Polski",
         langCode: "pl",
         /* Use capitalized keys for widely reused text that must be capitalized */
+        IHaveAWalletNow: "I have a Wallet now", //notTranslated
         Next: "Dalej",
         IAgree: "Zgadzam się",
         Back: "Wróć",
         EnterMessage: "Wprowadź tekst...",
+        Recommended: "Recommended", //notTranslated
         Reload: "Odśwież",
         You: "Ja",
         Skip: "Pomiń",
         Done: "Gotowe",
+        Status: "Status",
         Navigation: "Nawigacja", 
         Cancel: "Anuluj",
         ClosingOpenBazaar: "Ciekawostka: twoja strona jest online, póki nie zamkniesz programu.", 
@@ -5372,6 +6059,9 @@ module.exports = Backbone.Model.extend({
         Excellent: "Doskonały",
         Good: "W dobrym stanie",
         Poor: "W złym stanie",
+        StillValidating: "Your handle is still validating", //notTranslated
+        CheckStatus: "Check Status", //notTranslated
+        ChangeCurrency: "Change currency", //notTranslated
         SKU: "Na stanie",
         Refurbished: "Odnowiony",
         Physical: "Fizyczny",
@@ -5401,7 +6091,7 @@ module.exports = Backbone.Model.extend({
         DontDelete: "Nie usuwaj",
         ConfirmDelete: "Potwierdź usunięcie",
         Website: "Strona",
-        Guid: "OpenBazaar ID (GUID)",
+        Guid: "OpenBazaar ID",
         Welcome: "Witaj",
         CreateStore: "Utwórz sklep",
         GoToMyPage: "Mój profil",
@@ -5457,9 +6147,9 @@ module.exports = Backbone.Model.extend({
         Changes: "Zmiany",
         SaveChanges: "Zapisz wprowadzone zmiany",
         YourName: "Twoje imię",
-        BitcoinReturnAddress: "Adres zwrotów BTC",
+        BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
         BitcoinReturnAddressPlaceholder: "Wprowadź adres BTC...",
-        BitcoinReturnAddressInfo: "W przypadku zwrotów środki będą zwracane na ten adres.",
+        BitcoinReturnAddressInfo: "If a refund is issued, the funds will need to be sent to a Bitcoin address. Please provide an address to your Wallet below.", //notTranslated
         LocalCurrency: "Lokalna waluta",
         TimeZone: "Strefa czasowa",
         ShipToName: "Name",
@@ -5511,6 +6201,8 @@ module.exports = Backbone.Model.extend({
         AboutPlaceholder: "Pełny opis",
         BackgroundColor: "Kolor tła",
         NotificationFollow: "zaczął cię obserować!",
+        NotificationDispute: "has opened a new dispute", //not translated
+        NotificationNewOrder: "has made a purchase", //not translated
         NoNotifications: "Brak powiadomień",
         WelcomeToYourPage: "Witaj na swojej stronie!",
         SearchForCategory: "Szukaj w kategorii",
@@ -5585,14 +6277,18 @@ module.exports = Backbone.Model.extend({
         NotFollowingAnyone: "Brak obserwowanych",
         NoFollowers: "Brak obserwujących",
         Moderator: "Moderator",//notTranslated
+        Firewall: "Firewall", //notTranslated
+        ReadOnly: "(This Field is Read Only)", //notTranslated
+        HandleResolver: "Handle Resolver",  // not translated
         moderatorSettings: {
-          ProvideResolution: "Provide dispute resolution",//notTranslated
+          DisputeResolution: "Dispute Resolution", //notTranslated
           ServiceFee: "Service fee",//notTranslated
-          ServiceFeeNote: "Percentage of transaction price (max 25)"//notTranslated
+          ServiceFeeNote: "Min: 0%, Max: 25%"//notTranslated
         },
         BecomeModerator: "Become a moderator",//notTranslated
         EditModerator: "Moderator Settings",//notTranslated
         transactions: {
+          OrderDetails: "Order Details", //notTranslated
           SoldBy: "Sprzedawca",
           PurchasedBy: "Nabywca",
           searchByOrder: "Szukaj po ID lub nazwie przedmiotu",
@@ -5610,6 +6306,7 @@ module.exports = Backbone.Model.extend({
           OrderStatus2: "Potwierdzone/Wysłane",
           OrderStatus3: "Zakończone (opłacone)",
           OrderStatus4: "W trakcie sporu",
+          InEscrow: "- In Escrow", // not translated
           OrderTotal: "Do zapłaty",
           OrderTotalInBTC: "Łącznie (BTC)",
           PaymentProtection: "Ubezpieczenie płatności",
@@ -5617,6 +6314,8 @@ module.exports = Backbone.Model.extend({
           ConfirmOrder: "Potwierdź to zamówienie",
           ReceivingAddress: "Adres odbiorczy",
           RecievingAddressPlaceholder: "Adres portfela, na którzy otrzymasz płatność",
+          Comments: "Comments", // not translated
+          CommentsPlaceHolder: "Comments on the order, if any", // not translated
           Shipper: "Wysłane przez",
           ShipperPlaceholder: "Firma przesyłkowa",
           TrackingNumber: "Numer śledzenia",
@@ -5631,6 +6330,7 @@ module.exports = Backbone.Model.extend({
           ModeratedTransaction: "Transakcja nadzorowana",
           Seller: "Sprzedawca",
           Buyer: "Kupujący",
+          Moderator: "Moderator", //not translated
           transferReceipt: "Dowód transakcji",
           copyTxid: "Kopiuj numer transakcji",
           Close: "Zamknij",
@@ -5648,7 +6348,12 @@ module.exports = Backbone.Model.extend({
           CustomerService: "Obsługa klienta",
           Review: "Oceń",
           ReviewPlaceHolder: "Twoja opinia o tej transakcji",
-          NoneSent: "Brak informacji"
+          NoneSent: "None sent", // not translated
+          ModerationFee: "Moderation Fee:", // not translated
+          DisputeTransaction: "Start a Dispute", // not translated
+          sendMessagePlaceholder: "Type your message here.", // not translated
+          DisputeInstructions: "To file a dispute for this transaction, type the reason for the dispute below, and click the Start a Dispute button. This will begin a discussion between you, the seller, and the moderator. The moderator will make the final decision as to whether any funds are returned to you, and how much. The moderator's fee will be paid out of the funds you have already sent.", // not translated
+          SendMessage: "Send" // not translated
         },
         errorMessages: {
           saveError: "Nie można zapisać zmian.",
@@ -5660,7 +6365,7 @@ module.exports = Backbone.Model.extend({
           notFoundError: "Nie można załadować danych dla:",
           socketError: "URL dla WebSocket nieprawidłowy. Łączę z domyślnym adresem ws://localhost:18466",
           contractError: "Nie można kupić tego przedmiotu",
-          sellerError: "Serwer sprzedawcy odrzucił płatność",
+          sellerError: "Serwer sprzedawcy odrzucił płatność. This may be due to a connection issue.", // not translated
           checkPurchaseData: "Upewnij się, że wprowadziłeś poprawne dane. Sprawdź stan konta oraz adresu zwrotów.",
           pageUnavailable: "This page is currently unavailable."  //notTranslated
         },
@@ -5668,7 +6373,7 @@ module.exports = Backbone.Model.extend({
           about: "<p>OpenBazaar to sieć osób, które kupują i sprzedają dobra oraz usługi bez pośredników, przy użyciu Bitcoina. Sieć ta jest zdecentralizowana i nie podlega żadnej organizacji.</p><p>Oprogramowanie jest otwarte, udostępniane na licencji MIT. Kod dostępny jest na <a href=\"https://github.com/OpenBazaar/\" target=\"_blank\">Githubie</a>.</p><p>OpenBazaar jest projektem społeczośniowym i zachęcamy do wejścia na nasz kanał <a href=\"https://openbazaar-slackin-drwasho.herokuapp.com/\" target=\"_blank\">Slack</a> lub odwiedzenia naszego <a href=\"http://www.reddit.com/r/openbazaar\" target=\"_blank\">subreddita</a>.</p><p>Jeśli potrzebujesz pomocy, przeczytaj <a href=\"\" target=\"_blank\">poradnik</a> do OpenBazaar w wersji 1.0.</p><p>Jeśli nadaj masz jakieś pytania, kliknij <a href=\"https://openbazaar.zendesk.com/hc/en-us/articles/203219995-Question-not-answered-Read-this-post\" target=\"_blank\">tutaj</a>.</p>",
           contributors: "<p>OpenBazaar jest rozwijany przez międzynarodową społeczność, złożoną zarówno z deweloperów, jak i wolontariuszy, którzy poświęcają swój czas, by uczynić handel wolnym. Oto niepełna lista osób, które wsparły projekt poprzez pisanie kodu lub inny rodzaj uczestnictwa.</p><ul><li>Giannis Adamopoulos</li><li>Ariadni-Karolina Alexiou</li><li>Tikhon Bernstam</li><li>Brad Burnham</li><li>George Chatzisofroniou</li><li>Patrick Connolly</li><li>Chris Dixon</li><li>Simon de la Rouviere</li><li>Braden Glasgow</li><li>Brian Hoffman</li><li>Ben Holden-Crowther</li><li>Joshua Jeffryes</li><li>Nikolas Korasidis</li><li>Regan Lawton</li><li>Sami Lehtinen</li><li>Angel Leon</li><li>Joye Lin</li><li>Joel Monegro</li><li>William Mougayar</li><li>Jonas David Nick</li><li>Onename</li><li>Chris Pacia</li><li>Sam Patterson</li><li>Chara Podimata</li><li>Samuel Reed</li><li>Washington Sanchez</li><li>Aeron Paul Sioson</li><li>Adrian Smith</li><li>Adam Snodgrass</li><li>Thomas Stilwell</li><li>Amir Taaki</li><li>Mike Wolf</li><li>Dionysis Zindros</li><li>secret-bitcoin-login</li><li>Rav3nPL</li><li>El--Presidente</li><li>Tinytin</li><li>ULRichard</li><li>Michał Pado</li></ul>", 
           support: "<p>Możesz wesprzeć OpenBazaar na wiele sposobów, by wspomóc nas w naszej misji.</p><p>Kupowanie i sprzedawanie dóbr i usług przyczynia się do powiększenia naszej społeczności, a to z kolei zwiększa atrakcyjność platformy w oczach potencjalnych nowych użytkowników. Uprzejme prośby (kierowane do sprzedawców) o akceptację płatności w Bitcoinie za pośrednictwem naszej platformy pomaga docierać do kolejnych osób i pokazuje, że jest zapotrzebowanie na handel P2P.</p><p>Jeśli jesteś programistą, odwiedź naszego <a href=\"https://github.com/OpenBazaar/\" target=\"_blank\">Githuba</a> i zobacz, czy może nie ma czegoś, w czym mógłbyś nam pomóc. Oprócz pomocy z kodem źrodłowym mamy nadzieję, liberalna natura projektu zachęci was do tworzenia nowych usług bazujących na istniejącej sieci.</p><p>Możesz również <a href=\"https://blockchain.info/address/3MXYUBLWNETa5HTewZp1xMTt7AW9kbFNqs\" target=\"_blank\">wspomóc nas finansowo</a>. Środki zostaną wykorzystane na pokrycie kosztów związanych z konferencjami, programem Bug Bounty oraz promocją //bounties.</p><p><a href=\"https://openbazaar-slackin-drwasho.herokuapp.com/\" target=\"_blank\">Dołącz do naszego Slacka</a>, jeśli masz jakieś pomysły związane z projektem lub chciałbyś o coś zapytać deweloperów.</p>",
-          licensing: "<p>OpenBazaar to otwarte oprogramowanie oparte na licencj MIT. To liberalna licencja, zezwala pozwala na wykorzystanie kodu przy innych otwartych projektach, jak i projektach prawnie zastrzeżonych. Pełna treść licencji dostępna jest pod poniższym linkiem.</p><h4>The MIT License (MIT)</h4><h5>Copyright &#169 2015 OpenBazaar Developers</h5><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p><h4>Libraries</h4><p>The following libraries are used in OpenBazaar:</p><ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>autobahn</li><li>python-obelisk</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li></ul>",
+          licensing: "<p>OpenBazaar to otwarte oprogramowanie oparte na licencj MIT. To liberalna licencja, zezwala pozwala na wykorzystanie kodu przy innych otwartych projektach, jak i projektach prawnie zastrzeżonych. Pełna treść licencji dostępna jest pod poniższym linkiem.</p><h4>The MIT License (MIT)</h4><h5>Copyright &#169 2015 OpenBazaar Developers</h5><p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p><p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p><p>THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p><h4>Libraries</h4><p>The following libraries are used in OpenBazaar:</p><ul><li>protobuf</li><li>Twisted</li><li>txJSON-RPC</li><li>txrudp</li><li>pyelliptic</li><li>pystun</li><li>bitcoin</li><li>gnupg</li><li>pynacl</li><li>txrestapi</li><li>txws</li><li>python-libbitcoin client</li><li>requests</li><li>backbone</li><li>underscore</li><li>moment.js</li><li>jquery</li><li>electron.js</li><li>backbone.linear</li><li>list.js</li><li>polyglot.js</li><li>taggle.js</li><li>safestart</li><li>python-bitcoinlib</li></ul>",
         },
         saveMessages: {
           Saved: "Zapisano",
@@ -5735,6 +6440,19 @@ module.exports = Backbone.Model.extend({
           Finished: "Gotowe"
         },
         buyFlow: {
+          PayForOrder: "Pay for Order", //notTranslated
+          NeedTempAddress: "I need a temporary Bitcoin address", //notTranslated
+          NeedTempAddressHelper: "Please bookmark the url to your temporary bitcoin address", //notTranslated
+          CantFindAddress: "I can't find my bitcoin address", //notTranslated
+          BitcoinWallet: "Bitcoin Wallet", //notTranslated
+          ModeratedPaymentDescription: "Your payment is held in a secure wallet until the seller completes their end of the agreement. If issues arise, a Moderator will help.", //notTranslated
+          ModeratorFeeHelper: "The moderator may charge a fee, but only if a dispute arises.", //notTranslated
+          ModeratedPayment: "Moderated Payment", //notTranslated
+          DisputeFee: "Dispute fee", //notTranslated
+          HaveWallet: "Do you have a Bitcoin Wallet?", //notTranslated
+          QuickSetup: "It only takes a few minutes to set one up", //notTranslated
+          CreateWallet: "Create a Wallet", //notTranslated
+          DirectPaymentDescription: "Funds are sent directly to the seller. Only use on small purchases or when purchasing from a trusted seller.", //notTranslated
           DirectPayment: "Płatność bezpośrednia",
           SendDirectlyTo: "Wyślij bezpośrednią płatność do %{handle}",
           MustAddAddress: "Musisz wprowadzić adres wysyłki",
@@ -5751,9 +6469,8 @@ module.exports = Backbone.Model.extend({
           summaryMsg3: "Możesz sprawdzić status swojego zamówienia na",
           purchasesPage: "Kupione",
           returnAddress: "Adres zwrotów",
-          moderatorPaymentDisclaimer: "Dotyczy wyłącznie transakcji w sporze.",
+          moderatorPaymentDisclaimer: "Paid from the total if the transaction ends in a dispute.", //notTranslated
           directPaymentDisclaimer: "Korzystaj z płatności bezpośredniej ostrożnie; środki nie są zwracane",
-          directPaymentTo: "Płatność bezpośrednia do",
           paymentSent: "Dokonano płatności!",
           total: "Suma"
         }

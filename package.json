@@ -1,6 +1,6 @@
 {
   "name": "OpenBazaar",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "description": "OpenBazaar Client",
   "main": "main.js",
   "repository": {
@@ -18,7 +18,9 @@
     "startwithserver": "electron main.js"
   },
   "dependencies": {
+    "autolinker": "^0.22.0",
     "backbone": ">=1.2.1",
+    "backbone.localstorage": "^1.1.16",
     "chosen": "0.0.2",
     "cropit": "0.4.5",
     "is_js": "0.7.4",

@@ -20,7 +20,7 @@ module.exports = Backbone.View.extend({
   initialize: function(options){
     this.options = options || {};
     /* expected options are:
-    userModel: this is set by app.js, then by a call to the settings API.
+    userModel: this is set by main.js, then by a call to the settings API.
      */
     //don't render immediately, wait for the model to update itself with converted prices
     this.listenTo(this.model, 'change:priceSet', this.render);
@@ -38,11 +38,11 @@ module.exports = Backbone.View.extend({
     loadTemplate('./js/templates/item.html', function(loadedTemplate) {
       self.$el.html(loadedTemplate(self.model.toJSON()));
 
-      var description = sanitizeHTML(self.model.get('vendor_offer').listing.item.description, {
+      var description = sanitizeHTML(self.model.get('vendor_offer').listing.item.displayDescription, {
         allowedTags: [ 'h2','h3', 'h4', 'h5', 'h6', 'p', 'a','u','ul', 'ol', 'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'hr', 'br', 'img', 'blockquote' ]
       });
 
-      $('.js-listingDescription').html(description);
+      self.$('.js-listingDescription').html(description);
     });
 
     return this;

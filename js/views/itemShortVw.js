@@ -11,6 +11,7 @@ module.exports = baseVw.extend({
   events: {
     'click .js-item': 'itemClick',
     'click .js-avatar': 'avatarClick',
+    'click .js-about': 'aboutClick',
     'click .js-itemShortEdit': 'editItemClick',
     'click .js-itemShortDelete': 'deleteItemClick',
     'click .js-userShortFollow': 'followUser',
@@ -75,6 +76,10 @@ module.exports = baseVw.extend({
     Backbone.history.navigate('#userPage/'+this.model.get('userID')+'/item/'+this.model.get('contract_hash'), {trigger: true});
   },
 
+  aboutClick: function(){
+    Backbone.history.navigate('#userPage/'+this.model.get('userID')+'/about', {trigger: true});
+  },
+
   avatarClick: function(){
     Backbone.history.navigate('#userPage/'+this.model.get('userID')+'/store', {trigger: true});
   },
@@ -90,15 +95,19 @@ module.exports = baseVw.extend({
   },
 
   followUser: function(e) {
-    window.obEventBus.trigger('followUser', {'guid': this.model.get('guid'), 'target': $(e.target), view: this});
-    this.$el.find('.js-userShortUnfollow').removeClass('hide');
-    this.$el.find('.js-userShortFollow').addClass('hide');
+    if(this.model.get('guid') !== this.model.get('ownGuid')){
+      window.obEventBus.trigger('followUser', {'guid': this.model.get('guid'), 'target': $(e.target), view: this});
+      this.$el.find('.js-userShortUnfollow').removeClass('hide');
+      this.$el.find('.js-userShortFollow').addClass('hide');
+    }
   },
 
   unfollowUser: function(e){
-    window.obEventBus.trigger('unfollowUser', {'guid': this.model.get('guid'), 'target': $(e.target), view: this});
-    this.$el.find('.js-userShortUnfollow').addClass('hide');
-    this.$el.find('.js-userShortFollow').removeClass('hide');
+    if(this.model.get('guid') !== this.model.get('ownGuid')) {
+      window.obEventBus.trigger('unfollowUser', {'guid': this.model.get('guid'), 'target': $(e.target), view: this});
+      this.$el.find('.js-userShortUnfollow').addClass('hide');
+      this.$el.find('.js-userShortFollow').removeClass('hide');
+    }
   },
 
   blockUser: function(e) {

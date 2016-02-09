@@ -51,7 +51,7 @@ module.exports = baseVw.extend({
 
     this.model.set({user: this.options.userModel.toJSON(), page: this.userProfile.toJSON()});
 
-    this.listenTo(window.obEventBus, "socketMessageRecived", function(response){
+    this.listenTo(window.obEventBus, "socketMessageReceived", function(response){
       self.handleSocketMessage(response);
     });
     this.socketItemsID = Math.random().toString(36).slice(2);
@@ -183,6 +183,7 @@ module.exports = baseVw.extend({
     item.showAvatar = true;
     item.userID = item.guid;
     item.discover = true;
+    item.ownGuid = this.userModel.get('guid');
 
     item.ownFollowing = false;
     if(this.ownFollowing.indexOf(item.guid) != -1){
@@ -307,6 +308,11 @@ module.exports = baseVw.extend({
       follow = true;
     }
 
+    //don't follow if this is the user's own guid
+    if(options.guid == this.options.userModel.get('guid')){
+      return;
+    }
+
     $.ajax({
       type: "POST",
       data: {'guid': options.guid},
@@ -397,7 +403,7 @@ module.exports = baseVw.extend({
       this.searchItems(targetText);
       addressText = addressText ? "#" + addressText.replace(/\s+/g, '') : "";
       target.val(addressText);
-      window.obEventBus.trigger("setAddressBar", addressText);
+      window.obEventBus.trigger("setAddressBar", {'addressText': addressText});
     }
   },
 
@@ -406,7 +412,7 @@ module.exports = baseVw.extend({
     this.loadItems();
 
     //clear address bar
-    window.obEventBus.trigger("setAddressBar", "");
+    window.obEventBus.trigger("setAddressBar", {'addressText': ""});
     
     this.$el.find('.js-discoverHeading').html(window.polyglot.t('Discover'));
 

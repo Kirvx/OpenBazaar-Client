@@ -1,7 +1,8 @@
 var __ = require('underscore'),
     Backbone = require('backbone'),
     getBTPrice = require('../utils/getBitcoinPrice'),
-    countriesMd = require('./countriesMd');
+    countriesMd = require('./countriesMd'),
+    autolinker = require( 'autolinker' );
 
 module.exports = window.Backbone.Model.extend({
   defaults: {
@@ -68,15 +69,13 @@ module.exports = window.Backbone.Model.extend({
         },
         "moderators": [
           {
+            "fee": 0,
+            "name": "",
+            "blockchain_id": "",
+            "avatar": "",
+            "short_description": "",
             "pubkeys": {
-              "encryption": {
-                "key": "",
-                "signature": ""
-              },
-              "signing": {
-                "key": "",
-                "signature": ""
-              },
+              "guid": "",
               "bitcoin": {
                 "key": "",
                 "signature": ""
@@ -185,6 +184,8 @@ module.exports = window.Backbone.Model.extend({
 
       });
 
+      //change any plain text urls in the description into links
+      response.vendor_offer.listing.item.displayDescription = autolinker.link(response.vendor_offer.listing.item.description, {'twitter': false, 'hashtag': false});
 
     }
 
