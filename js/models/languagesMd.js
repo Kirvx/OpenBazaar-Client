@@ -119,6 +119,7 @@ module.exports = Backbone.Model.extend({
         Optional: "Optional",
         Customize: "Customize",
         Save: "Save",
+        Change: "Change",
         Changes: "Changes",
         SaveChanges: "Save Changes",
         YourName: "Your name",
@@ -425,7 +426,8 @@ module.exports = Backbone.Model.extend({
           MyceliumTagline: "One of the longest in market, most secure and reliable Bitcoin wallets.",
           CoinkiteTagline: "The Most Powerful Bitcoin Wallet",
           BlockchaininfoTagline: "The world's most popular bitcoin wallet. Safer, Friendlier, Easier.",
-          DuoMoneyTagline: "Euro wallet for dead-easy Bitcoin payments. OpenBazaar for Grandma."
+          DuoMoneyTagline: "Euro wallet for dead-easy Bitcoin payments. OpenBazaar for Grandma.",
+          BitGoTagline: "The world's most secure bitcoin wallet. Trusted by leading Bitcoin businesses."
         },
         buyFlow: {
           PayForOrder: "Pay for Order",
@@ -470,8 +472,9 @@ module.exports = Backbone.Model.extend({
           statusConnected: "Connected", //notTranslated
           statusFailedConnection: "Unable to connect to your server", //notTranslated
           statusFailedAuthentication: "Authentication failed", //notTranslated
+          statusTooManyAttempts: "Too many failed login attempts", //notTranslated
           serverConfiguration: "Server Configuration", //notTranslated
-          attempt: "Attempt", //notTranslated
+          connecting: "Connecting", //notTranslated
           intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
           serverIP: "Server IP", //notTranslated
           restApiPort: "Rest API port", //notTranslated
@@ -589,6 +592,7 @@ module.exports = Backbone.Model.extend({
         Customize: "Personalizar",
         Save: "Guardar",
         Changes: "Cambios",
+        Change: "Change", //notTranslated
         SaveChanges: "Guardar Cambios",
         YourNombre: "Su nombre",
         BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
@@ -922,8 +926,9 @@ module.exports = Backbone.Model.extend({
           statusConnected: "Connected", //notTranslated
           statusFailedConnection: "Unable to connect to your server", //notTranslated
           statusFailedAuthentication: "Authentication failed", //notTranslated
+          statusTooManyAttempts: "Too many failed login attempts", //notTranslated
           serverConfiguration: "Server Configuration", //notTranslated
-          attempt: "Attempt", //notTranslated
+          connecting: "Connecting", //notTranslated
           intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
           serverIP: "Server IP", //notTranslated
           restApiPort: "Rest API port", //notTranslated
@@ -1045,6 +1050,7 @@ module.exports = Backbone.Model.extend({
         Customize: "Anpassen",
         Save: "Speichern",
         Changes: "&Auml;nderungen",
+        Change: "Change", //notTranslated
         SaveChanges: "&Auml;nderungen speichern",
         YourName: "Dein Name",
         BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
@@ -1384,8 +1390,9 @@ module.exports = Backbone.Model.extend({
           statusConnected: "Connected", //notTranslated
           statusFailedConnection: "Unable to connect to your server", //notTranslated
           statusFailedAuthentication: "Authentication failed", //notTranslated
+          statusTooManyAttempts: "Too many failed login attempts", //notTranslated
           serverConfiguration: "Server Configuration", //notTranslated
-          attempt: "Attempt", //notTranslated
+          connecting: "Connecting", //notTranslated
           intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
           serverIP: "Server IP", //notTranslated
           restApiPort: "Rest API port", //notTranslated
@@ -1513,6 +1520,7 @@ module.exports = Backbone.Model.extend({
         Customize: "Personalizza",
         Save: "Salva",
         Changes: "Modifiche",
+        Change: "Change", //notTranslated
         SaveChanges: "Salva modifiche",
         YourName: "Tuo nome",
         BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
@@ -1850,8 +1858,9 @@ module.exports = Backbone.Model.extend({
           statusConnected: "Connected", //notTranslated
           statusFailedConnection: "Unable to connect to your server", //notTranslated
           statusFailedAuthentication: "Authentication failed", //notTranslated
+          statusTooManyAttempts: "Too many failed login attempts", //notTranslated
           serverConfiguration: "Server Configuration", //notTranslated
-          attempt: "Attempt", //notTranslated
+          connecting: "Connecting", //notTranslated
           intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
           serverIP: "Server IP", //notTranslated
           restApiPort: "Rest API port", //notTranslated
@@ -1977,9 +1986,10 @@ module.exports = Backbone.Model.extend({
         ShipsTo: "Expédie vers",
         Optional: "Optionnel",
         Customize: "Personnaliser",
-        Save: "Sauvegarder",
-        Changes: "Changements",
-        SaveChanges: "Sauvegarder les changements",
+        Save: "Enregistrer",
+        Change: "Change", //notTranslated
+        Changes: "Modifications",
+        SaveChanges: "Enregistrer les modifications",
         YourName: "Votre nom",
         BitcoinReturnAddress: "Entrez votre adresse Bitcoin",
         BitcoinReturnAddressPlaceholder: "l'adresse bitcoin de remboursement",
@@ -2148,8 +2158,8 @@ module.exports = Backbone.Model.extend({
           ConfirmOrder: "Confirmer cette commande",
           ReceivingAddress: "Adresse de réception",
           RecievingAddressPlaceholder: "L'adresse Bitcoin à laquelle vous recevrez le paiement",
-          Comments: "Comments", // not translated
-          CommentsPlaceHolder: "Comments on the order, if any", // not translated
+          Comments: "Commentaires",
+          CommentsPlaceHolder: "Commentaires éventuels sur la commandes",
           Shipper: "Article expédié par",
           ShipperPlaceholder: "Nom de l'entreprise expédiant l'article",
           TrackingNumber: "Numéro de suivi",
@@ -2164,7 +2174,7 @@ module.exports = Backbone.Model.extend({
           ModeratedTransaction: "Transaction modérée",
           Seller: "Vendeur",
           Buyer: "Acheteur",
-          Moderator: "Moderator", //not translated
+          Moderator: "Modérateur",
           transferReceipt: "Reçu de transfert",
           copyTxid: "copier l'ID de transaction",
           Close: "Fermer",
@@ -2212,7 +2222,7 @@ module.exports = Backbone.Model.extend({
         },
         saveMessages: {
           Saved: "Enregistrés",
-          SaveSuccess: "Vos changements ont été enregistrés."
+          SaveSuccess: "Vos modifications ont été enregistrées."
         },
         discover: {
           searchDefaultText: "Analyse de votre réseau",
@@ -2304,7 +2314,7 @@ module.exports = Backbone.Model.extend({
           summaryMsg3: "Vous pouvez vérifier l'état de votre commande sur votre",
           purchasesPage: "page d'achat",
           returnAddress: "Adresse de retour",
-          moderatorPaymentDisclaimer: "Paid from the total if the transaction ends in a dispute.", // not translated
+          moderatorPaymentDisclaimer: "Payé depuis le total si la transaction se termine par un litige.",
           directPaymentDisclaimer: "Utilisez le paiement direct avec prudence, les fonds sont irréversibles",
           paymentSent: "Paiement envoyé !",
           total: "Total"
@@ -2313,23 +2323,25 @@ module.exports = Backbone.Model.extend({
           noSearchResultsFound: "Aucun résultat trouvé"
         },
         serverConnectModal: {
-          statusTryingToConnect: "Trying to connect to your server", //notTranslated
-          statusConnected: "Connected", //notTranslated
-          statusFailedConnection: "Unable to connect to your server", //notTranslated
-          statusFailedAuthentication: "Authentication failed", //notTranslated
-          serverConfiguration: "Server Configuration", //notTranslated
-          attempt: "Attempt", //notTranslated
-          intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
-          serverIP: "Server IP", //notTranslated
-          restApiPort: "Rest API port", //notTranslated
-          websocketApiPort: "Websocket API port", //notTranslated
-          heartbeatSocketApiPort: "Heartbeat socket port", //notTranslated
-          username: "Username", //notTranslated
-          password: "Password", //notTranslated                    
-          restoreDefaults: "Restore defaults", //notTranslated                    
-          saveChanges: "Save Changes", //notTranslated                    
-          retry: "Retry", //notTranslated 
-        }        
+          statusTooManyAttempts: "Too many failed login attempts", //notTranslated
+          connecting: "Connecting", //notTranslated
+          statusTryingToConnect: "Tentative de connexion à votre serveur",
+          statusConnected: "Connecté",
+          statusFailedConnection: "Impossible de se connecter à votre serveur",
+          statusFailedAuthentication: "L'authentification a échoué",
+          serverConfiguration: "Configuration du serveur",
+          attempt: "Tentative",
+          intro: "OpenBazaar est conçu de sorte à vous permettre d'héberger séparément votre serveur du client. Par défaut, le serveur sera exécuté localement, mais vous pouvez modifier cela avec les paramètres ci-dessous.",
+          serverIP: "IP du serveur",
+          restApiPort: "Port API REST",
+          websocketApiPort: "Port API Websocket",
+          heartbeatSocketApiPort: "Port socket Heartbeat",
+          username: "Nom d'utilisateur",
+          password: "Mot de passe",                 
+          restoreDefaults: "Paramètres par défaut",                   
+          saveChanges: "Enregistrer les modifications",            
+          retry: "Réessayer",
+        }
       },
       {
         langName: "Română",
@@ -2440,6 +2452,7 @@ module.exports = Backbone.Model.extend({
         Customize: "Customizare",
         Save: "Salvare",
         Changes: "Modificări",
+        Change: "Change", //notTranslated
         SaveChanges: "Salvare Modificări",
         YourName: "Numele dvs.",
         BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
@@ -2779,9 +2792,9 @@ module.exports = Backbone.Model.extend({
           statusConnected: "Connected", //notTranslated
           statusFailedConnection: "Unable to connect to your server", //notTranslated
           statusFailedAuthentication: "Authentication failed", //notTranslated
-          statusFailedAuthentication: "Authentication failed", //notTranslated
+          statusTooManyAttempts: "Too many failed login attempts", //notTranslated
           serverConfiguration: "Server Configuration", //notTranslated
-          attempt: "Attempt", //notTranslated
+          connecting: "Connecting", //notTranslated
           intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
           serverIP: "Server IP", //notTranslated
           restApiPort: "Rest API port", //notTranslated
@@ -2903,6 +2916,7 @@ module.exports = Backbone.Model.extend({
         Customize: "Настроить",
         Save: "Сохранить",
         Changes: "Изменения",
+        Change: "Change", //notTranslated
         SaveChanges: "Применить",
         YourName: "Ваше имя",
         BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
@@ -3242,8 +3256,9 @@ module.exports = Backbone.Model.extend({
           statusConnected: "Connected", //notTranslated
           statusFailedConnection: "Unable to connect to your server", //notTranslated
           statusFailedAuthentication: "Authentication failed", //notTranslated
+          statusTooManyAttempts: "Too many failed login attempts", //notTranslated
           serverConfiguration: "Server Configuration", //notTranslated
-          attempt: "Attempt", //notTranslated
+          connecting: "Connecting", //notTranslated
           intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
           serverIP: "Server IP", //notTranslated
           restApiPort: "Rest API port", //notTranslated
@@ -3364,6 +3379,7 @@ module.exports = Backbone.Model.extend({
         Customize: "Upraviť",
         Save: "Uložiť",
         Changes: "Zmeny",
+        Change: "Change", //notTranslated
         SaveChanges: "Uložiť zmeny",
         YourName: "Vaše meno",
         BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
@@ -3704,8 +3720,9 @@ module.exports = Backbone.Model.extend({
           statusConnected: "Connected", //notTranslated
           statusFailedConnection: "Unable to connect to your server", //notTranslated
           statusFailedAuthentication: "Authentication failed", //notTranslated
+          statusTooManyAttempts: "Too many failed login attempts", //notTranslated
           serverConfiguration: "Server Configuration", //notTranslated
-          attempt: "Attempt", //notTranslated
+          connecting: "Connecting", //notTranslated
           intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
           serverIP: "Server IP", //notTranslated
           restApiPort: "Rest API port", //notTranslated
@@ -3833,6 +3850,7 @@ module.exports = Backbone.Model.extend({
         Customize: "Özelleştir",
         Save: "Kaydet",
         Changes: "Değişiklikler",
+        Change: "Change", //notTranslated
         SaveChanges: "Değişiklikleri Kaydet",
         YourName: "Adınız",
         BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
@@ -4170,8 +4188,9 @@ module.exports = Backbone.Model.extend({
           statusConnected: "Connected", //notTranslated
           statusFailedConnection: "Unable to connect to your server", //notTranslated
           statusFailedAuthentication: "Authentication failed", //notTranslated
+          statusTooManyAttempts: "Too many failed login attempts", //notTranslated
           serverConfiguration: "Server Configuration", //notTranslated
-          attempt: "Attempt", //notTranslated
+          connecting: "Connecting", //notTranslated
           intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
           serverIP: "Server IP", //notTranslated
           restApiPort: "Rest API port", //notTranslated
@@ -4298,6 +4317,7 @@ module.exports = Backbone.Model.extend({
         Customize: "ChoH",
         Save: "Choq",
         Changes: "ChoH",
+        Change: "Change", //notTranslated
         SaveChanges: "ChoH toD",
         YourName: "PonglIj'e'",
         BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
@@ -4635,8 +4655,9 @@ module.exports = Backbone.Model.extend({
           statusConnected: "Connected", //notTranslated
           statusFailedConnection: "Unable to connect to your server", //notTranslated
           statusFailedAuthentication: "Authentication failed", //notTranslated
+          statusTooManyAttempts: "Too many failed login attempts", //notTranslated
           serverConfiguration: "Server Configuration", //notTranslated
-          attempt: "Attempt", //notTranslated
+          connecting: "Connecting", //notTranslated
           intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
           serverIP: "Server IP", //notTranslated
           restApiPort: "Rest API port", //notTranslated
@@ -4763,6 +4784,7 @@ module.exports = Backbone.Model.extend({
         Customize: "个性化",
         Save: "保存",
         Changes: "更改",
+        Change: "Change", //notTranslated
         SaveChanges: "保存更改",
         YourName: "您的姓名",
         BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
@@ -5099,8 +5121,9 @@ module.exports = Backbone.Model.extend({
           statusConnected: "Connected", //notTranslated
           statusFailedConnection: "Unable to connect to your server", //notTranslated
           statusFailedAuthentication: "Authentication failed", //notTranslated
+          statusTooManyAttempts: "Too many failed login attempts", //notTranslated
           serverConfiguration: "Server Configuration", //notTranslated
-          attempt: "Attempt", //notTranslated
+          connecting: "Connecting", //notTranslated
           intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
           serverIP: "Server IP", //notTranslated
           restApiPort: "Rest API port", //notTranslated
@@ -5229,6 +5252,7 @@ module.exports = Backbone.Model.extend({
         Customize: "사용자 지정",
         Save: "저장",
         Changes: "변경",
+        Change: "Change", //notTranslated
         SaveChanges: "변경 사항 저장",
         YourName: "당신 이름",
         BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
@@ -5566,8 +5590,9 @@ module.exports = Backbone.Model.extend({
           statusConnected: "Connected", //notTranslated
           statusFailedConnection: "Unable to connect to your server", //notTranslated
           statusFailedAuthentication: "Authentication failed", //notTranslated
+          statusTooManyAttempts: "Too many failed login attempts", //notTranslated
           serverConfiguration: "Server Configuration", //notTranslated
-          attempt: "Attempt", //notTranslated
+          connecting: "Connecting", //notTranslated
           intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
           serverIP: "Server IP", //notTranslated
           restApiPort: "Rest API port", //notTranslated
@@ -5690,6 +5715,7 @@ module.exports = Backbone.Model.extend({
         Customize: "カスタマイズ",
         Save: "保存",
         Changes: "変更",
+        Change: "Change", //notTranslated
         SaveChanges: "変更を保存",
         YourName: "氏名",
         BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
@@ -6016,8 +6042,9 @@ module.exports = Backbone.Model.extend({
           statusConnected: "Connected", //notTranslated
           statusFailedConnection: "Unable to connect to your server", //notTranslated
           statusFailedAuthentication: "Authentication failed", //notTranslated
+          statusTooManyAttempts: "Too many failed login attempts", //notTranslated
           serverConfiguration: "Server Configuration", //notTranslated
-          attempt: "Attempt", //notTranslated
+          connecting: "Connecting", //notTranslated
           intro: "OpenBazaar is designed to allow you to host your server separate from the client. By default, your server will run locally, but you can override it below.", //notTranslated
           serverIP: "Server IP", //notTranslated
           restApiPort: "Rest API port", //notTranslated
@@ -6145,6 +6172,7 @@ module.exports = Backbone.Model.extend({
         Customize: "Dostosuj",
         Save: "Zapisz",
         Changes: "Zmiany",
+        Change: "Change", //notTranslated
         SaveChanges: "Zapisz wprowadzone zmiany",
         YourName: "Twoje imię",
         BitcoinReturnAddress: "Enter your Bitcoin Address", //notTranslated
